@@ -7,6 +7,8 @@ import java.util.Arrays;
 @Entity
 @Table(name = "T_KONTAKTI", schema = "dbo", catalog = "ck_db")
 public class TKontaktiEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int kontaktId;
     private String organizacija;
     private String prezime;
@@ -20,7 +22,7 @@ public class TKontaktiEntity {
     private String skype;
     private String twiter;
     private byte[] slika;
-    private Timestamp datumRodjenja;
+    private String datumRodjenja;
     private String obrazovanje;
     private String zanimanje;
     private String poslodavac;
@@ -163,11 +165,11 @@ public class TKontaktiEntity {
 
     @Basic
     @Column(name = "DATUM_RODJENJA")
-    public Timestamp getDatumRodjenja() {
+    public String getDatumRodjenja() {
         return datumRodjenja;
     }
 
-    public void setDatumRodjenja(Timestamp datumRodjenja) {
+    public void setDatumRodjenja(String datumRodjenja) {
         this.datumRodjenja = datumRodjenja;
     }
 

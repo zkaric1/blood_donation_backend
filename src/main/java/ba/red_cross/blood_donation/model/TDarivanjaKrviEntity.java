@@ -6,6 +6,8 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "T_DARIVANJA_KRVI", schema = "dbo", catalog = "ck_db")
 public class TDarivanjaKrviEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int darivanjeKrviId;
     private int davaocId;
     private int lijecnikId;

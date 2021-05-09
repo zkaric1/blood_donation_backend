@@ -1,11 +1,14 @@
 package ba.red_cross.blood_donation.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "T_KORISNICI", schema = "dbo", catalog = "ck_db")
 public class TKorisniciEntity {
-    private short korisnikId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int korisnikId;
     private int kontaktId;
     private String korisnickoIme;
     private String sifra;
@@ -14,11 +17,11 @@ public class TKorisniciEntity {
 
     @Id
     @Column(name = "KORISNIK_ID")
-    public short getKorisnikId() {
+    public int getKorisnikId() {
         return korisnikId;
     }
 
-    public void setKorisnikId(short korisnikId) {
+    public void setKorisnikId(int korisnikId) {
         this.korisnikId = korisnikId;
     }
 
@@ -82,10 +85,10 @@ public class TKorisniciEntity {
         if (korisnikId != that.korisnikId) return false;
         if (kontaktId != that.kontaktId) return false;
         if (vazi != that.vazi) return false;
-        if (korisnickoIme != null ? !korisnickoIme.equals(that.korisnickoIme) : that.korisnickoIme != null)
+        if (!Objects.equals(korisnickoIme, that.korisnickoIme))
             return false;
-        if (sifra != null ? !sifra.equals(that.sifra) : that.sifra != null) return false;
-        if (tipKorisnika != null ? !tipKorisnika.equals(that.tipKorisnika) : that.tipKorisnika != null) return false;
+        if (!Objects.equals(sifra, that.sifra)) return false;
+        if (!Objects.equals(tipKorisnika, that.tipKorisnika)) return false;
 
         return true;
     }
