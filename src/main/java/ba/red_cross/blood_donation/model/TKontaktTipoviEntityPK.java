@@ -1,12 +1,12 @@
-package ba.red_cross.blood_donation;
+package ba.red_cross.blood_donation.model;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
 import java.io.Serializable;
 
-public class TKontaktVjestineEntityPK implements Serializable {
+public class TKontaktTipoviEntityPK implements Serializable {
     private int kontaktId;
-    private String vjestina;
+    private String tipKontakta;
 
     @Column(name = "KONTAKT_ID")
     @Id
@@ -18,14 +18,14 @@ public class TKontaktVjestineEntityPK implements Serializable {
         this.kontaktId = kontaktId;
     }
 
-    @Column(name = "VJESTINA")
+    @Column(name = "TIP_KONTAKTA")
     @Id
-    public String getVjestina() {
-        return vjestina;
+    public String getTipKontakta() {
+        return tipKontakta;
     }
 
-    public void setVjestina(String vjestina) {
-        this.vjestina = vjestina;
+    public void setTipKontakta(String tipKontakta) {
+        this.tipKontakta = tipKontakta;
     }
 
     @Override
@@ -33,10 +33,10 @@ public class TKontaktVjestineEntityPK implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TKontaktVjestineEntityPK that = (TKontaktVjestineEntityPK) o;
+        TKontaktTipoviEntityPK that = (TKontaktTipoviEntityPK) o;
 
         if (kontaktId != that.kontaktId) return false;
-        if (vjestina != null ? !vjestina.equals(that.vjestina) : that.vjestina != null) return false;
+        if (tipKontakta != null ? !tipKontakta.equals(that.tipKontakta) : that.tipKontakta != null) return false;
 
         return true;
     }
@@ -44,7 +44,7 @@ public class TKontaktVjestineEntityPK implements Serializable {
     @Override
     public int hashCode() {
         int result = kontaktId;
-        result = 31 * result + (vjestina != null ? vjestina.hashCode() : 0);
+        result = 31 * result + (tipKontakta != null ? tipKontakta.hashCode() : 0);
         return result;
     }
 }

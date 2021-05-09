@@ -1,16 +1,15 @@
-package ba.red_cross.blood_donation;
+package ba.red_cross.blood_donation.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import java.io.Serializable;
 
-@Entity
-@Table(name = "T_KONTAKT_VJESTINE", schema = "dbo", catalog = "ck_db")
-@IdClass(TKontaktVjestineEntityPK.class)
-public class TKontaktVjestineEntity {
+public class TKontaktVjestineEntityPK implements Serializable {
     private int kontaktId;
     private String vjestina;
 
-    @Id
     @Column(name = "KONTAKT_ID")
+    @Id
     public int getKontaktId() {
         return kontaktId;
     }
@@ -19,8 +18,8 @@ public class TKontaktVjestineEntity {
         this.kontaktId = kontaktId;
     }
 
-    @Id
     @Column(name = "VJESTINA")
+    @Id
     public String getVjestina() {
         return vjestina;
     }
@@ -34,7 +33,7 @@ public class TKontaktVjestineEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TKontaktVjestineEntity that = (TKontaktVjestineEntity) o;
+        TKontaktVjestineEntityPK that = (TKontaktVjestineEntityPK) o;
 
         if (kontaktId != that.kontaktId) return false;
         if (vjestina != null ? !vjestina.equals(that.vjestina) : that.vjestina != null) return false;

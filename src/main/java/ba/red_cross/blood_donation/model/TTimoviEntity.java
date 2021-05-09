@@ -1,22 +1,22 @@
-package ba.red_cross.blood_donation;
+package ba.red_cross.blood_donation.model;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "T_OBRAZOVANJE", schema = "dbo", catalog = "ck_db")
-public class TObrazovanjeEntity {
-    private String obrazovanje;
+@Table(name = "T_TIMOVI", schema = "dbo", catalog = "ck_db")
+public class TTimoviEntity {
+    private String tim;
     private String naziv;
     private boolean vazi;
 
     @Id
-    @Column(name = "OBRAZOVANJE")
-    public String getObrazovanje() {
-        return obrazovanje;
+    @Column(name = "TIM")
+    public String getTim() {
+        return tim;
     }
 
-    public void setObrazovanje(String obrazovanje) {
-        this.obrazovanje = obrazovanje;
+    public void setTim(String tim) {
+        this.tim = tim;
     }
 
     @Basic
@@ -44,10 +44,10 @@ public class TObrazovanjeEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TObrazovanjeEntity that = (TObrazovanjeEntity) o;
+        TTimoviEntity that = (TTimoviEntity) o;
 
         if (vazi != that.vazi) return false;
-        if (obrazovanje != null ? !obrazovanje.equals(that.obrazovanje) : that.obrazovanje != null) return false;
+        if (tim != null ? !tim.equals(that.tim) : that.tim != null) return false;
         if (naziv != null ? !naziv.equals(that.naziv) : that.naziv != null) return false;
 
         return true;
@@ -55,7 +55,7 @@ public class TObrazovanjeEntity {
 
     @Override
     public int hashCode() {
-        int result = obrazovanje != null ? obrazovanje.hashCode() : 0;
+        int result = tim != null ? tim.hashCode() : 0;
         result = 31 * result + (naziv != null ? naziv.hashCode() : 0);
         result = 31 * result + (vazi ? 1 : 0);
         return result;

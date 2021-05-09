@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="connection.url">jdbc:sqlserver://localhost:1433;database=ck_db</property>
+    <property name="connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
+      <mapping class="ba.red_cross.blood_donation.model.TBankeEntity"/>
+      <mapping class="ba.red_cross.blood_donation.model.TDarivanjaKrviEntity"/>
+      <mapping class="ba.red_cross.blood_donation.model.TKontaktiEntity"/>
+      <mapping class="ba.red_cross.blood_donation.model.TKontaktTimoviEntity"/>
+      <mapping class="ba.red_cross.blood_donation.model.TKontaktTipoviEntity"/>
+      <mapping class="ba.red_cross.blood_donation.model.TKontaktVjestineEntity"/>
+      <mapping class="ba.red_cross.blood_donation.model.TKorisniciEntity"/>
+      <mapping class="ba.red_cross.blood_donation.model.TKrvneGrupeEntity"/>
+      <mapping class="ba.red_cross.blood_donation.model.TMjestaEntity"/>
+      <mapping class="ba.red_cross.blood_donation.model.TObrazovanjeEntity"/>
+      <mapping class="ba.red_cross.blood_donation.model.TOrganizacijaEntity"/>
+      <mapping class="ba.red_cross.blood_donation.model.TPravnaLicaEntity"/>
+      <mapping class="ba.red_cross.blood_donation.model.TPrijaveEntity"/>
+      <mapping class="ba.red_cross.blood_donation.model.TRacunariEntity"/>
+      <mapping class="ba.red_cross.blood_donation.model.TTimoviEntity"/>
+      <mapping class="ba.red_cross.blood_donation.model.TTipKontaktaEntity"/>
+      <mapping class="ba.red_cross.blood_donation.model.TTipKorisnikaEntity"/>
+      <mapping class="ba.red_cross.blood_donation.model.TTransfuziologijaEntity"/>
+      <mapping class="ba.red_cross.blood_donation.model.TVjestineEntity"/>
+      <mapping class="ba.red_cross.blood_donation.model.TZanimanjaEntity"/>
+
+    <!-- DB schema will be updated if needed -->
+    <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
+  </session-factory>
+</hibernate-configuration>

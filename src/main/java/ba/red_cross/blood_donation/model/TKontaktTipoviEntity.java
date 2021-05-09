@@ -1,15 +1,17 @@
-package ba.red_cross.blood_donation;
+package ba.red_cross.blood_donation.model;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import java.io.Serializable;
 
-public class TKontaktTipoviEntityPK implements Serializable {
+import javax.persistence.*;
+
+@Entity
+@Table(name = "T_KONTAKT_TIPOVI", schema = "dbo", catalog = "ck_db")
+@IdClass(TKontaktTipoviEntityPK.class)
+public class TKontaktTipoviEntity {
     private int kontaktId;
     private String tipKontakta;
 
-    @Column(name = "KONTAKT_ID")
     @Id
+    @Column(name = "KONTAKT_ID")
     public int getKontaktId() {
         return kontaktId;
     }
@@ -18,8 +20,8 @@ public class TKontaktTipoviEntityPK implements Serializable {
         this.kontaktId = kontaktId;
     }
 
-    @Column(name = "TIP_KONTAKTA")
     @Id
+    @Column(name = "TIP_KONTAKTA")
     public String getTipKontakta() {
         return tipKontakta;
     }
@@ -33,7 +35,7 @@ public class TKontaktTipoviEntityPK implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TKontaktTipoviEntityPK that = (TKontaktTipoviEntityPK) o;
+        TKontaktTipoviEntity that = (TKontaktTipoviEntity) o;
 
         if (kontaktId != that.kontaktId) return false;
         if (tipKontakta != null ? !tipKontakta.equals(that.tipKontakta) : that.tipKontakta != null) return false;

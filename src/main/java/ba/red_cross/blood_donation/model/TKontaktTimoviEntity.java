@@ -1,4 +1,5 @@
-package ba.red_cross.blood_donation;
+package ba.red_cross.blood_donation.model;
+
 
 import javax.persistence.*;
 

@@ -1,22 +1,22 @@
-package ba.red_cross.blood_donation;
+package ba.red_cross.blood_donation.model;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "T_TIP_KONTAKTA", schema = "dbo", catalog = "ck_db")
-public class TTipKontaktaEntity {
-    private String tipKontakta;
+@Table(name = "T_TIP_KORISNIKA", schema = "dbo", catalog = "ck_db")
+public class TTipKorisnikaEntity {
+    private String tipKorisnika;
     private String naziv;
     private boolean vazi;
 
     @Id
-    @Column(name = "TIP_KONTAKTA")
-    public String getTipKontakta() {
-        return tipKontakta;
+    @Column(name = "TIP_KORISNIKA")
+    public String getTipKorisnika() {
+        return tipKorisnika;
     }
 
-    public void setTipKontakta(String tipKontakta) {
-        this.tipKontakta = tipKontakta;
+    public void setTipKorisnika(String tipKorisnika) {
+        this.tipKorisnika = tipKorisnika;
     }
 
     @Basic
@@ -44,10 +44,10 @@ public class TTipKontaktaEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TTipKontaktaEntity that = (TTipKontaktaEntity) o;
+        TTipKorisnikaEntity that = (TTipKorisnikaEntity) o;
 
         if (vazi != that.vazi) return false;
-        if (tipKontakta != null ? !tipKontakta.equals(that.tipKontakta) : that.tipKontakta != null) return false;
+        if (tipKorisnika != null ? !tipKorisnika.equals(that.tipKorisnika) : that.tipKorisnika != null) return false;
         if (naziv != null ? !naziv.equals(that.naziv) : that.naziv != null) return false;
 
         return true;
@@ -55,7 +55,7 @@ public class TTipKontaktaEntity {
 
     @Override
     public int hashCode() {
-        int result = tipKontakta != null ? tipKontakta.hashCode() : 0;
+        int result = tipKorisnika != null ? tipKorisnika.hashCode() : 0;
         result = 31 * result + (naziv != null ? naziv.hashCode() : 0);
         result = 31 * result + (vazi ? 1 : 0);
         return result;
