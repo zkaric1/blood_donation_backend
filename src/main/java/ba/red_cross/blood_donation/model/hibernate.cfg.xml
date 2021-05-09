@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="connection.url">jdbc:sqlserver://localhost:1433;database=ck_db</property>
+    <property name="connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
+      <mapping class="ba.red_cross.blood_donation.TBankeEntity"/>
+      <mapping class="ba.red_cross.blood_donation.TDarivanjaKrviEntity"/>
+      <mapping class="ba.red_cross.blood_donation.TKontaktiEntity"/>
+      <mapping class="ba.red_cross.blood_donation.TKontaktTimoviEntity"/>
+      <mapping class="ba.red_cross.blood_donation.TKontaktTipoviEntity"/>
+      <mapping class="ba.red_cross.blood_donation.TKontaktVjestineEntity"/>
+      <mapping class="ba.red_cross.blood_donation.TKorisniciEntity"/>
+      <mapping class="ba.red_cross.blood_donation.TKrvneGrupeEntity"/>
+      <mapping class="ba.red_cross.blood_donation.TMjestaEntity"/>
+      <mapping class="ba.red_cross.blood_donation.TObrazovanjeEntity"/>
+      <mapping class="ba.red_cross.blood_donation.TOrganizacijaEntity"/>
+      <mapping class="ba.red_cross.blood_donation.TPravnaLicaEntity"/>
+      <mapping class="ba.red_cross.blood_donation.TPrijaveEntity"/>
+      <mapping class="ba.red_cross.blood_donation.TRacunariEntity"/>
+      <mapping class="ba.red_cross.blood_donation.TTimoviEntity"/>
+      <mapping class="ba.red_cross.blood_donation.TTipKontaktaEntity"/>
+      <mapping class="ba.red_cross.blood_donation.TTipKorisnikaEntity"/>
+      <mapping class="ba.red_cross.blood_donation.TTransfuziologijaEntity"/>
+      <mapping class="ba.red_cross.blood_donation.TVjestineEntity"/>
+      <mapping class="ba.red_cross.blood_donation.TZanimanjaEntity"/>
+      <mapping class="ba.red_cross.blood_donation.VKorisniciEntity"/>
+      <mapping class="ba.red_cross.blood_donation.VUposleniciEntity"/>
+      <!-- <property name="connection.username"/> -->
+    <!-- <property name="connection.password"/> -->
+
+    <!-- DB schema will be updated if needed -->
+    <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
+  </session-factory>
+</hibernate-configuration>
