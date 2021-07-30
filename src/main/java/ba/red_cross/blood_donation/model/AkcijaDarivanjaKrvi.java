@@ -2,43 +2,46 @@ package ba.red_cross.blood_donation.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class AkcijeDarivanjaKrvi {
+public class AkcijaDarivanjaKrvi {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
 
-    @NotBlank(message = "Adresa održavanja akcije darivanja ne može biti prazno!")
+   // @NotBlank(message = "Adresa održavanja akcije darivanja ne može biti prazno!")
     private String adresa;
 
-    @NotBlank(message = "Grad održavanja akcije darivanja ne može biti prazno!")
+   // @NotBlank(message = "Grad održavanja akcije darivanja ne može biti prazno!")
     private String grad;
 
-    @NotBlank(message = "Datum održavanja akcije darivanja ne može biti prazno!")
-    private Date datum;
+   // @NotNull(message = "Datum održavanja akcije darivanja ne može biti prazno!")
+    private LocalDate datum;
 
-    @NotBlank(message = "Početak održavanja akcije darivanja ne može biti prazno!")
-    private Time pocetak;
+   // @NotNull(message = "Početak održavanja akcije darivanja ne može biti prazno!")
+    private LocalTime pocetak;
 
-    @NotBlank(message = "Početak održavanja akcije darivanja ne može biti prazno!")
-    private Time kraj;
+    //@NotNull(message = "Početak održavanja akcije darivanja ne može biti prazno!")
+    private LocalTime kraj;
 
-    @NotBlank(message = "Naslov akcije darivanja ne može biti prazno!")
+ //   @NotBlank(message = "Naslov akcije darivanja ne može biti prazno!")
     private String naslov;
 
     // Korisnik n-n
     @ManyToMany(mappedBy = "akcijeDarivanja", cascade = { CascadeType.ALL })
     private Set<Korisnik> korisnici = new HashSet<Korisnik>();
 
-    public AkcijeDarivanjaKrvi() {}
+    public AkcijaDarivanjaKrvi() {}
 
-    public AkcijeDarivanjaKrvi(String adresa, String grad, Date datum, Time pocetak, Time kraj, String naslov) {
+    public AkcijaDarivanjaKrvi(String adresa, String grad, LocalDate datum, LocalTime pocetak, LocalTime kraj, String naslov) {
         this.adresa = adresa;
         this.grad = grad;
         this.datum = datum;
@@ -71,27 +74,27 @@ public class AkcijeDarivanjaKrvi {
         this.grad = grad;
     }
 
-    public Date getDatum() {
+    public LocalDate getDatum() {
         return datum;
     }
 
-    public void setDatum(Date datum) {
+    public void setDatum(LocalDate datum) {
         this.datum = datum;
     }
 
-    public Time getPocetak() {
+    public LocalTime getPocetak() {
         return pocetak;
     }
 
-    public void setPocetak(Time pocetak) {
+    public void setPocetak(LocalTime pocetak) {
         this.pocetak = pocetak;
     }
 
-    public Time getKraj() {
+    public LocalTime getKraj() {
         return kraj;
     }
 
-    public void setKraj(Time kraj) {
+    public void setKraj(LocalTime kraj) {
         this.kraj = kraj;
     }
 

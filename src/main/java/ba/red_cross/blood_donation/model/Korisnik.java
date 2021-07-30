@@ -1,11 +1,8 @@
 package ba.red_cross.blood_donation.model;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -86,7 +83,7 @@ public class Korisnik {
                     @JoinColumn(name = "korisnik_ID", referencedColumnName = "ID", nullable = false, updatable = false)},
             inverseJoinColumns = {
                     @JoinColumn(name = "akcijeDarivanjaKrvi_ID", referencedColumnName = "ID", nullable = false, updatable = false)})
-    private Set<AkcijeDarivanjaKrvi> akcijeDarivanja = new HashSet<>();
+    private Set<AkcijaDarivanjaKrvi> akcijeDarivanja = new HashSet<>();
 
     // Notifikacije n-n
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
@@ -309,11 +306,11 @@ public class Korisnik {
         this.priznanja = priznanja;
     }
 
-    public Set<AkcijeDarivanjaKrvi> getAkcijeDarivanja() {
+    public Set<AkcijaDarivanjaKrvi> getAkcijeDarivanja() {
         return akcijeDarivanja;
     }
 
-    public void setAkcijeDarivanja(Set<AkcijeDarivanjaKrvi> akcijeDarivanja) {
+    public void setAkcijeDarivanja(Set<AkcijaDarivanjaKrvi> akcijeDarivanja) {
         this.akcijeDarivanja = akcijeDarivanja;
     }
 

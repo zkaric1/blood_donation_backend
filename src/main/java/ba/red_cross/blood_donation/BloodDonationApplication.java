@@ -1,12 +1,13 @@
 package ba.red_cross.blood_donation;
 
+import ba.red_cross.blood_donation.model.AkcijaDarivanjaKrvi;
 import ba.red_cross.blood_donation.model.Korisnik;
 import ba.red_cross.blood_donation.model.Rola;
 import ba.red_cross.blood_donation.model.TransfuzijskiCentar;
+import ba.red_cross.blood_donation.repository.AkcijeDarivanjaKrviRepository;
 import ba.red_cross.blood_donation.repository.KorisnikRepository;
 import ba.red_cross.blood_donation.repository.RolaRepository;
 import ba.red_cross.blood_donation.repository.TransfuzijskiCentarRepository;
-import org.apache.commons.logging.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -14,8 +15,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+
 import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalTime;
 
 @SpringBootApplication
 public class BloodDonationApplication {
@@ -29,7 +31,7 @@ public class BloodDonationApplication {
 
 
     @Bean
-    public CommandLineRunner addDataToDatabase(KorisnikRepository korisnikRepository, TransfuzijskiCentarRepository transCentarRepo, RolaRepository rolaRepo) {
+    public CommandLineRunner addDataToDatabase(KorisnikRepository korisnikRepository, TransfuzijskiCentarRepository transCentarRepo, RolaRepository rolaRepo, AkcijeDarivanjaKrviRepository akcijaDarivanjaRepo) {
         return (args) -> {
 
             // Kreiranje rola
@@ -43,7 +45,16 @@ public class BloodDonationApplication {
 
             // Kreiranje transfuzijskih centara
             transCentarRepo.save (new TransfuzijskiCentar("Novi Travnik", "Stjepana Radića 18/15", "061718733"));
-            log.info("ok");
+
+
+            // Kreiranje akcija darivanja krvi
+            AkcijaDarivanjaKrvi akcijaDarivanja = new AkcijaDarivanjaKrvi("Paromlinska 3", "Sarajevo", LocalDate.now(), LocalTime.now(), LocalTime.now(), "Akcija darivanja krvi");
+            akcijaDarivanjaRepo.save(akcijaDarivanja);
+            akcijaDarivanja = new AkcijaDarivanjaKrvi("Hujići 4", "Zenica", LocalDate.now(), LocalTime.now(), LocalTime.now(), "Akcija darivanja krvi u Zenici");
+            akcijaDarivanjaRepo.save(akcijaDarivanja);
+
+            log.info("Podaci uspjesno upisani u db!");
         };
+
     }
 }
