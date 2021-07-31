@@ -41,7 +41,7 @@ public class BloodDonationApplication {
             // Kreiranje korisnika
             LocalDate datumKreiranjaRacuna = LocalDate.now();
             LocalDate datumRodenja = LocalDate.of(1996, 10, 23);
-            Korisnik user = korisnikRepository.save(new Korisnik("Alma", "Ibrašimović", "Jasmina", "Z", datumRodenja, "Zenica","Novi Travnik", "Stjepana Radića 18/15", "SBK", "061718733", "SW dev", "0+", 5, "almaibrasimovic96@gmail.com", "proba123", false, datumKreiranjaRacuna, korisnik));
+            Korisnik user = korisnikRepository.save(new Korisnik("Alma", "Ibrašimović", "alma_96", "Z", datumRodenja, "Zenica","Novi Travnik", "Stjepana Radića 18/15", "SBK", "061718733", "SW dev", "0+", 5, "almaibrasimovic96@gmail.com", "proba123", false, datumKreiranjaRacuna, admin));
 
             // Kreiranje transfuzijskih centara
             transCentarRepo.save (new TransfuzijskiCentar("Novi Travnik", "Stjepana Radića 18/15", "061718733"));

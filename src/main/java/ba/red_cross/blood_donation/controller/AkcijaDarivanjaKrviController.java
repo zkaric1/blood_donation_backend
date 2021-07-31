@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import java.util.*;
 
 @RestController
+@Api( tags = "Akcije darivanja krvi")
 public class AkcijaDarivanjaKrviController {
 
     AkcijeDarivanjaKrviService akcijeDarivanjaService;
@@ -90,7 +91,7 @@ public class AkcijaDarivanjaKrviController {
     // PUT metoda
     @PutMapping("/akcija_darivanja_krvi")
     @ApiOperation(value = "Ažuriranje akcije darivanja krvi sa određenim ID!")
-    ResponseEntity<JSONObject> updateZivotinje(@RequestBody AkcijaDarivanjaKrvi novaAkcijaDarivanja) throws Exception {
+    ResponseEntity<JSONObject> editAkcijeDarivanjaKrvi(@RequestBody AkcijaDarivanjaKrvi novaAkcijaDarivanja) throws Exception {
         JSONObject message = new JSONObject();
         try {
             akcijeDarivanjaService.editAkcija(novaAkcijaDarivanja);

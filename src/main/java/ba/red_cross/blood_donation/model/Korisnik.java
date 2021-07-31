@@ -5,7 +5,9 @@ import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class Korisnik {
     @Id
@@ -15,16 +17,15 @@ public class Korisnik {
     @NotBlank(message = "Ime korisnika ne može biti prazno!")
     private String ime;
 
+    @NotBlank(message = "Korisničke ime ne može biti prazno!")
+    private String korisnickoIme;
+
     @NotBlank(message = "Prezime korisnika ne može biti prazno!")
     private String prezime;
-
-    @NotBlank(message = "Ime jednog roditelja korisnika ne može biti prazno!")
-    private String imeJednogRoditelja;
 
     @NotBlank(message = "Spol korisnika ne može biti prazno!")
     private String spol;
 
-    @JsonFormat(pattern="DD-MM-YYYY")
     private LocalDate datumRodenja;
 
     @NotBlank(message = "Mjesto rođenja korisnika ne može biti prazno!")
@@ -53,7 +54,6 @@ public class Korisnik {
     private String lozinka;
     private Boolean slatiNotifikacije;
 
-    @JsonFormat(pattern="DD-MM-YYYY")
     private LocalDate datumKreiranjaRacuna;
 
     // Veze između tabela
@@ -64,7 +64,7 @@ public class Korisnik {
     private Rola rola;
 
     // Device 1-n
-    @OneToMany(mappedBy="korisnik")
+    @OneToMany(mappedBy = "korisnik")
     private Set<Uredaj> uredaji;
 
     // Priznanja n-n
@@ -94,12 +94,13 @@ public class Korisnik {
                     @JoinColumn(name = "notifikacije_ID", referencedColumnName = "ID", nullable = false, updatable = false)})
     private Set<Notifikacija> notifikacije = new HashSet<>();
 
-    public Korisnik(){}
+    public Korisnik() {
+    }
 
-    public Korisnik(String ime, String prezime, String imeJednogRoditelja, String spol, LocalDate datumRodenja,  String mjestoRodena,String mjestoPrebivalista, String adresaPrebivalista, String kantonPrebivalista, String kontaktTelefon, String zanimanje, String krvnaGrupa, int brojDarivanjaKrvi, String emailAdresa,String lozinka, Boolean slatiNotifikacije, LocalDate datumKreiranjaRacuna, Rola rola) {
+    public Korisnik(String ime, String prezime, String korisnickoIme, String spol, LocalDate datumRodenja, String mjestoRodena, String mjestoPrebivalista, String adresaPrebivalista, String kantonPrebivalista, String kontaktTelefon, String zanimanje, String krvnaGrupa, int brojDarivanjaKrvi, String emailAdresa, String lozinka, Boolean slatiNotifikacije, LocalDate datumKreiranjaRacuna, Rola rola) {
         this.ime = ime;
         this.prezime = prezime;
-        this.imeJednogRoditelja = imeJednogRoditelja;
+        this.korisnickoIme = korisnickoIme;
         this.spol = spol;
         this.datumRodenja = datumRodenja;
         this.mjestoRodena = mjestoRodena;
@@ -117,10 +118,10 @@ public class Korisnik {
         this.rola = rola;
     }
 
-    public Korisnik(String ime, String prezime, String imeJednogRoditelja, String spol, LocalDate datumRodenja, String mjestoRodena, String mjestoPrebivalista, String adresaPrebivalista, String kantonPrebivalista, String kontaktTelefon, String zanimanje, String krvnaGrupa, int brojDarivanjaKrvi, String emailAdresa, String lozinka, Boolean slatiNotifikacije, LocalDate datumKreiranjaRacuna) {
+    public Korisnik(String ime, String prezime, String korisnickoIme, String spol, LocalDate datumRodenja, String mjestoRodena, String mjestoPrebivalista, String adresaPrebivalista, String kantonPrebivalista, String kontaktTelefon, String zanimanje, String krvnaGrupa, int brojDarivanjaKrvi, String emailAdresa, String lozinka, Boolean slatiNotifikacije, LocalDate datumKreiranjaRacuna) {
         this.ime = ime;
         this.prezime = prezime;
-        this.imeJednogRoditelja = imeJednogRoditelja;
+        this.korisnickoIme = korisnickoIme;
         this.spol = spol;
         this.datumRodenja = datumRodenja;
         this.mjestoRodena = mjestoRodena;
@@ -160,14 +161,6 @@ public class Korisnik {
 
     public void setPrezime(String prezime) {
         this.prezime = prezime;
-    }
-
-    public String getImeJednogRoditelja() {
-        return imeJednogRoditelja;
-    }
-
-    public void setImeJednogRoditelja(String imeJednogRoditelja) {
-        this.imeJednogRoditelja = imeJednogRoditelja;
     }
 
     public String getSpol() {
@@ -320,5 +313,13 @@ public class Korisnik {
 
     public void setNotifikacije(Set<Notifikacija> notifikacije) {
         this.notifikacije = notifikacije;
+    }
+
+    public String getKorisnickoIme() {
+        return korisnickoIme;
+    }
+
+    public void setKorisnickoIme(String korisnickoIme) {
+        this.korisnickoIme = korisnickoIme;
     }
 }
