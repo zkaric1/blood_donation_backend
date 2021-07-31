@@ -60,4 +60,20 @@ public class AkcijeDarivanjaKrviService {
     public AkcijaDarivanjaKrvi addAkcijaDarivanja (AkcijaDarivanjaKrvi akcijaDarivanjaKrvi) {
         return akcijeDarivanjaKrviRepository.save(akcijaDarivanjaKrvi);
     }
+
+    public AkcijaDarivanjaKrvi editAkcija (AkcijaDarivanjaKrvi novaAkcijaDarivanja) throws AkcijeDarivanjaKrviException {
+        akcijeDarivanjaKrviRepository.findById(novaAkcijaDarivanja.getID()).orElseThrow(() -> new AkcijeDarivanjaKrviException("Akcija darivanja krvi sa ID " + novaAkcijaDarivanja.getID() + " ne postoji!"));
+        akcijeDarivanjaKrviRepository.findById(novaAkcijaDarivanja.getID()).map(
+                akcijaDarivanjaKrvi -> {
+                    akcijaDarivanjaKrvi.setGrad(novaAkcijaDarivanja.getGrad());
+                    akcijaDarivanjaKrvi.setAdresa(novaAkcijaDarivanja.getAdresa());
+                    akcijaDarivanjaKrvi.setDatum(novaAkcijaDarivanja.getDatum());
+                    akcijaDarivanjaKrvi.setKraj(novaAkcijaDarivanja.getKraj());
+                    akcijaDarivanjaKrvi.setPocetak(novaAkcijaDarivanja.getPocetak());
+                    return akcijeDarivanjaKrviRepository.save(akcijaDarivanjaKrvi);
+                }
+        );
+
+        return akcijeDarivanjaKrviRepository.findById(novaAkcijaDarivanja.getID()).get();
+    }
 }
