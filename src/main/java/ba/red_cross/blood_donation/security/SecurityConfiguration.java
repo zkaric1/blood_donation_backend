@@ -42,11 +42,28 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/login", "/validate-token","/korisnik")
-                .permitAll()
+
+                // Korisnici
+                .antMatchers(HttpMethod.POST, "/login", "/validate-token", "/korisnik", "/register").permitAll()
+                .antMatchers(HttpMethod.PUT, "/korisnici").hasAuthority("administrator")
+                .antMatchers(HttpMethod.DELETE, "/korisnici/obrisi_sve","/korisnici/{id}").hasAuthority("administrator")
+                .antMatchers(HttpMethod.GET, "/korisnici","/korisnici/{id}").hasAuthority("administrator")
+
+
+                // Akcije darivanja krvi
+                .antMatchers(HttpMethod.GET, "/akcija_darivanja_krvi/lista","/akcija_darivanja_krvi/{id}").permitAll()
+                .antMatchers(HttpMethod.POST, "/akcija_darivanja_krvi").hasAuthority("administrator")
+                .antMatchers(HttpMethod.PUT, "/akcija_darivanja_krvi").hasAuthority("administrator")
+                .antMatchers(HttpMethod.DELETE, "/akcija_darivanja_krvi/obrisi_sve","/akcija_darivanja_krvi/{id}").hasAuthority("administrator")
+
+                // Notifikacije
+                .antMatchers(HttpMethod.GET, "/notifikacije/lista","/notifikacije/{id}").permitAll()
+                .antMatchers(HttpMethod.POST, "/notifikacije").hasAuthority("administrator")
+                .antMatchers(HttpMethod.PUT, "/notifikacije").hasAuthority("administrator")
+                .antMatchers(HttpMethod.DELETE, "/notifikacije","/notifikacije/{id}").hasAuthority("administrator")
 
                 //Swagger
-                .antMatchers(HttpMethod.GET,  "/swagger-resources/**",
+                .antMatchers(HttpMethod.GET, "/swagger-resources/**",
                         "/swagger-ui.html",
                         "/v2/api-docs",
                         "/webjars/**",
@@ -54,27 +71,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/")
                 .permitAll();
 
-               /* .antMatchers(HttpMethod.GET, "/akcija_darivanja_krvi/lista")
-                .permitAll();*/
-                /*.hasAuthority("korisnik")
-                .anyRequest()
-                .denyAll()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);*/
-
-
-
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-
     }
 
     @Bean
-    CorsConfigurationSource corsConfigurationSource()
-    {
+    CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PUT", "DELETE"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

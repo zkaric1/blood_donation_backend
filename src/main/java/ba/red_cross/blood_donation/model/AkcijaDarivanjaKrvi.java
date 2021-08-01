@@ -17,22 +17,22 @@ public class AkcijaDarivanjaKrvi {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
 
-   // @NotBlank(message = "Adresa održavanja akcije darivanja ne može biti prazno!")
+    @NotBlank(message = "Adresa održavanja akcije darivanja ne može biti prazno!")
     private String adresa;
 
-   // @NotBlank(message = "Grad održavanja akcije darivanja ne može biti prazno!")
+    @NotBlank(message = "Grad održavanja akcije darivanja ne može biti prazno!")
     private String grad;
 
-   // @NotNull(message = "Datum održavanja akcije darivanja ne može biti prazno!")
+    @NotNull(message = "Datum održavanja akcije darivanja ne može biti prazno!")
     private LocalDate datum;
 
-   // @NotNull(message = "Početak održavanja akcije darivanja ne može biti prazno!")
+    @NotNull(message = "Početak održavanja akcije darivanja ne može biti prazno!")
     private LocalTime pocetak;
 
-    //@NotNull(message = "Početak održavanja akcije darivanja ne može biti prazno!")
+    @NotNull(message = "Početak održavanja akcije darivanja ne može biti prazno!")
     private LocalTime kraj;
 
- //   @NotBlank(message = "Naslov akcije darivanja ne može biti prazno!")
+    @NotBlank(message = "Naslov akcije darivanja ne može biti prazno!")
     private String naslov;
 
     // Korisnik n-n

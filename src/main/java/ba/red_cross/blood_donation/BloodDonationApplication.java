@@ -1,13 +1,7 @@
 package ba.red_cross.blood_donation;
 
-import ba.red_cross.blood_donation.model.AkcijaDarivanjaKrvi;
-import ba.red_cross.blood_donation.model.Korisnik;
-import ba.red_cross.blood_donation.model.Rola;
-import ba.red_cross.blood_donation.model.TransfuzijskiCentar;
-import ba.red_cross.blood_donation.repository.AkcijeDarivanjaKrviRepository;
-import ba.red_cross.blood_donation.repository.KorisnikRepository;
-import ba.red_cross.blood_donation.repository.RolaRepository;
-import ba.red_cross.blood_donation.repository.TransfuzijskiCentarRepository;
+import ba.red_cross.blood_donation.model.*;
+import ba.red_cross.blood_donation.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -31,7 +25,7 @@ public class BloodDonationApplication {
 
 
     @Bean
-    public CommandLineRunner addDataToDatabase(KorisnikRepository korisnikRepository, TransfuzijskiCentarRepository transCentarRepo, RolaRepository rolaRepo, AkcijeDarivanjaKrviRepository akcijaDarivanjaRepo) {
+    public CommandLineRunner addDataToDatabase(KorisnikRepository korisnikRepository, TransfuzijskiCentarRepository transCentarRepo, RolaRepository rolaRepo, AkcijeDarivanjaKrviRepository akcijaDarivanjaRepo, NotifikacijaRepository notifikacijaRepo) {
         return (args) -> {
 
             // Kreiranje rola
@@ -52,6 +46,9 @@ public class BloodDonationApplication {
             akcijaDarivanjaRepo.save(akcijaDarivanja);
             akcijaDarivanja = new AkcijaDarivanjaKrvi("Hujići 4", "Zenica", LocalDate.now(), LocalTime.now(), LocalTime.now(), "Akcija darivanja krvi u Zenici");
             akcijaDarivanjaRepo.save(akcijaDarivanja);
+
+            // Kreiranje notifikacija
+            notifikacijaRepo.save (new Notifikacija("Hitno potrebna krvna grupa 0+", "Hitno potrebna krvna grupa 0+", "HITNO", "0+"));
 
             log.info("Podaci uspjesno upisani u db!");
         };

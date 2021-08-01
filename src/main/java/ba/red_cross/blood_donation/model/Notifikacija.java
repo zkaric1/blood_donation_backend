@@ -31,6 +31,12 @@ public class Notifikacija {
         this.krvnaGrupa = krvnaGrupa;
     }
 
+    public Notifikacija(String naslov, String tekst, String tipNotifikacije) {
+        this.naslov = naslov;
+        this.tekst = tekst;
+        this.tipNotifikacije = tipNotifikacije;
+    }
+
     public Notifikacija() {
     }
 
