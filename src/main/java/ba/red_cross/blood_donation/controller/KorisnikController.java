@@ -65,19 +65,33 @@ public class KorisnikController {
         );
     }
 
+    @GetMapping("/korisnici/krvna_grupa/{krvnaGrupa}")
+    @ApiOperation(value = "Dobavljanje svih korisnika sa odgovarajućom krvnom grupom!")
+    List<Korisnik> getKorisniciByKrvnaGrupa(@PathVariable String krvnaGrupa) throws Exception {
+        return korisnikService.getKorisniciByKrvnaGrupa(krvnaGrupa);
+    }
+
     // POST
     @ApiOperation(value = "Unos novog korisnika!")
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    DTOKorisnici dodajKorisnikaIKontakt( @RequestBody DTOKorisnici noviKorisnik) throws Exception {
+    ResponseEntity<Object> dodajKorisnikaIKontakt( @RequestBody DTOKorisnici noviKorisnik) throws Exception {
+        JSONObject message = new JSONObject();
         try {
             // TKontaktiEntity dbKontakt = kontaktiService.dodajKontakt(noviKorisnik.getKontakt());
             //noviKorisnik.getKorisnik().setKontaktId(dbKontakt.getKontaktId());
             Korisnik dbKorisnik = korisnikService.dodajKontakt(noviKorisnik.getKorisnik());
-            return new DTOKorisnici(dbKorisnik);
+            return new ResponseEntity<>(
+                    dbKorisnik,
+                    HttpStatus.OK
+            );
         }
         catch(Exception e) {
-            throw new Exception(e.getMessage());
+            message.put("Poruka: ", e.getMessage());
+            return new ResponseEntity<>(
+                    message,
+                    HttpStatus.BAD_REQUEST
+            );
         }
     }
 
