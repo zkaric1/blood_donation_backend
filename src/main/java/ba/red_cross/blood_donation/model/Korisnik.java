@@ -6,8 +6,6 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 @Entity
 public class Korisnik {
     @Id
@@ -29,7 +27,7 @@ public class Korisnik {
     private LocalDate datumRodenja;
 
     @NotBlank(message = "Mjesto rođenja korisnika ne može biti prazno!")
-    private String mjestoRodena;
+    private String mjestoRodenja;
 
     @NotBlank(message = "Mjesto prebivališta korisnika ne može biti prazno!")
     private String mjestoPrebivalista;
@@ -97,13 +95,13 @@ public class Korisnik {
     public Korisnik() {
     }
 
-    public Korisnik(String ime, String prezime, String korisnickoIme, String spol, LocalDate datumRodenja, String mjestoRodena, String mjestoPrebivalista, String adresaPrebivalista, String kantonPrebivalista, String kontaktTelefon, String zanimanje, String krvnaGrupa, int brojDarivanjaKrvi, String emailAdresa, String lozinka, Boolean slatiNotifikacije, LocalDate datumKreiranjaRacuna, Rola rola) {
+    public Korisnik(String ime, String prezime, String korisnickoIme, String spol, LocalDate datumRodenja, String mjestoRodenja, String mjestoPrebivalista, String adresaPrebivalista, String kantonPrebivalista, String kontaktTelefon, String zanimanje, String krvnaGrupa, int brojDarivanjaKrvi, String emailAdresa, String lozinka, Boolean slatiNotifikacije, LocalDate datumKreiranjaRacuna, Rola rola) {
         this.ime = ime;
         this.prezime = prezime;
         this.korisnickoIme = korisnickoIme;
         this.spol = spol;
         this.datumRodenja = datumRodenja;
-        this.mjestoRodena = mjestoRodena;
+        this.mjestoRodenja = mjestoRodenja;
         this.mjestoPrebivalista = mjestoPrebivalista;
         this.adresaPrebivalista = adresaPrebivalista;
         this.kantonPrebivalista = kantonPrebivalista;
@@ -118,13 +116,13 @@ public class Korisnik {
         this.rola = rola;
     }
 
-    public Korisnik(String ime, String prezime, String korisnickoIme, String spol, LocalDate datumRodenja, String mjestoRodena, String mjestoPrebivalista, String adresaPrebivalista, String kantonPrebivalista, String kontaktTelefon, String zanimanje, String krvnaGrupa, int brojDarivanjaKrvi, String emailAdresa, String lozinka, Boolean slatiNotifikacije, LocalDate datumKreiranjaRacuna) {
+    public Korisnik(String ime, String prezime, String korisnickoIme, String spol, LocalDate datumRodenja, String mjestoRodenja, String mjestoPrebivalista, String adresaPrebivalista, String kantonPrebivalista, String kontaktTelefon, String zanimanje, String krvnaGrupa, int brojDarivanjaKrvi, String emailAdresa, String lozinka, Boolean slatiNotifikacije, LocalDate datumKreiranjaRacuna) {
         this.ime = ime;
         this.prezime = prezime;
         this.korisnickoIme = korisnickoIme;
         this.spol = spol;
         this.datumRodenja = datumRodenja;
-        this.mjestoRodena = mjestoRodena;
+        this.mjestoRodenja = mjestoRodenja;
         this.mjestoPrebivalista = mjestoPrebivalista;
         this.adresaPrebivalista = adresaPrebivalista;
         this.kantonPrebivalista = kantonPrebivalista;
@@ -179,12 +177,12 @@ public class Korisnik {
         this.datumRodenja = datumRodenja;
     }
 
-    public String getMjestoRodena() {
-        return mjestoRodena;
+    public String getMjestoRodenja() {
+        return mjestoRodenja;
     }
 
-    public void setMjestoRodena(String mjestoRodena) {
-        this.mjestoRodena = mjestoRodena;
+    public void setMjestoRodenja(String mjestoRodenja) {
+        this.mjestoRodenja = mjestoRodenja;
     }
 
     public String getMjestoPrebivalista() {

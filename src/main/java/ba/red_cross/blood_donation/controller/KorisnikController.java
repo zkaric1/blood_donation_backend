@@ -75,12 +75,12 @@ public class KorisnikController {
     @ApiOperation(value = "Unos novog korisnika!")
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    ResponseEntity<Object> dodajKorisnikaIKontakt( @RequestBody DTOKorisnici noviKorisnik) throws Exception {
+    ResponseEntity<Object> dodajKorisnikaIKontakt( @RequestBody Korisnik noviKorisnik) throws Exception {
         JSONObject message = new JSONObject();
         try {
             // TKontaktiEntity dbKontakt = kontaktiService.dodajKontakt(noviKorisnik.getKontakt());
             //noviKorisnik.getKorisnik().setKontaktId(dbKontakt.getKontaktId());
-            Korisnik dbKorisnik = korisnikService.dodajKontakt(noviKorisnik.getKorisnik());
+            Korisnik dbKorisnik = korisnikService.dodajKontakt(noviKorisnik);
             return new ResponseEntity<>(
                     dbKorisnik,
                     HttpStatus.OK

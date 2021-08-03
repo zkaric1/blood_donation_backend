@@ -57,7 +57,7 @@ public class KorisnikService {
                     korisnik.setSpol(noviKorisnik.getSpol());
                     korisnik.setDatumRodenja(noviKorisnik.getDatumRodenja());
                     korisnik.setDatumKreiranjaRacuna(noviKorisnik.getDatumKreiranjaRacuna());
-                    korisnik.setMjestoRodena(noviKorisnik.getMjestoRodena());
+                    korisnik.setMjestoRodenja(noviKorisnik.getMjestoRodenja());
                     korisnik.setMjestoPrebivalista(noviKorisnik.getMjestoPrebivalista());
                     korisnik.setAdresaPrebivalista(noviKorisnik.getAdresaPrebivalista());
                     korisnik.setKantonPrebivalista(noviKorisnik.getKantonPrebivalista());
