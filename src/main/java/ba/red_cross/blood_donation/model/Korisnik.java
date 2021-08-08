@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Korisnik {
+public class Korisnik implements Comparable<Korisnik> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
@@ -319,5 +319,14 @@ public class Korisnik {
 
     public void setKorisnickoIme(String korisnickoIme) {
         this.korisnickoIme = korisnickoIme;
+    }
+
+
+    @Override
+    public int compareTo(Korisnik o) {
+
+
+        return (o.getDatumKreiranjaRacuna().compareTo(this.getDatumKreiranjaRacuna()));
+       // return 0;
     }
 }

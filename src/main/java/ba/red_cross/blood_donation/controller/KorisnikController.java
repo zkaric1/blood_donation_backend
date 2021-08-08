@@ -71,6 +71,12 @@ public class KorisnikController {
         return korisnikService.getKorisniciByKrvnaGrupa(krvnaGrupa);
     }
 
+    @GetMapping("/korisnici/zadnjiRegistrovani")
+    @ApiOperation(value = "Dobavljanje zadnjih pet registrovanih korisnika!")
+    List<Korisnik> getNewestKorisnici() throws Exception {
+        return korisnikService.getNewestKorisnici();
+    }
+
     // POST
     @ApiOperation(value = "Unos novog korisnika!")
     @PostMapping("/register")

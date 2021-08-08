@@ -6,9 +6,8 @@ import ba.red_cross.blood_donation.repository.KorisnikRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+
+import java.util.*;
 
 @Service
 public class KorisnikService {
@@ -46,6 +45,20 @@ public class KorisnikService {
         return korisnikRepository.findByKrvnaGrupa(krvnaGrupa);
     }
 
+    public List<Korisnik> getNewestKorisnici () throws Exception {
+        if (korisnikRepository.count() == 0) throw new Exception("Nema korisnika u bazi");
+        List<Korisnik> korisnici = sviKorisnici();
+        Collections.sort(korisnici);
+        List<Korisnik> tempKorisnici = new ArrayList<>();
+        if (korisnici.size() > 5) {
+            for (int i = 0; i<5; i++) {
+                tempKorisnici.add(korisnici.get(i));
+            }
+            return tempKorisnici;
+        }
+
+        return korisnici;
+    }
 
     public Korisnik editKorisnika (Korisnik noviKorisnik) throws Exception{
         korisnikRepository.findById(noviKorisnik.getID()).orElseThrow(() -> new Exception("Korisnik sa ID " + noviKorisnik.getID() + " ne postoji!"));
