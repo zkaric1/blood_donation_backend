@@ -52,7 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 // Akcije darivanja krvi
                 .antMatchers(HttpMethod.GET, "/akcija_darivanja_krvi/lista","/akcija_darivanja_krvi/{id}").permitAll()
-                .antMatchers(HttpMethod.POST, "/akcija_darivanja_krvi").hasAuthority("administrator")
+                .antMatchers(HttpMethod.POST, "/akcija_darivanja_krvi").permitAll()
                 .antMatchers(HttpMethod.PUT, "/akcija_darivanja_krvi").hasAuthority("administrator")
                 .antMatchers(HttpMethod.DELETE, "/akcija_darivanja_krvi/obrisi_sve","/akcija_darivanja_krvi/{id}").hasAuthority("administrator")
 

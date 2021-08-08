@@ -18,6 +18,11 @@ public class AkcijeDarivanjaKrviService {
         this.akcijeDarivanjaKrviRepository = akcijeDarivanjaKrviRepository;
     }
 
+    // Metoda za vraćanje mjeseca održavanja akcije
+    private Integer getMjesecAkcije (Long id)  {
+        AkcijaDarivanjaKrvi akcija = akcijeDarivanjaKrviRepository.findById(id).orElseThrow(() -> new AkcijeDarivanjaKrviException("Akcija darivanja krvi sa ID " + id + " ne postoji!"));
+        return akcija.getDatum().getMonth().getValue();
+    }
 
     public List<AkcijaDarivanjaKrvi> getAkcijeDarivanjaKrvi () throws  Exception{
         if (akcijeDarivanjaKrviRepository.count() == 0) {
@@ -27,6 +32,7 @@ public class AkcijeDarivanjaKrviService {
     }
 
     public AkcijaDarivanjaKrvi getAkcijeDarivanjaKrviById (Long id) throws AkcijeDarivanjaKrviException {
+        System.out.print(getMjesecAkcije(id));
         return akcijeDarivanjaKrviRepository.findById(id).orElseThrow(() -> new AkcijeDarivanjaKrviException("Akcija darivanja krvi sa ID " + id + " ne postoji!"));
     }
 
