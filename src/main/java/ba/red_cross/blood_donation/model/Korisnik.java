@@ -1,6 +1,8 @@
 package ba.red_cross.blood_donation.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
@@ -10,7 +12,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Korisnik implements Comparable<Korisnik> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -80,6 +83,7 @@ public class Korisnik implements Comparable<Korisnik> {
 
     // Akcije darivanja n-n
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JsonBackReference
     @JoinTable(name = "korisnik_akcije_darivanja",
             joinColumns = {
                     @JoinColumn(name = "korisnik_ID", referencedColumnName = "ID", nullable = false, updatable = false)},

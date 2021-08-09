@@ -1,5 +1,7 @@
 package ba.red_cross.blood_donation.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -37,6 +39,7 @@ public class AkcijaDarivanjaKrvi {
 
     // Korisnik n-n
     @ManyToMany(mappedBy = "akcijeDarivanja", cascade = { CascadeType.ALL })
+    @JsonBackReference
     private Set<Korisnik> korisnici = new HashSet<Korisnik>();
 
     public AkcijaDarivanjaKrvi() {}

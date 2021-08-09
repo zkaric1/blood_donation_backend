@@ -4,6 +4,7 @@ import ba.red_cross.blood_donation.DTO.ResponseMessageDTO;
 import ba.red_cross.blood_donation.exception.AkcijeDarivanjaKrviException;
 import ba.red_cross.blood_donation.model.AkcijaDarivanjaKrvi;
 import ba.red_cross.blood_donation.repository.AkcijeDarivanjaKrviRepository;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.*;
@@ -81,5 +82,18 @@ public class AkcijeDarivanjaKrviService {
         );
 
         return akcijeDarivanjaKrviRepository.findById(novaAkcijaDarivanja.getID()).get();
+    }
+
+    public List<Integer> getBrojDarivanjaPoMjesecu () {
+        String year = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        List<Map<Integer,Integer>> brojDarivanjaPoMjesecu = akcijeDarivanjaKrviRepository.getBrojDarivanjaPoMjesecu(year);
+        List<Map<Integer, Integer>> lista = new ArrayList<>();
+        List<Integer> brojDarivanja = new ArrayList<>();
+        for (int i = 0; i<12; i++) brojDarivanja.add(0);
+        for (Map<Integer, Integer> a : brojDarivanjaPoMjesecu) {
+            brojDarivanja.set(a.get("mjesec"), a.get("broj_darivanja"));
+        }
+
+        return brojDarivanja;
     }
 }
