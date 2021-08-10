@@ -64,8 +64,8 @@ public class Korisnik implements Comparable<Korisnik> {
     // Veze između tabela
 
     // Rola 1-n
-    @ManyToOne
-    @JoinColumn(name = "rola_ID", referencedColumnName = "ID")
+    @ManyToOne ()
+    @JoinColumn(name="rola_id", nullable=false)
     private Rola rola;
 
     // Device 1-n

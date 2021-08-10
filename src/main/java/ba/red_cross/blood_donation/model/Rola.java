@@ -2,6 +2,7 @@ package ba.red_cross.blood_donation.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
 @Entity
 public class Rola {
@@ -34,4 +35,7 @@ public class Rola {
     public void setID(Long ID) {
         this.ID = ID;
     }
+
+    @OneToMany(mappedBy="rola")
+    private Set<Korisnik> korisnici;
 }

@@ -2,7 +2,9 @@ package ba.red_cross.blood_donation.service;
 
 import ba.red_cross.blood_donation.DTO.ResponseMessageDTO;
 import ba.red_cross.blood_donation.model.Korisnik;
+import ba.red_cross.blood_donation.model.Rola;
 import ba.red_cross.blood_donation.repository.KorisnikRepository;
+import ba.red_cross.blood_donation.repository.RolaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,8 @@ public class KorisnikService {
     @Autowired
     private KorisnikRepository korisnikRepository;
 
+    @Autowired RolaRepository rolaRepository;
+
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public Korisnik dodajKontakt(Korisnik noviKorisnik) throws Exception {
@@ -22,7 +26,11 @@ public class KorisnikService {
         if(postojeciKorisnik != null) {
             throw new Exception("Postoji korisnik sa istim korisnickim imenom");
         }
+
         noviKorisnik.setLozinka(passwordEncoder.encode(noviKorisnik.getLozinka()));
+        Rola korisnik = rolaRepository.findById(Long.valueOf(2)).orElseThrow(() -> new Exception("Rola sa ID " + 2 + " ne postoji!"));
+        noviKorisnik.setRola(korisnik);
+        System.out.print(noviKorisnik.getRola().getNazivRole());
         return korisnikRepository.save(noviKorisnik);
     }
 

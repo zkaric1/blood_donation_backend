@@ -8,5 +8,6 @@ import java.util.*;
 @Repository
 public interface KorisnikRepository extends JpaRepository<Korisnik, Long> {
     Korisnik findByKorisnickoIme (String korisnickoIme);
+    Korisnik findByLozinka (String lozinka);
     List<Korisnik> findByKrvnaGrupa (String krvnaGrupa);
 }

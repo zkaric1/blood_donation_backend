@@ -1,7 +1,8 @@
 package ba.red_cross.blood_donation.service;
 
-import ba.red_cross.blood_donation.model.dto.LoginRequest;
-import ba.red_cross.blood_donation.model.dto.LoginResponse;
+
+import ba.red_cross.blood_donation.DTO.LoginRequest;
+import ba.red_cross.blood_donation.DTO.LoginResponse;
 import ba.red_cross.blood_donation.model.dto.ValidationRequest;
 import ba.red_cross.blood_donation.model.dto.ValidationResponse;
 import ba.red_cross.blood_donation.security.CustomUserDetails;

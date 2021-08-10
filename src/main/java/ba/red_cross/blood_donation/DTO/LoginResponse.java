@@ -1,4 +1,5 @@
-package ba.red_cross.blood_donation.model.dto;
+package ba.red_cross.blood_donation.DTO;
+
 
 import lombok.Getter;
 import lombok.Setter;
