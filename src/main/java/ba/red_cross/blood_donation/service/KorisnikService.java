@@ -1,5 +1,6 @@
 package ba.red_cross.blood_donation.service;
 
+import ba.red_cross.blood_donation.DTO.KorisnikPatchDTO;
 import ba.red_cross.blood_donation.DTO.ResponseMessageDTO;
 import ba.red_cross.blood_donation.model.Korisnik;
 import ba.red_cross.blood_donation.model.Rola;
@@ -112,5 +113,18 @@ public class KorisnikService {
             return new ResponseMessageDTO("Uspjesno obrisan korisnik sa id " + id).getHashMap();
         }
         return new ResponseMessageDTO("Ne postoji korisnik sa id " + id).getHashMap();
+    }
+
+    public Korisnik partialUpdateUser (KorisnikPatchDTO noviKorisnik, Long id) throws Exception{
+        Korisnik korisnik = korisnikRepository.findById(id).orElseThrow(() -> new Exception("Korisnik sa ID " + id + " ne postoji!"));
+        korisnik.setMjestoPrebivalista(noviKorisnik.getMjestoPrebivalista());
+        korisnik.setAdresaPrebivalista(noviKorisnik.getAdresaPrebivalista());
+        korisnik.setKantonPrebivalista(noviKorisnik.getKantonPrebivalista());
+        korisnik.setKontaktTelefon(noviKorisnik.getKontaktTelefon());
+        korisnik.setZanimanje(noviKorisnik.getZanimanje());
+        korisnik.setEmailAdresa(noviKorisnik.getEmailAdresa());
+        korisnik.setKorisnickoIme(noviKorisnik.getKorisnickoIme());
+        korisnikRepository.save(korisnik);
+        return korisnik;
     }
 }

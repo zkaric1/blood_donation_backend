@@ -1,4 +1,5 @@
 package ba.red_cross.blood_donation.controller;
+import ba.red_cross.blood_donation.DTO.KorisnikPatchDTO;
 import ba.red_cross.blood_donation.exception.GeneralException;
 import ba.red_cross.blood_donation.model.Korisnik;
 import ba.red_cross.blood_donation.DTO.DTOKorisnici;
@@ -133,5 +134,26 @@ public class KorisnikController {
     @ApiOperation(value = "Brisanje korisnika sa određenim ID!")
     HashMap<String, String> obrisiKorisnikaById(@PathVariable Long id) throws Exception {
         return korisnikService.deleteById(id);
+    }
+
+    // PATCH
+    @PatchMapping("/korisnici/{id}")
+    @ApiOperation(value = "Ažuriranje samo određenih podataka korisnika!")
+    public ResponseEntity<JSONObject> partialUpdateUser(@RequestBody KorisnikPatchDTO user, @PathVariable("id") Long id)  {
+        JSONObject message = new JSONObject();
+        try {
+            korisnikService.partialUpdateUser(user, id);
+            message.put("Poruka: ", "Uspjesno azuriran korisnikom sa id " + id);
+            return new ResponseEntity<>(
+                    message,
+                    HttpStatus.OK
+            );
+        } catch (Exception e) {
+            message.put("Poruka: ", e.getMessage());
+            return new ResponseEntity<>(
+                    message,
+                    HttpStatus.BAD_REQUEST
+            );
+        }
     }
 }

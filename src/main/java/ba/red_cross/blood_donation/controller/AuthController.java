@@ -34,8 +34,6 @@ public class AuthController {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         try {
             Korisnik userWithUserName = korisnikRepository.findByKorisnickoIme(loginRequest.getUsername());
-            System.out.print((userWithUserName.getLozinka()) + "\n");
-            System.out.print(passwordEncoder.encode(loginRequest.getPassword()));
             /*if (userWithUserName == null || (!loginRequest.getPassword().equals(userWithUserName.getLozinka()))) {
 
                 throw new Exception("Pogrešna lozinka ili korisničko ime!");
