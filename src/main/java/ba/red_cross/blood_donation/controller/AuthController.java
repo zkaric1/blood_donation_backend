@@ -32,12 +32,15 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
         try {
             Korisnik userWithUserName = korisnikRepository.findByKorisnickoIme(loginRequest.getUsername());
-            /*if (userWithUserName == null || (!loginRequest.getPassword().equals(userWithUserName.getLozinka()))) {
+           /* boolean isPasswordMatch = passwordEncoder.matches(loginRequest.getPassword(), userWithUserName.getLozinka());
 
+            if (!isPasswordMatch) {
                 throw new Exception("Pogrešna lozinka ili korisničko ime!");
-            }*/
+            }
+            */
             return new ResponseEntity<>(authenticationService.login(loginRequest), HttpStatus.CREATED);
         }
         catch (Exception e) {
