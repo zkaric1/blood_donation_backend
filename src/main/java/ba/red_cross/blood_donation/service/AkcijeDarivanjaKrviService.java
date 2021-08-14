@@ -68,8 +68,8 @@ public class AkcijeDarivanjaKrviService {
         return akcijeDarivanjaKrviRepository.save(akcijaDarivanjaKrvi);
     }
 
-    public AkcijaDarivanjaKrvi editAkcija (AkcijaDarivanjaKrvi novaAkcijaDarivanja) throws AkcijeDarivanjaKrviException {
-        akcijeDarivanjaKrviRepository.findById(novaAkcijaDarivanja.getID()).orElseThrow(() -> new AkcijeDarivanjaKrviException("Akcija darivanja krvi sa ID " + novaAkcijaDarivanja.getID() + " ne postoji!"));
+    public AkcijaDarivanjaKrvi editAkcija (AkcijaDarivanjaKrvi novaAkcijaDarivanja,Long id) throws AkcijeDarivanjaKrviException {
+        akcijeDarivanjaKrviRepository.findById(id).orElseThrow(() -> new AkcijeDarivanjaKrviException("Akcija darivanja krvi sa ID " + novaAkcijaDarivanja.getID() + " ne postoji!"));
         akcijeDarivanjaKrviRepository.findById(novaAkcijaDarivanja.getID()).map(
                 akcijaDarivanjaKrvi -> {
                     akcijaDarivanjaKrvi.setGrad(novaAkcijaDarivanja.getGrad());
@@ -95,5 +95,17 @@ public class AkcijeDarivanjaKrviService {
         }
 
         return brojDarivanja;
+    }
+
+    public AkcijaDarivanjaKrvi partialUpdateAkcija (AkcijaDarivanjaKrvi novaAkcija, Long id) throws Exception {
+        AkcijaDarivanjaKrvi akcija = akcijeDarivanjaKrviRepository.findById(id).orElseThrow(() -> new Exception("Akcija darivanja krvi sa ID " + id + " ne postoji!"));
+        if (novaAkcija.getNaslov() != "")  akcija.setNaslov(novaAkcija.getNaslov());
+        if (novaAkcija.getAdresa() != "") akcija.setAdresa(novaAkcija.getAdresa());
+        if (novaAkcija.getGrad() != "") akcija.setGrad(novaAkcija.getGrad());
+        if (novaAkcija.getDatum() != null) akcija.setDatum(novaAkcija.getDatum());
+        if (novaAkcija.getPocetak() != null) akcija.setPocetak(novaAkcija.getPocetak());
+        if (novaAkcija.getKraj() != null) akcija.setKraj(novaAkcija.getKraj());
+        akcijeDarivanjaKrviRepository.save(akcija);
+        return akcija;
     }
 }

@@ -51,6 +51,7 @@ public class KorisnikService {
     public List<Korisnik> getKorisniciByKrvnaGrupa (String krvnaGrupa) throws Exception {
 
         if (korisnikRepository.count() == 0) throw new Exception("Nema korisnika u bazi");
+        if (krvnaGrupa.equals("sve")) return korisnikRepository.findAll();
         return korisnikRepository.findByKrvnaGrupa(krvnaGrupa);
     }
 
@@ -117,13 +118,14 @@ public class KorisnikService {
 
     public Korisnik partialUpdateUser (KorisnikPatchDTO noviKorisnik, Long id) throws Exception{
         Korisnik korisnik = korisnikRepository.findById(id).orElseThrow(() -> new Exception("Korisnik sa ID " + id + " ne postoji!"));
-        korisnik.setMjestoPrebivalista(noviKorisnik.getMjestoPrebivalista());
-        korisnik.setAdresaPrebivalista(noviKorisnik.getAdresaPrebivalista());
-        korisnik.setKantonPrebivalista(noviKorisnik.getKantonPrebivalista());
-        korisnik.setKontaktTelefon(noviKorisnik.getKontaktTelefon());
-        korisnik.setZanimanje(noviKorisnik.getZanimanje());
-        korisnik.setEmailAdresa(noviKorisnik.getEmailAdresa());
-        korisnik.setKorisnickoIme(noviKorisnik.getKorisnickoIme());
+        if (noviKorisnik.getMjestoPrebivalista() != "") korisnik.setMjestoPrebivalista(noviKorisnik.getMjestoPrebivalista());
+        if (noviKorisnik.getAdresaPrebivalista() != "") korisnik.setAdresaPrebivalista(noviKorisnik.getAdresaPrebivalista());
+        if (noviKorisnik.getKantonPrebivalista() != "") korisnik.setKantonPrebivalista(noviKorisnik.getKantonPrebivalista());
+        if (noviKorisnik.getKontaktTelefon() != "") korisnik.setKontaktTelefon(noviKorisnik.getKontaktTelefon());
+        if (noviKorisnik.getZanimanje() != "") korisnik.setZanimanje(noviKorisnik.getZanimanje());
+        if (noviKorisnik.getEmailAdresa() != "") korisnik.setEmailAdresa(noviKorisnik.getEmailAdresa());
+        if (noviKorisnik.getKorisnickoIme() != "") korisnik.setKorisnickoIme(noviKorisnik.getKorisnickoIme());
+
         korisnikRepository.save(korisnik);
         return korisnik;
     }

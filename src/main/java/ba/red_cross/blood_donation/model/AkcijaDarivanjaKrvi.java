@@ -38,7 +38,8 @@ public class AkcijaDarivanjaKrvi {
     private String naslov;
 
     // Korisnik n-n
-    @ManyToMany(mappedBy = "akcijeDarivanja", cascade = { CascadeType.ALL })
+    //bilo all
+    @ManyToMany(mappedBy = "akcijeDarivanja", cascade = {CascadeType.REFRESH})
     @JsonBackReference
     private Set<Korisnik> korisnici = new HashSet<Korisnik>();
 

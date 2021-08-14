@@ -54,19 +54,19 @@ public class BloodDonationApplication {
 
             datumKreiranjaRacuna = LocalDate.of(2021, 10, 23);
             datumRodenja = LocalDate.of(1958, 6, 25);
-            Korisnik user1 = (new Korisnik("Jasmina", "Ibrašimović", "jasmina_58", "Z", datumRodenja, "Bosanski Petrovac","Novi Travnik", "Stjepana Radića 18/15", "SBK", "063836791", "Profesor", "A+", 5, "jasmina@gmail.com", "proba123", false, datumKreiranjaRacuna, korisnik));
+            Korisnik user1 = (new Korisnik("Jasmina", "Ibrašimović", "jasmina_58", "Z", datumRodenja, "Bosanski Petrovac","Novi Travnik", "Stjepana Radića 18/15", "SBK", "063836791", "Profesor", "A+", 5, "jasmina@gmail.com", passwordEncoder.encode("proba123"), false, datumKreiranjaRacuna, korisnik));
             user1.getAkcijeDarivanja().add(akcijaDarivanja);
             korisnikRepository.save(user1);
 
             datumKreiranjaRacuna = LocalDate.of(2021, 10, 23);
             datumRodenja = LocalDate.of(1993, 10, 28);
-            Korisnik user2 = (new Korisnik("Belma", "Ibrašimović", "belma_93", "Z", datumRodenja, "Zenica","Sarajevo", "Paromlinska 5", "KS", "063836790", "Dev", "B+", 5, "belma@gmail.com", "proba123", false, datumKreiranjaRacuna, korisnik));
+            Korisnik user2 = (new Korisnik("Belma", "Ibrašimović", "belma_93", "Z", datumRodenja, "Zenica","Sarajevo", "Paromlinska 5", "KS", "063836790", "Dev", "B+", 5, "belma@gmail.com", passwordEncoder.encode("proba123"), false, datumKreiranjaRacuna, korisnik));
             user2.getAkcijeDarivanja().add(akcijaDarivanja1);
             korisnikRepository.save(user2);
 
             datumKreiranjaRacuna = LocalDate.of(2021, 12, 23);
             datumRodenja = LocalDate.of(1993, 10, 28);
-            Korisnik user3 = (new Korisnik("Šefik", "Ibrašimović", "sefik", "Z", datumRodenja, "Zenica","Sarajevo", "Paromlinska 5", "KS", "063836790", "Dev", "B+", 5, "belma@gmail.com", "proba123", false, datumKreiranjaRacuna, korisnik));
+            Korisnik user3 = (new Korisnik("Šefik", "Ibrašimović", "sefik", "Z", datumRodenja, "Zenica","Sarajevo", "Paromlinska 5", "KS", "063836790", "Dev", "B+", 5, "belma@gmail.com", passwordEncoder.encode("proba123"), false, datumKreiranjaRacuna, korisnik));
             user3.getAkcijeDarivanja().add(akcijaDarivanja2);
             korisnikRepository.save(user3);
 

@@ -1,5 +1,6 @@
 package ba.red_cross.blood_donation.controller;
 
+import ba.red_cross.blood_donation.DTO.KorisnikPatchDTO;
 import ba.red_cross.blood_donation.exception.AkcijeDarivanjaKrviException;
 import ba.red_cross.blood_donation.exception.GeneralException;
 import ba.red_cross.blood_donation.model.AkcijaDarivanjaKrvi;
@@ -51,7 +52,6 @@ public class AkcijaDarivanjaKrviController {
 
         return akcijeDarivanjaService.getBrojDarivanjaPoMjesecu();
     }
-    //
 
     @GetMapping("/akcija_darivanja_krvi/{id}")
     @ApiOperation(value = "Dobavljanje akcije darivanja krvi na osnovu ID!")
@@ -95,13 +95,34 @@ public class AkcijaDarivanjaKrviController {
     }
 
     // PUT metoda
-    @PutMapping("/akcija_darivanja_krvi")
+    @PutMapping("/akcija_darivanja_krvi/{id}")
     @ApiOperation(value = "Ažuriranje akcije darivanja krvi sa određenim ID!")
-    ResponseEntity<JSONObject> editAkcijeDarivanjaKrvi(@RequestBody AkcijaDarivanjaKrvi novaAkcijaDarivanja) throws Exception {
+    ResponseEntity<JSONObject> editAkcijeDarivanjaKrvi(@RequestBody AkcijaDarivanjaKrvi novaAkcijaDarivanja,@PathVariable Long id) throws Exception {
         JSONObject message = new JSONObject();
         try {
-            akcijeDarivanjaService.editAkcija(novaAkcijaDarivanja);
-            message.put("Poruka: ", "Uspjesno azurirana akcija darivanja sa id " + novaAkcijaDarivanja.getID());
+            akcijeDarivanjaService.editAkcija(novaAkcijaDarivanja, id);
+            message.put("Poruka: ", "Uspjesno azurirana akcija darivanja sa id " + id);
+            return new ResponseEntity<>(
+                    message,
+                    HttpStatus.OK
+            );
+        } catch (Exception e) {
+            message.put("Poruka: ", e.getMessage());
+            return new ResponseEntity<>(
+                    message,
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+    }
+
+    // PATCH
+    @PatchMapping("/akcija_darivanja_krvi/{id}")
+    @ApiOperation(value = "Ažuriranje samo određenih podataka akcije darivanja krvi!")
+    public ResponseEntity<JSONObject> partialUpdateAkcija(@RequestBody AkcijaDarivanjaKrvi akcija, @PathVariable("id") Long id)  {
+        JSONObject message = new JSONObject();
+        try {
+            akcijeDarivanjaService.partialUpdateAkcija(akcija, id);
+            message.put("Poruka: ", "Uspjesno azurirana akcija darivanja krvi sa id " + id);
             return new ResponseEntity<>(
                     message,
                     HttpStatus.OK

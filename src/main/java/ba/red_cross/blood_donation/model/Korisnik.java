@@ -82,13 +82,14 @@ public class Korisnik implements Comparable<Korisnik> {
     private Set<Priznanje> priznanja = new HashSet<>();
 
     // Akcije darivanja n-n
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    // bilo lazy i merge
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH})
     @JsonBackReference
     @JoinTable(name = "korisnik_akcije_darivanja",
             joinColumns = {
-                    @JoinColumn(name = "korisnik_ID", referencedColumnName = "ID", nullable = false, updatable = false)},
+                    @JoinColumn(name = "korisnik_ID", referencedColumnName = "ID", nullable = true, updatable = false)},
             inverseJoinColumns = {
-                    @JoinColumn(name = "akcijeDarivanjaKrvi_ID", referencedColumnName = "ID", nullable = false, updatable = false)})
+                    @JoinColumn(name = "akcijeDarivanjaKrvi_ID", referencedColumnName = "ID", nullable = true, updatable = false)})
     private Set<AkcijaDarivanjaKrvi> akcijeDarivanja = new HashSet<>();
 
     // Notifikacije n-n
