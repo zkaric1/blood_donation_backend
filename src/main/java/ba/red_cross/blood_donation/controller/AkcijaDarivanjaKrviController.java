@@ -8,9 +8,14 @@ import ba.red_cross.blood_donation.service.AkcijeDarivanjaKrviService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.minidev.json.JSONObject;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.File;
 import java.util.*;
 
 @RestController
@@ -134,5 +139,21 @@ public class AkcijaDarivanjaKrviController {
                     HttpStatus.BAD_REQUEST
             );
         }
+    }
+    @GetMapping("/generisi_izvjestaj/{id}")
+    @ApiOperation(value = "Generisanje i preuzimanje izvještaja za akcije darivanja!")
+    public String generisiIzvjestaj(@PathVariable("id") Long id) throws Exception {
+        String path = "C:\\Users\\belma\\Desktop\\Report";
+        AkcijaDarivanjaKrvi akcija = akcijeDarivanjaService.getAkcijeDarivanjaKrviById(id);
+        List<AkcijaDarivanjaKrvi> akcije = new ArrayList<>();
+        akcije.add(akcija);
+        File file = ResourceUtils.getFile("classpath:akcijeDarivanjaIzvjestaj.jrxml");
+        JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(akcije);
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("createdBy", "Alma Ibrasimovic");
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+        JasperExportManager.exportReportToPdfFile(jasperPrint, path + "\\akcija_darivanja_krvi" + akcija.getDatum() + ".pdf");
+        return "Izvjestaj generisan na lokaciji : " + path;
     }
 }
