@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SveAkcije" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4eedbb89-b4f6-4469-9ab6-f642a1688cf7">
+    <property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+    <property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
+    <style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+    <style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+    <style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true"/>
+    <style name="Detail" mode="Transparent" fontName="Times New Roman"/>
+    <style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+        <conditionalStyle>
+            <conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+            <style mode="Opaque" backcolor="#EEEFF0"/>
+        </conditionalStyle>
+    </style>
+    <style name="Table">
+        <box>
+            <pen lineWidth="1.0" lineColor="#000000"/>
+            <topPen lineWidth="1.0" lineColor="#000000"/>
+            <leftPen lineWidth="1.0" lineColor="#000000"/>
+            <bottomPen lineWidth="1.0" lineColor="#000000"/>
+            <rightPen lineWidth="1.0" lineColor="#000000"/>
+        </box>
+    </style>
+    <style name="Table_TH" mode="Opaque" backcolor="#FFFFFF">
+        <box>
+            <pen lineWidth="0.5" lineColor="#000000"/>
+            <topPen lineWidth="0.5" lineColor="#000000"/>
+            <leftPen lineWidth="0.5" lineColor="#000000"/>
+            <bottomPen lineWidth="0.5" lineColor="#000000"/>
+            <rightPen lineWidth="0.5" lineColor="#000000"/>
+        </box>
+    </style>
+    <style name="Table_CH" mode="Opaque" backcolor="#CACED0">
+        <box>
+            <pen lineWidth="0.5" lineColor="#000000"/>
+            <topPen lineWidth="0.5" lineColor="#000000"/>
+            <leftPen lineWidth="0.5" lineColor="#000000"/>
+            <bottomPen lineWidth="0.5" lineColor="#000000"/>
+            <rightPen lineWidth="0.5" lineColor="#000000"/>
+        </box>
+    </style>
+    <style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+        <box>
+            <pen lineWidth="0.5" lineColor="#000000"/>
+            <topPen lineWidth="0.5" lineColor="#000000"/>
+            <leftPen lineWidth="0.5" lineColor="#000000"/>
+            <bottomPen lineWidth="0.5" lineColor="#000000"/>
+            <rightPen lineWidth="0.5" lineColor="#000000"/>
+        </box>
+        <conditionalStyle>
+            <conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+            <style backcolor="#D8D8D8"/>
+        </conditionalStyle>
+    </style>
+    <subDataset name="tableDataset" uuid="f13e6d36-5148-4ecc-bbe3-3035def80980">
+        <queryString>
+            <![CDATA[]]>
+        </queryString>
+    </subDataset>
+
+    <field name="ID" class="java.lang.Long">
+    </field>
+    <field name="grad" class="java.lang.String">
+    </field>
+    <field name="adresa" class="java.lang.String">
+    </field>
+    <field name="datum" class="java.time.LocalDate">
+    </field>
+    <field name="pocetak" class="java.time.LocalTime">
+    </field>
+    <field name="kraj" class="java.time.LocalTime">
+    </field>
+    <title>
+        <band height="196" splitType="Stretch">
+            <line>
+                <reportElement x="-1" y="97" width="556" height="1" uuid="806ce5df-1219-4876-ae0c-ca7405b1f246">
+                    <property name="local_mesure_unitheight" value="pixel"/>
+                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                </reportElement>
+            </line>
+            <staticText>
+                <reportElement x="320" y="0" width="134" height="20" uuid="0f86baff-6386-4f3f-b3fe-2388707babe8"/>
+                <box rightPadding="4"/>
+                <textElement textAlignment="Right"/>
+                <text><![CDATA[Datum generisanja:]]></text>
+            </staticText>
+            <textField pattern="EEEEE dd MMMMM yyyy">
+                <reportElement x="454" y="0" width="98" height="20" uuid="bb10dbe1-0a4f-4722-9953-c163b63cf979"/>
+                <textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="190" y="60" width="210" height="25" uuid="e622555d-198b-4ccd-a4a1-c59c53304058">
+                    <property name="local_mesure_unitheight" value="pixel"/>
+                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                </reportElement>
+                <textElement textAlignment="Center">
+                    <font size="19" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Godišnji izvještaj]]></text>
+            </staticText>
+            <image>
+                <reportElement x="0" y="0" width="80" height="80" uuid="65367ab5-9f16-49a0-982d-1be718f03397"/>
+                <imageExpression><![CDATA["C:/Users/belma/Desktop/DDK-frontend/ddk/public/static/images/avatars/logo.png"]]></imageExpression>
+            </image>
+
+        </band>
+    </title>
+    <columnHeader>
+        <band height="20">
+            <staticText>
+                <reportElement style="Column header" positionType="Float" x="0" y="-80" width="50" height="20" forecolor="#000000" uuid="e6e97879-a682-43ca-8d73-288fb6eee9d5">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dbfd5f14-ed6c-4f7f-9b07-b63821999798"/>
+                </reportElement>
+                <textElement>
+                    <font fontName="Arial" size="12" isBold="true"/>
+                </textElement>
+                <text><![CDATA[ID]]></text>
+            </staticText>
+            <staticText>
+                <reportElement style="Column header" positionType="Float" x="18" y="-80" width="170" height="20" forecolor="#000000" uuid="c3326e41-5f5c-44c2-951a-905d553650ea">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d23532e6-6ae5-4022-ad58-de6dbc3d34e0"/>
+                </reportElement>
+                <textElement>
+                    <font fontName="Arial" size="12" isBold="true" pdfEncoding="Cp1250"/>
+                </textElement>
+                <text><![CDATA[Grad]]></text>
+            </staticText>
+            <staticText>
+                <reportElement style="Column header" positionType="Float" x="105" y="-80" width="150" height="20" forecolor="#000000" uuid="f889d379-090f-4eb5-8dfc-06fc833fdae3">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0b7d723c-5aa9-440e-8449-37243b7f1116"/>
+                </reportElement>
+                <textElement>
+                    <font fontName="Arial" size="12" isBold="true" pdfEncoding="Cp1250"/>
+                </textElement>
+                <text><![CDATA[Adresa]]></text>
+            </staticText>
+            <staticText>
+                <reportElement style="Column header" positionType="Float" x="281" y="-80" width="69" height="20" forecolor="#000000" uuid="9bd09e26-85ed-4728-b001-678690dc3a60">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="69855c4f-604d-4170-8781-48bbd138aff1"/>
+                </reportElement>
+                <textElement>
+                    <font fontName="Arial" size="12" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Datum]]></text>
+            </staticText>
+            <staticText>
+                <reportElement style="Column header" positionType="Float" x="350" y="-80" width="69" height="20" forecolor="#000000" uuid="5c1eac9e-75bc-41b2-9008-731f63501d0c">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="08e606a5-e93b-4e6a-a9a4-d845de3aea59"/>
+                </reportElement>
+                <textElement>
+                    <font fontName="Arial" size="12" isBold="true" pdfEncoding="Cp1250"/>
+                </textElement>
+                <text ><![CDATA[Početak]]></text>
+            </staticText>
+            <staticText>
+                <reportElement style="Column header" positionType="Float" x="419" y="-80" width="61" height="20" forecolor="#000000" uuid="f9b42516-80f5-4961-aed2-3d088a12164e">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="942c7f22-f13f-49d9-8e18-c04d069dd13c"/>
+                </reportElement>
+                <textElement>
+                    <font fontName="Arial" size="12" isBold="true" pdfEncoding="Cp1250"/>
+                </textElement>
+                <text><![CDATA[Kraj]]></text>
+            </staticText>
+            <staticText>
+                <reportElement style="Column header" positionType="Float" x="480" y="-80" width="69" height="20" forecolor="#000000" uuid="9bd09e26-85ed-4728-b001-678690dc3a60">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="69855c4f-604d-4170-8781-48bbd138aff1"/>
+                </reportElement>
+                <textElement>
+                    <font fontName="Arial" size="12" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Broj donora]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="20">
+            <textField  isBlankWhenNull="true">
+                <reportElement style="Detail" positionType="Float" x="0" y="-80" width="50" height="20" uuid="3d8d2dc1-c898-43be-a137-eb648dbcb252">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dbfd5f14-ed6c-4f7f-9b07-b63821999798"/>
+                </reportElement>
+                <textElement>
+                    <font fontName="Arial" size="12" isBold="true" pdfEncoding="Cp1250"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{ID}]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="true">
+                <reportElement style="Detail" positionType="Float" x="18" y="-80" width="170" height="20" uuid="4324781e-b507-4b85-a4a6-2456c9a54951">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d23532e6-6ae5-4022-ad58-de6dbc3d34e0"/>
+                </reportElement>
+                <textElement>
+                    <font fontName="Arial" size="12" isBold="true" pdfEncoding="Cp1250"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{grad}]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="true">
+                <reportElement style="Detail" positionType="Float" x="105" y="-80" width="150" height="20" uuid="87e42beb-7d33-4367-8fcd-0615b36fbd14">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0b7d723c-5aa9-440e-8449-37243b7f1116"/>
+                </reportElement>
+                <textElement>
+                    <font fontName="Arial" size="12" isBold="true" pdfEncoding="Cp1250"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{adresa}]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="true">
+                <reportElement style="Detail" positionType="Float" x="281" y="-80" width="69" height="20" uuid="392308d3-4afa-4724-bd58-aa5e18e80879">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="69855c4f-604d-4170-8781-48bbd138aff1"/>
+                </reportElement>
+                <textElement>
+                    <font fontName="Arial" size="12" isBold="false" pdfEncoding="Cp1250"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{datum}]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="true">
+                <reportElement style="Detail" positionType="Float" x="350" y="-80" width="69" height="20" uuid="e77a900d-1ccb-4047-817e-3a17e13c81a6">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="08e606a5-e93b-4e6a-a9a4-d845de3aea59"/>
+                </reportElement>
+                <textElement>
+                    <font fontName="Arial" size="12" isBold="false" pdfEncoding="Cp1250"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{pocetak}]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="true">
+                <reportElement style="Detail" positionType="Float" x="419" y="-80" width="61" height="20" uuid="a33b5e07-ccbb-4637-bfdd-7e1d19ff5765">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="942c7f22-f13f-49d9-8e18-c04d069dd13c"/>
+                </reportElement>
+                <textElement>
+                    <font fontName="Arial" size="12" isBold="false" pdfEncoding="Cp1250"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{kraj}]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="true">
+                <reportElement style="Detail" positionType="Float" x="480" y="-80" width="75" height="20" uuid="76ae78c1-cee3-4f81-a585-747ce50c5f99">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="642abe3d-2067-41ae-8f34-93c035960558"/>
+                </reportElement>
+                <textElement>
+                    <font fontName="Arial" size="12" isBold="false" pdfEncoding="Cp1250"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{ID}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+    <lastPageFooter>
+        <band height="177"/>
+    </lastPageFooter>
+</jasperReport>

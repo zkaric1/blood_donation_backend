@@ -16,6 +16,7 @@ import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.util.*;
 
 @RestController
@@ -140,8 +141,9 @@ public class AkcijaDarivanjaKrviController {
             );
         }
     }
+
     @GetMapping("/generisi_izvjestaj/{id}")
-    @ApiOperation(value = "Generisanje i preuzimanje izvještaja za akcije darivanja!")
+    @ApiOperation(value = "Generisanje i preuzimanje izvještaja nakon završene akcije darivanja!")
     public String generisiIzvjestaj(@PathVariable("id") Long id) throws Exception {
         String path = "C:\\Users\\belma\\Desktop\\Report";
         AkcijaDarivanjaKrvi akcija = akcijeDarivanjaService.getAkcijeDarivanjaKrviById(id);
@@ -152,8 +154,34 @@ public class AkcijaDarivanjaKrviController {
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(akcije);
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("createdBy", "Alma Ibrasimovic");
+
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+
         JasperExportManager.exportReportToPdfFile(jasperPrint, path + "\\akcija_darivanja_krvi" + akcija.getDatum() + ".pdf");
         return "Izvjestaj generisan na lokaciji : " + path;
+    }
+
+    @GetMapping("/generisi_izvjestaj/godisnji")
+    @ApiOperation(value = "Generisanje i preuzimanje izvještaja za akcije darivanja u godini!")
+    public String generisiGodisnjiIzvjestaj() throws Exception {
+        String path = "C:\\Users\\belma\\Desktop\\Report";
+        List<AkcijaDarivanjaKrvi> akcije = akcijeDarivanjaService.getAkcijeDarivanjaKrvi();
+        File file = ResourceUtils.getFile("classpath:godisnjiIzvjestaj.jrxml");
+        JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(akcije);
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("createdBy", "Alma Ibrasimovic");
+
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+        LocalDate now = LocalDate.now();
+        JasperExportManager.exportReportToPdfFile(jasperPrint, path + "\\godisnji_izvjestaj_" + now.getYear() + ".pdf");
+        return "Izvjestaj generisan na lokaciji : " + path;
+    }
+
+    @GetMapping("/zavrseneAkcijeDarivanja")
+    @ApiOperation(value = "Dobavljanje akcija darivanja krvi koje su završene!")
+    public List<AkcijaDarivanjaKrvi> zavrseneAkcije() throws Exception {
+        List<AkcijaDarivanjaKrvi> zavrseneAkcije = akcijeDarivanjaService.zavrseneAkcije();
+        return zavrseneAkcije;
     }
 }

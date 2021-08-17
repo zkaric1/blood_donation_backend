@@ -7,6 +7,9 @@ import ba.red_cross.blood_donation.repository.AkcijeDarivanjaKrviRepository;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 
 @Service
@@ -107,5 +110,21 @@ public class AkcijeDarivanjaKrviService {
         if (novaAkcija.getKraj() != null) akcija.setKraj(novaAkcija.getKraj());
         akcijeDarivanjaKrviRepository.save(akcija);
         return akcija;
+    }
+
+    public List<AkcijaDarivanjaKrvi> zavrseneAkcije () throws Exception {
+        LocalDate datumSada = LocalDate.now();
+        LocalTime vrijemeSada = LocalTime.now();
+        if (akcijeDarivanjaKrviRepository.count() == 0) throw new Exception("Nema akcija darivanja krvi u bazi!");
+        List<AkcijaDarivanjaKrvi> akcijeTemp = akcijeDarivanjaKrviRepository.findAll();
+        List<AkcijaDarivanjaKrvi> akcije = new ArrayList<>();
+
+        for (int i = 0; i<akcijeTemp.size(); i++) {
+            if (akcijeTemp.get(i).getDatum().isBefore(datumSada)) {
+                akcije.add(akcijeTemp.get(i));
+            }
+        }
+
+        return akcije;
     }
 }

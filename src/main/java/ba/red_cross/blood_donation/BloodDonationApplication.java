@@ -38,13 +38,16 @@ public class BloodDonationApplication {
             Rola korisnik = rolaRepo.save(new Rola("korisnik"));
 
             // Kreiranje akcija darivanja krvi
-            AkcijaDarivanjaKrvi akcijaDarivanja = new AkcijaDarivanjaKrvi("Paromlinska 3", "Sarajevo", LocalDate.of(2021, 9, 23), LocalTime.now(), LocalTime.now(), "Akcija darivanja krvi");
+            AkcijaDarivanjaKrvi akcijaDarivanja = new AkcijaDarivanjaKrvi("Paromlinska 3", "Sarajevo", LocalDate.of(2021, 9, 23), LocalTime.of(9, 0, 0), LocalTime.of(11, 30, 0), "Akcija darivanja krvi u Sarajevu");
             akcijaDarivanjaRepo.save(akcijaDarivanja);
             AkcijaDarivanjaKrvi akcijaDarivanja1 = new AkcijaDarivanjaKrvi("Hujići 4", "Zenica", LocalDate.now(), LocalTime.now(), LocalTime.now(), "Akcija darivanja krvi u Zenici");
             akcijaDarivanjaRepo.save(akcijaDarivanja1);
-            AkcijaDarivanjaKrvi akcijaDarivanja2 = new AkcijaDarivanjaKrvi("Stjepana Radića 18/15", "Novi Travnik", LocalDate.of(2021, 7, 23), LocalTime.now(), LocalTime.now(), "Akcija darivanja krvi u Zenici");
+            AkcijaDarivanjaKrvi akcijaDarivanja2 = new AkcijaDarivanjaKrvi("Stjepana Radića 18/15", "Novi Travnik", LocalDate.of(2021, 7, 23), LocalTime.of(15, 0, 0), LocalTime.of(17, 30, 0), "Akcija darivanja krvi u Novom Travniku");
             akcijaDarivanjaRepo.save(akcijaDarivanja2);
-
+            AkcijaDarivanjaKrvi akcijaDarivanja3 = new AkcijaDarivanjaKrvi("Nerkeza Smailagića 15", "Bihać", LocalDate.of(2021, 8, 10), LocalTime.of(10, 0, 0), LocalTime.of(15, 0, 0), "Akcija darivanja krvi u Bihaću");
+            akcijaDarivanjaRepo.save(akcijaDarivanja3);
+            AkcijaDarivanjaKrvi akcijaDarivanja4 = new AkcijaDarivanjaKrvi("Titova", "Banja Luka", LocalDate.of(2021, 8, 17), LocalTime.of(16, 0, 0), LocalTime.of(20, 0, 0), "Akcija darivanja krvi u Banja Luci");
+            akcijaDarivanjaRepo.save(akcijaDarivanja4);
             // Kreiranje korisnika
             LocalDate datumKreiranjaRacuna = LocalDate.now();
             LocalDate datumRodenja = LocalDate.of(1996, 10, 23);
