@@ -165,7 +165,7 @@ public class AkcijaDarivanjaKrviController {
     @ApiOperation(value = "Generisanje i preuzimanje izvještaja za akcije darivanja u godini!")
     public String generisiGodisnjiIzvjestaj() throws Exception {
         String path = "C:\\Users\\belma\\Desktop\\Report";
-        List<AkcijaDarivanjaKrvi> akcije = akcijeDarivanjaService.getAkcijeDarivanjaKrvi();
+        List<AkcijaDarivanjaKrvi> akcije = akcijeDarivanjaService.getAkcijeDarivanjaKrviTrenutnaGodina();
         File file = ResourceUtils.getFile("classpath:godisnjiIzvjestaj.jrxml");
         JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(akcije);

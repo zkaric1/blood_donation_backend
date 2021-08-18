@@ -5,11 +5,15 @@ import ba.red_cross.blood_donation.exception.AkcijeDarivanjaKrviException;
 import ba.red_cross.blood_donation.model.AkcijaDarivanjaKrvi;
 import ba.red_cross.blood_donation.repository.AkcijeDarivanjaKrviRepository;
 import io.swagger.models.auth.In;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -35,14 +39,29 @@ public class AkcijeDarivanjaKrviService {
         return akcijeDarivanjaKrviRepository.findAll();
     }
 
+    public List<AkcijaDarivanjaKrvi> getAkcijeDarivanjaKrviTrenutnaGodina () throws Exception {
+        List<AkcijaDarivanjaKrvi> akcijeTemp = getAkcijeDarivanjaKrvi();
+        List<AkcijaDarivanjaKrvi> akcije = new ArrayList<>();
+        String trenutnaGodina = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
+
+        for (int i = 0; i<akcijeTemp.size(); i++) {
+            LocalDate datumAkcije = akcijeTemp.get(i).getDatum();
+            String datumAkcijeGodina = datumAkcije.format(formatter);
+
+            if (datumAkcijeGodina.equals(trenutnaGodina)) {
+                akcije.add(akcijeTemp.get(i));
+            }
+        }
+
+        return akcije;
+    }
     public AkcijaDarivanjaKrvi getAkcijeDarivanjaKrviById (Long id) throws AkcijeDarivanjaKrviException {
-        System.out.print(getMjesecAkcije(id));
         return akcijeDarivanjaKrviRepository.findById(id).orElseThrow(() -> new AkcijeDarivanjaKrviException("Akcija darivanja krvi sa ID " + id + " ne postoji!"));
     }
 
     public List<AkcijaDarivanjaKrvi> getAkcijeDarivanjaKrviByGrad (String grad) throws AkcijeDarivanjaKrviException {
         List<AkcijaDarivanjaKrvi> listaAkcijaDarivanja = akcijeDarivanjaKrviRepository.findAllByGrad(grad);
-        System.out.print(listaAkcijaDarivanja.size());
         if (listaAkcijaDarivanja.size() == 0) {
             throw new AkcijeDarivanjaKrviException("Akcije darivanja krvi za grad " + grad + " ne postoje!");
         }
@@ -114,7 +133,6 @@ public class AkcijeDarivanjaKrviService {
 
     public List<AkcijaDarivanjaKrvi> zavrseneAkcije () throws Exception {
         LocalDate datumSada = LocalDate.now();
-        LocalTime vrijemeSada = LocalTime.now();
         if (akcijeDarivanjaKrviRepository.count() == 0) throw new Exception("Nema akcija darivanja krvi u bazi!");
         List<AkcijaDarivanjaKrvi> akcijeTemp = akcijeDarivanjaKrviRepository.findAll();
         List<AkcijaDarivanjaKrvi> akcije = new ArrayList<>();
