@@ -32,7 +32,7 @@ public class BloodDonationApplication {
     public CommandLineRunner addDataToDatabase(KorisnikRepository korisnikRepository, TransfuzijskiCentarRepository transCentarRepo, RolaRepository rolaRepo, AkcijeDarivanjaKrviRepository akcijaDarivanjaRepo, NotifikacijaRepository notifikacijaRepo) {
         return (args) -> {
 
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+         /*   BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             // Kreiranje rola
             Rola admin = rolaRepo.save(new Rola("administrator"));
             Rola korisnik = rolaRepo.save(new Rola("korisnik"));
@@ -79,7 +79,7 @@ public class BloodDonationApplication {
             // Kreiranje notifikacija
             notifikacijaRepo.save (new Notifikacija("Hitno potrebna krvna grupa 0+", "Hitno potrebna krvna grupa 0+", "HITNO", "0+"));
 
-            log.info("Podaci uspjesno upisani u db!");
+            log.info("Podaci uspjesno upisani u db!");*/
         };
 
     }

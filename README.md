@@ -7,3 +7,5 @@
 5. Kreiranje, brisanje i promjena akcija
 6. Logiranje korisnika na akcije
 7. Promjena podataka na profilu, brisanje profila?
+
+Link za heroku: https://blood-donation-backend-ck.herokuapp.com/swagger-ui.html
