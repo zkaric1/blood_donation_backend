@@ -46,6 +46,7 @@ public class NotifikacijaController {
                 HttpStatus.OK
         );
     }
+
     @GetMapping("/notifikacije/{id}")
     @ApiOperation(value = "Dobavljanje notifikacije na osnovu ID!")
     public ResponseEntity<Object> getNotifikacijaById(@PathVariable Long id) {
