@@ -11,4 +11,5 @@ public interface KorisnikRepository extends JpaRepository<Korisnik, Long> {
     Korisnik findByLozinka (String lozinka);
     List<Korisnik> findByKrvnaGrupa (String krvnaGrupa);
     Korisnik findByEmailAdresa(String email);
+    Korisnik findByID(Long id);
 }

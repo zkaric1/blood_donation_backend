@@ -18,7 +18,18 @@ public class LoginResponse {
 
     private String token;
 
-    public LoginResponse(String token) {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    private Long id;
+
+    public LoginResponse(String token, Long id) {
         this.token = token;
+        this.id = id;
     }
 }

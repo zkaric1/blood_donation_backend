@@ -47,8 +47,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/login", "/validate-token", "/korisnik", "/register").permitAll()
                 .antMatchers(HttpMethod.PUT, "/korisnici").hasAuthority("administrator")
                 .antMatchers(HttpMethod.DELETE, "/korisnici/obrisi_sve","/korisnici/{id}").hasAuthority("administrator")
-                .antMatchers(HttpMethod.GET, "/korisnici","/korisnici/{id}").hasAnyAuthority()
-                .antMatchers(HttpMethod.PATCH, "/korisnici/{id}").hasAnyAuthority()
+                .antMatchers(HttpMethod.GET, "/korisnici","/korisnici/{id}").hasAnyAuthority("korisnik","administrator")
+                .antMatchers(HttpMethod.PATCH, "/korisnici/{id}").hasAnyAuthority("korisnik","administrator")
 
                 // Akcije darivanja krvi
                 .antMatchers(HttpMethod.GET, "/akcija_darivanja_krvi/lista","/akcija_darivanja_krvi/{id}").permitAll()
@@ -57,7 +57,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.DELETE, "/akcija_darivanja_krvi/obrisi_sve","/akcija_darivanja_krvi/{id}").hasAuthority("administrator")
 
                 // Notifikacije
-                .antMatchers(HttpMethod.GET, "/notifikacije/lista","/notifikacije/{id}").hasAnyAuthority()
+                .antMatchers(HttpMethod.GET, "/notifikacije/lista","/notifikacije/{id}").hasAnyAuthority("korisnik","administrator")
                 .antMatchers(HttpMethod.POST, "/notifikacije").hasAuthority("administrator")
                 .antMatchers(HttpMethod.PUT, "/notifikacije").hasAuthority("administrator")
                 .antMatchers(HttpMethod.DELETE, "/notifikacije","/notifikacije/{id}").hasAuthority("administrator")

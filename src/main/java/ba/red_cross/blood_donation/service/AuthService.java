@@ -46,7 +46,7 @@ public class AuthService {
 
         final CustomUserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
 
-        return new LoginResponse(JwtUtil.generateToken(userDetails, SECRET_KEY));
+        return new LoginResponse(JwtUtil.generateToken(userDetails, SECRET_KEY), userDetails.getUserId());
     }
 
     public ValidationResponse validate(ValidationRequest validationRequest) {

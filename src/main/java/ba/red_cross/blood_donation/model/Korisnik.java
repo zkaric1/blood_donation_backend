@@ -355,8 +355,6 @@ public class Korisnik implements Comparable<Korisnik> {
 
     @Override
     public int compareTo(Korisnik o) {
-
-
         return (o.getDatumKreiranjaRacuna().compareTo(this.getDatumKreiranjaRacuna()));
        // return 0;
     }

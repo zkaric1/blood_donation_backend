@@ -3,6 +3,7 @@ package ba.red_cross.blood_donation.service;
 import ba.red_cross.blood_donation.DTO.KorisnikPatchDTO;
 import ba.red_cross.blood_donation.DTO.RegisterRequest;
 import ba.red_cross.blood_donation.DTO.ResponseMessageDTO;
+import ba.red_cross.blood_donation.model.AkcijaDarivanjaKrvi;
 import ba.red_cross.blood_donation.model.Korisnik;
 import ba.red_cross.blood_donation.model.Rola;
 import ba.red_cross.blood_donation.repository.KorisnikRepository;
