@@ -34,7 +34,7 @@ public class AuthService {
     public LoginResponse login(LoginRequest loginRequest) throws Exception {
         try {
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
+                    new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
             );
         }
         catch (BadCredentialsException e) {
@@ -44,7 +44,7 @@ public class AuthService {
             throw e;
         }
 
-        final CustomUserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getUsername());
+        final CustomUserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
 
         return new LoginResponse(JwtUtil.generateToken(userDetails, SECRET_KEY));
     }
@@ -63,6 +63,5 @@ public class AuthService {
         catch (JwtException e) {
             return new ValidationResponse(false);
         }
-
     }
 }

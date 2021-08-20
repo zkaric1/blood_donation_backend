@@ -1,5 +1,6 @@
 package ba.red_cross.blood_donation.controller;
 import ba.red_cross.blood_donation.DTO.KorisnikPatchDTO;
+import ba.red_cross.blood_donation.DTO.RegisterRequest;
 import ba.red_cross.blood_donation.exception.GeneralException;
 import ba.red_cross.blood_donation.model.Korisnik;
 import ba.red_cross.blood_donation.DTO.DTOKorisnici;
@@ -17,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,17 +27,8 @@ import java.util.List;
 @RestController
 public class KorisnikController {
 
-    /*
-    @Autowired
-    private KontaktiService kontaktiService;
-*/
     @Autowired
     private KorisnikService korisnikService;
-
- /*   @Autowired
-    KorisniciController(KorisniciService korisniciService) {
-        this.korisniciService = korisniciService;
-    } */
 
     // GET
     @GetMapping("/korisnici")
@@ -82,11 +75,9 @@ public class KorisnikController {
     @ApiOperation(value = "Unos novog korisnika!")
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    ResponseEntity<Object> dodajKorisnikaIKontakt( @RequestBody Korisnik noviKorisnik) throws Exception {
+    ResponseEntity<Object> dodajKorisnikaIKontakt( @RequestBody RegisterRequest noviKorisnik) throws Exception { //radel validacije?
         JSONObject message = new JSONObject();
         try {
-            // TKontaktiEntity dbKontakt = kontaktiService.dodajKontakt(noviKorisnik.getKontakt());
-            //noviKorisnik.getKorisnik().setKontaktId(dbKontakt.getKontaktId());
             Korisnik dbKorisnik = korisnikService.dodajKontakt(noviKorisnik);
             return new ResponseEntity<>(
                     dbKorisnik,

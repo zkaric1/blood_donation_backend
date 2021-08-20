@@ -1,4 +1,5 @@
 package ba.red_cross.blood_donation.controller;
+
 import ba.red_cross.blood_donation.DTO.LoginRequest;
 import ba.red_cross.blood_donation.DTO.LoginResponse;
 import ba.red_cross.blood_donation.model.Korisnik;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@Api( tags = "Auth")
+@Api(tags = "Auth")
 @RestController
 public class AuthController {
 
@@ -34,16 +35,15 @@ public class AuthController {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
         try {
-            Korisnik userWithUserName = korisnikRepository.findByKorisnickoIme(loginRequest.getUsername());
-           /* boolean isPasswordMatch = passwordEncoder.matches(loginRequest.getPassword(), userWithUserName.getLozinka());
+            Korisnik userWithUserName = korisnikRepository.findByEmailAdresa(loginRequest.getEmail());
+            boolean isPasswordMatch = passwordEncoder.matches(loginRequest.getPassword(), userWithUserName.getLozinka());
 
             if (!isPasswordMatch) {
                 throw new Exception("Pogrešna lozinka ili korisničko ime!");
             }
-            */
-            return new ResponseEntity<>(authenticationService.login(loginRequest), HttpStatus.CREATED);
-        }
-        catch (Exception e) {
+
+            return new ResponseEntity<>(authenticationService.login(loginRequest), HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
@@ -52,8 +52,7 @@ public class AuthController {
     public ResponseEntity<ValidationResponse> validate(@RequestBody ValidationRequest validationRequest) {
         try {
             return new ResponseEntity<>(authenticationService.validate(validationRequest), HttpStatus.OK);
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             LoggerFactory.getLogger(AuthController.class).error("Failed to validate token");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

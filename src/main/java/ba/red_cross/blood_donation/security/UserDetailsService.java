@@ -21,10 +21,10 @@ public class UserDetailsService implements org.springframework.security.core.use
     }
 
     @Override
-    public CustomUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Korisnik userAccount = korisniciRepository.findByKorisnickoIme(username);
+    public CustomUserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Korisnik userAccount = korisniciRepository.findByEmailAdresa(email);
 
         List<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority(userAccount.getRola().getNazivRole()));
-        return new CustomUserDetails(userAccount.getKorisnickoIme(), userAccount.getLozinka(), authorities, userAccount.getID());
+        return new CustomUserDetails(userAccount.getEmailAdresa(), userAccount.getLozinka(), authorities, userAccount.getID());
     }
 }

@@ -1,10 +1,12 @@
 package ba.red_cross.blood_donation.model;
 
+import ba.red_cross.blood_donation.DTO.RegisterRequest;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import javax.management.relation.Role;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
@@ -145,6 +147,26 @@ public class Korisnik implements Comparable<Korisnik> {
         this.datumKreiranjaRacuna = datumKreiranjaRacuna;
     }
 
+    public Korisnik(RegisterRequest user, Rola role, LocalDate datumKreiranjaRacuna) {
+        this.ime = user.getIme();
+        this.prezime = user.getPrezime();
+        this.korisnickoIme = user.getKorisnickoIme();
+        this.spol = user.getSpol();
+        this.datumRodenja = user.getDatumRodenja();
+        this.datumKreiranjaRacuna = datumKreiranjaRacuna;
+        this.mjestoRodenja = user.getMjestoRodenja();
+        this.mjestoPrebivalista = user.getMjestoPrebivalista();
+        this.adresaPrebivalista = user.getAdresaPrebivalista();
+        this.kantonPrebivalista = user.getKantonPrebivalista();
+        this.kontaktTelefon = user.getKontaktTelefon();
+        this.zanimanje = user.getZanimanje();
+        this.krvnaGrupa = user.getKrvnaGrupa();
+        this.brojDarivanjaKrvi = user.getBrojDarivanjaKrvi();
+        this.emailAdresa = user.getEmailAdresa();
+        this.rola = role;
+        this.slatiNotifikacije = true;
+        this.lozinka = user.getLozinka();
+    }
 
     public Long getID() {
         return ID;
