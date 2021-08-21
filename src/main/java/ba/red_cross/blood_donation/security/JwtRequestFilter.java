@@ -1,6 +1,8 @@
 package ba.red_cross.blood_donation.security;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,10 +36,18 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         String username = null;
         String jwt = null;
+        try {
+            if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+                jwt = authorizationHeader.substring(7);
+                username = JwtUtil.extractUsername(jwt, SECRET_KEY);
+            }
+        } catch (ExpiredJwtException e) {
+            final String expiredMsg = e.getMessage();
+            logger.warn(expiredMsg);
 
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            jwt = authorizationHeader.substring(7);
-            username = JwtUtil.extractUsername(jwt, SECRET_KEY);
+            final String msg = (expiredMsg != null) ? expiredMsg : "Unauthorized";
+            response.sendError(HttpStatus.UNAUTHORIZED.value(), msg);
+            return;
         }
 
 

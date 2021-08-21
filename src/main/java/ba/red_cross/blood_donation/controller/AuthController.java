@@ -54,7 +54,7 @@ public class AuthController {
             return new ResponseEntity<>(authenticationService.validate(validationRequest), HttpStatus.OK);
         } catch (Exception ex) {
             LoggerFactory.getLogger(AuthController.class).error("Failed to validate token");
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 }
