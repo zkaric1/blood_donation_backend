@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Korisnik implements Comparable<Korisnik> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -92,6 +90,7 @@ public class Korisnik implements Comparable<Korisnik> {
                     @JoinColumn(name = "korisnik_ID", referencedColumnName = "ID", nullable = true, updatable = false)},
             inverseJoinColumns = {
                     @JoinColumn(name = "akcijeDarivanjaKrvi_ID", referencedColumnName = "ID", nullable = true, updatable = false)})
+    @OrderBy(value ="datum DESC")
     private Set<AkcijaDarivanjaKrvi> akcijeDarivanja = new HashSet<>();
 
     // Notifikacije n-n
