@@ -11,6 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -82,11 +83,10 @@ public class Korisnik implements Comparable<Korisnik> {
             inverseJoinColumns = {
                     @JoinColumn(name = "priznanje_ID", referencedColumnName = "ID", nullable = false, updatable = false)})
     private Set<Priznanje> priznanja = new HashSet<>();
-
-    // Akcije darivanja n-n
+     // Akcije darivanja n-n
     // bilo lazy i merge
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH})
-    @JsonBackReference
+    @JsonManagedReference
     @JoinTable(name = "korisnik_akcije_darivanja",
             joinColumns = {
                     @JoinColumn(name = "korisnik_ID", referencedColumnName = "ID", nullable = true, updatable = false)},
@@ -101,7 +101,24 @@ public class Korisnik implements Comparable<Korisnik> {
                     @JoinColumn(name = "korisnik_ID", referencedColumnName = "ID", nullable = false, updatable = false)},
             inverseJoinColumns = {
                     @JoinColumn(name = "notifikacije_ID", referencedColumnName = "ID", nullable = false, updatable = false)})
+    @JsonManagedReference
     private Set<Notifikacija> notifikacije = new HashSet<>();
+
+    public Set<AkcijaDarivanjaKrvi> getAkcijeDarivanja() {
+        return akcijeDarivanja;
+    }
+
+    public void setAkcijeDarivanja(Set<AkcijaDarivanjaKrvi> akcijeDarivanja) {
+        this.akcijeDarivanja = akcijeDarivanja;
+    }
+
+    public Set<Notifikacija> getNotifikacije() {
+        return notifikacije;
+    }
+
+    public void setNotifikacije(Set<Notifikacija> notifikacije) {
+        this.notifikacije = notifikacije;
+    }
 
     public Korisnik() {
     }
@@ -328,21 +345,21 @@ public class Korisnik implements Comparable<Korisnik> {
         this.priznanja = priznanja;
     }
 
-    public Set<AkcijaDarivanjaKrvi> getAkcijeDarivanja() {
-        return akcijeDarivanja;
-    }
-
-    public void setAkcijeDarivanja(Set<AkcijaDarivanjaKrvi> akcijeDarivanja) {
-        this.akcijeDarivanja = akcijeDarivanja;
-    }
-
-    public Set<Notifikacija> getNotifikacije() {
-        return notifikacije;
-    }
-
-    public void setNotifikacije(Set<Notifikacija> notifikacije) {
-        this.notifikacije = notifikacije;
-    }
+//    public Set<AkcijaDarivanjaKrvi> getAkcijeDarivanja() {
+//        return akcijeDarivanja;
+//    }
+//
+//    public void setAkcijeDarivanja(Set<AkcijaDarivanjaKrvi> akcijeDarivanja) {
+//        this.akcijeDarivanja = akcijeDarivanja;
+//    }
+//
+//    public Set<Notifikacija> getNotifikacije() {
+//        return notifikacije;
+//    }
+//
+//    public void setNotifikacije(Set<Notifikacija> notifikacije) {
+//        this.notifikacije = notifikacije;
+//    }
 
     public String getKorisnickoIme() {
         return korisnickoIme;

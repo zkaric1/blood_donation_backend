@@ -1,8 +1,12 @@
 package ba.red_cross.blood_donation.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,9 +24,29 @@ public class Notifikacija {
     private String tipNotifikacije;
     private String krvnaGrupa;
 
-    // Korisnik n-n
+   /* @ManyToMany(targetEntity = Korisnik.class, mappedBy = "notifikacije", cascade = CascadeType.ALL)
+    private List<Korisnik> korisnici;
+
+    @JsonManagedReference
+    public List<Korisnik> getKorisnici() {
+        return korisnici;
+    }
+
+    public void setKorisnici(List<Korisnik> korisnici) {
+        this.korisnici = korisnici;
+    }*/
+//    // Korisnik n-n
     @ManyToMany(mappedBy = "notifikacije", cascade = { CascadeType.ALL })
+    @JsonBackReference
     private Set<Korisnik> korisnici = new HashSet<Korisnik>();
+
+    public Set<Korisnik> getKorisnici() {
+        return korisnici;
+    }
+
+    public void setKorisnici(Set<Korisnik> korisnici) {
+        this.korisnici = korisnici;
+    }
 
     public Notifikacija(String naslov, String tekst, String tipNotifikacije, String krvnaGrupa) {
         this.naslov = naslov;
@@ -80,11 +104,4 @@ public class Notifikacija {
         this.krvnaGrupa = krvnaGrupa;
     }
 
-    public Set<Korisnik> getKorisnici() {
-        return korisnici;
-    }
-
-    public void setKorisnici(Set<Korisnik> korisnici) {
-        this.korisnici = korisnici;
-    }
 }

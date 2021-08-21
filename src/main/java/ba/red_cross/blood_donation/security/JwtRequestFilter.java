@@ -41,6 +41,22 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 jwt = authorizationHeader.substring(7);
                 username = JwtUtil.extractUsername(jwt, SECRET_KEY);
             }
+
+
+            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+
+                UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+
+                if (JwtUtil.validateToken(jwt, userDetails, SECRET_KEY)) {
+
+                    UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+                            userDetails, null, userDetails.getAuthorities());
+                    usernamePasswordAuthenticationToken
+                            .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                }
+            }
+            chain.doFilter(request, response);
         } catch (ExpiredJwtException e) {
             final String expiredMsg = e.getMessage();
             logger.warn(expiredMsg);
@@ -49,21 +65,5 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             response.sendError(HttpStatus.UNAUTHORIZED.value(), msg);
             return;
         }
-
-
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-
-            if (JwtUtil.validateToken(jwt, userDetails, SECRET_KEY)) {
-
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities());
-                usernamePasswordAuthenticationToken
-                        .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-            }
-        }
-        chain.doFilter(request, response);
     }
 }

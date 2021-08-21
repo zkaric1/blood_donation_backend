@@ -1,6 +1,7 @@
 package ba.red_cross.blood_donation.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -36,6 +38,18 @@ public class AkcijaDarivanjaKrvi {
 
     @NotBlank(message = "Naslov akcije darivanja ne može biti prazno!")
     private String naslov;
+
+/*    @ManyToMany(targetEntity = Korisnik.class, mappedBy = "akcije", cascade = CascadeType.ALL)
+    private List<Korisnik> korisnici;
+
+    @JsonManagedReference
+    public List<Korisnik> getKorisnici() {
+        return korisnici;
+    }
+
+    public void setKorisnici(List<Korisnik> korisnici) {
+        this.korisnici = korisnici;
+    }*/
 
     // Korisnik n-n
     //bilo all
@@ -110,11 +124,11 @@ public class AkcijaDarivanjaKrvi {
         this.naslov = naslov;
     }
 
-    public Set<Korisnik> getKorisnici() {
-        return korisnici;
-    }
-
-    public void setKorisnici(Set<Korisnik> korisnici) {
-        this.korisnici = korisnici;
-    }
+//    public Set<Korisnik> getKorisnici() {
+//        return korisnici;
+//    }
+//
+//    public void setKorisnici(Set<Korisnik> korisnici) {
+//        this.korisnici = korisnici;
+//    }
 }
