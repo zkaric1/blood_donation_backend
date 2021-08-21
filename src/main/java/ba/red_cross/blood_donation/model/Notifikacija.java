@@ -19,22 +19,12 @@ public class Notifikacija {
     @NotBlank(message = "Naslov notifikacije ne moze biti prazno!")
     private String naslov;
     private String tekst;
+    private String adresa;
 
     @NotBlank(message = "Tip notifikacije ne moze biti prazno!")
     private String tipNotifikacije;
     private String krvnaGrupa;
 
-   /* @ManyToMany(targetEntity = Korisnik.class, mappedBy = "notifikacije", cascade = CascadeType.ALL)
-    private List<Korisnik> korisnici;
-
-    @JsonManagedReference
-    public List<Korisnik> getKorisnici() {
-        return korisnici;
-    }
-
-    public void setKorisnici(List<Korisnik> korisnici) {
-        this.korisnici = korisnici;
-    }*/
 //    // Korisnik n-n
     @ManyToMany(mappedBy = "notifikacije", cascade = { CascadeType.ALL })
     @JsonBackReference
@@ -42,6 +32,14 @@ public class Notifikacija {
 
     public Set<Korisnik> getKorisnici() {
         return korisnici;
+    }
+
+    public String getAdresa() {
+        return adresa;
+    }
+
+    public void setAdresa(String adresa) {
+        this.adresa = adresa;
     }
 
     public void setKorisnici(Set<Korisnik> korisnici) {
