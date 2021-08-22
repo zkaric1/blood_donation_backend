@@ -15,15 +15,28 @@ public class TransfuzijskiCentar {
     @NotBlank(message = "Adresa ne moze biti prazna!")
     private String adresa;
 
+    @NotBlank(message = "Naziv ustanove ne smije biti prazan")
+    private String ustanova;
+
     @NotBlank(message = "Kontakt telefon ne moze biti prazan!")
     private String kontaktTelefon;
 
     public TransfuzijskiCentar() {}
-    public TransfuzijskiCentar (String grad, String adresa, String kontaktTelefon) {
+    public TransfuzijskiCentar (String grad, String adresa, String kontaktTelefon, String ustanova) {
         this.grad = grad;
         this.adresa = adresa;
         this.kontaktTelefon = kontaktTelefon;
+        this.ustanova = ustanova;
     }
+
+    public String getUstanova() {
+        return ustanova;
+    }
+
+    public void setUstanova(String ustanova) {
+        this.ustanova = ustanova;
+    }
+
     public Long getID() {
         return ID;
     }
