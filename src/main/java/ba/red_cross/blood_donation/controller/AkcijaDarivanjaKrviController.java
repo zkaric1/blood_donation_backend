@@ -1,6 +1,5 @@
 package ba.red_cross.blood_donation.controller;
 
-import ba.red_cross.blood_donation.DTO.KorisnikPatchDTO;
 import ba.red_cross.blood_donation.exception.AkcijeDarivanjaKrviException;
 import ba.red_cross.blood_donation.exception.GeneralException;
 import ba.red_cross.blood_donation.model.AkcijaDarivanjaKrvi;
@@ -10,11 +9,14 @@ import io.swagger.annotations.ApiOperation;
 import net.minidev.json.JSONObject;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.attribute.standard.Media;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.*;
@@ -142,6 +144,8 @@ public class AkcijaDarivanjaKrviController {
         }
     }
 
+
+
     @GetMapping("/generisi_izvjestaj/{id}")
     @ApiOperation(value = "Generisanje i preuzimanje izvještaja nakon završene akcije darivanja!")
     public String generisiIzvjestaj(@PathVariable("id") Long id) throws Exception {
@@ -158,24 +162,32 @@ public class AkcijaDarivanjaKrviController {
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
 
         JasperExportManager.exportReportToPdfFile(jasperPrint, path + "\\akcija_darivanja_krvi" + akcija.getDatum() + ".pdf");
+
         return "Izvjestaj generisan na lokaciji : " + path;
     }
 
     @GetMapping("/generisi_izvjestaj/godisnji")
     @ApiOperation(value = "Generisanje i preuzimanje izvještaja za akcije darivanja u godini!")
-    public String generisiGodisnjiIzvjestaj() throws Exception {
+    public ResponseEntity<byte[]> generisiGodisnjiIzvjestaj() throws Exception {
         String path = "C:\\Users\\belma\\Desktop\\Report";
+        HashMap<String, Object> map = new HashMap<>();
         List<AkcijaDarivanjaKrvi> akcije = akcijeDarivanjaService.getAkcijeDarivanjaKrviTrenutnaGodina();
         File file = ResourceUtils.getFile("classpath:godisnjiIzvjestaj.jrxml");
         JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(akcije);
-        Map<String, Object> parameters = new HashMap<>();
+        Map<String, Object> parameters = new HashMap<String,Object>();
+        JasperPrint jasper = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+
+
         parameters.put("createdBy", "Alma Ibrasimovic");
 
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+
+        byte[] data = JasperExportManager.exportReportToPdf(jasper);
         LocalDate now = LocalDate.now();
-        JasperExportManager.exportReportToPdfFile(jasperPrint, path + "\\godisnji_izvjestaj_" + now.getYear() + ".pdf");
-        return "Izvjestaj generisan na lokaciji : " + path;
+     //   JasperExportManager.exportReportToPdfFile(jasperPrint, path + "\\godisnji_izvjestaj_" + now.getYear() + ".pdf");
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(HttpHeaders.CONTENT_DISPOSITION, "inline;filename=godisnji_izvjestaj.pdf");
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_PDF).body(data);
     }
 
     @GetMapping("/zavrseneAkcijeDarivanja")
