@@ -1,9 +1,6 @@
 package ba.red_cross.blood_donation.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -44,6 +41,7 @@ public class AkcijaDarivanjaKrvi {
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             orphanRemoval = true)
+    @JsonIgnore
     private List<KorisnikAkcijaDarivanjaKrvi> korisniciAkcijeDarivanja = new ArrayList<>();
 
     public List<KorisnikAkcijaDarivanjaKrvi> getKorisniciAkcijeDarivanja() {

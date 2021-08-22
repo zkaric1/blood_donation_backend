@@ -1,5 +1,7 @@
 package ba.red_cross.blood_donation.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -48,9 +50,11 @@ public class KorisnikAkcijaDarivanjaKrvi {
         this.korisnik = korisnik;
     }
 
+
     public AkcijaDarivanjaKrvi getAkcijaDarivanjaKrvi() {
         return akcijaDarivanjaKrvi;
     }
+
 
     public void setAkcijaDarivanjaKrvi(AkcijaDarivanjaKrvi akcijaDarivanjaKrvi) {
         this.akcijaDarivanjaKrvi = akcijaDarivanjaKrvi;

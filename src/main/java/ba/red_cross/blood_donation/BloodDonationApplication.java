@@ -31,7 +31,32 @@ public class BloodDonationApplication {
     @Bean
     public CommandLineRunner addDataToDatabase(KorisnikRepository korisnikRepository, TransfuzijskiCentarRepository transCentarRepo, RolaRepository rolaRepo, AkcijeDarivanjaKrviRepository akcijaDarivanjaRepo, NotifikacijaRepository notifikacijaRepo) {
         return (args) -> {
+          /*  BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            Rola admin = rolaRepo.save(new Rola("administrator"));
+            Rola korisnik = rolaRepo.save(new Rola("korisnik"));
+            LocalDate datumKreiranjaRacuna = LocalDate.now();
+            LocalDate datumRodenja = LocalDate.of(1996, 10, 23);
+            Korisnik user = new Korisnik("Alma", "Ibrašimović", "alma_96", "Z", datumRodenja, "Zenica","Novi Travnik", "Stjepana Radića 18/15", "SBK", "061718733", "SW dev", "0+", 5, "almaibrasimovic96@gmail.com", passwordEncoder.encode("proba123"), false, datumKreiranjaRacuna, admin);
+          //  user.getAkcijeDarivanja().add(akcijaDarivanja);
+            korisnikRepository.save(user);
 
+            datumKreiranjaRacuna = LocalDate.of(2021, 10, 23);
+            datumRodenja = LocalDate.of(1958, 6, 25);
+            Korisnik user1 = (new Korisnik("Jasmina", "Ibrašimović", "jasmina_58", "Z", datumRodenja, "Bosanski Petrovac","Novi Travnik", "Stjepana Radića 18/15", "SBK", "063836791", "Profesor", "A+", 5, "jasmina@gmail.com", passwordEncoder.encode("proba123"), false, datumKreiranjaRacuna, korisnik));
+           // user1.getAkcijeDarivanja().add(akcijaDarivanja);
+            korisnikRepository.save(user1);
+
+            datumKreiranjaRacuna = LocalDate.of(2021, 10, 23);
+            datumRodenja = LocalDate.of(1993, 10, 28);
+            Korisnik user2 = (new Korisnik("Belma", "Ibrašimović", "belma_93", "Z", datumRodenja, "Zenica","Sarajevo", "Paromlinska 5", "KS", "063836790", "Dev", "B+", 5, "belma@gmail.com", passwordEncoder.encode("proba123"), false, datumKreiranjaRacuna, korisnik));
+           // user2.getAkcijeDarivanja().add(akcijaDarivanja1);
+            korisnikRepository.save(user2);
+
+            datumKreiranjaRacuna = LocalDate.of(2021, 12, 23);
+            datumRodenja = LocalDate.of(1993, 10, 28);
+            Korisnik user3 = (new Korisnik("Šefik", "Ibrašimović", "sefik", "Z", datumRodenja, "Zenica","Sarajevo", "Paromlinska 5", "KS", "063836790", "Dev", "B+", 5, "belma@gmail.com", passwordEncoder.encode("proba123"), false, datumKreiranjaRacuna, korisnik));
+         //   user3.getAkcijeDarivanja().add(akcijaDarivanja2);
+            korisnikRepository.save(user3);
          /*   BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             // Kreiranje rola
             Rola admin = rolaRepo.save(new Rola("administrator"));
