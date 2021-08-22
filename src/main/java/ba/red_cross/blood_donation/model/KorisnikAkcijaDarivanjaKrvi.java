@@ -13,12 +13,12 @@ public class KorisnikAkcijaDarivanjaKrvi {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
     @JoinColumn(name = "korisnik_id")
     private Korisnik korisnik;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
     @JoinColumn(name = "akcija_darivanja_krvi_id")
     private AkcijaDarivanjaKrvi akcijaDarivanjaKrvi;

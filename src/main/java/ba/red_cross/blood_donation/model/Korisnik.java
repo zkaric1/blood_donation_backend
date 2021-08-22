@@ -86,7 +86,7 @@ public class Korisnik implements Comparable<Korisnik> {
 
     @OneToMany(
             mappedBy = "korisnik",
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private List<KorisnikAkcijaDarivanjaKrvi> akcijeDarivanja; //= new ArrayList<>();

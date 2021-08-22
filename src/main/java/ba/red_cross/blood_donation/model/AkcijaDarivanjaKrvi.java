@@ -11,7 +11,6 @@ import java.time.LocalTime;
 import java.util.*;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class AkcijaDarivanjaKrvi {
 
     @Id
