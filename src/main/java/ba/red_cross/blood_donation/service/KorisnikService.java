@@ -57,6 +57,11 @@ public class KorisnikService {
         return korisnikRepository.findByKrvnaGrupa(krvnaGrupa);
     }
 
+    public List<Korisnik> getKorisnikByImePrezime (String ime, String prezime) throws Exception {
+        List<Korisnik> korisnik = korisnikRepository.findByImePrezime(ime, prezime);
+        return korisnik;
+    }
+
     public List<Korisnik> getNewestKorisnici() throws Exception {
         if (korisnikRepository.count() == 0) throw new Exception("Nema korisnika u bazi");
         List<Korisnik> korisnici = sviKorisnici();
