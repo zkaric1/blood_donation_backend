@@ -64,6 +64,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             final String msg = (expiredMsg != null) ? expiredMsg : "Unauthorized";
             response.sendError(HttpStatus.UNAUTHORIZED.value(), msg);
             return;
+        }  catch (Exception e) {
+            throw e;
         }
     }
 }

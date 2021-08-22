@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,14 +26,29 @@ public class Notifikacija {
     private String tipNotifikacije;
     private String krvnaGrupa;
 
-//    // Korisnik n-n
-    @ManyToMany(mappedBy = "notifikacije", cascade = { CascadeType.ALL })
-    @JsonBackReference
-    private Set<Korisnik> korisnici = new HashSet<Korisnik>();
+    @OneToMany(
+            mappedBy = "notifikacija",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<KorisnikNotifikacija> korisniciNotifikacije = new ArrayList<>();
 
-    public Set<Korisnik> getKorisnici() {
-        return korisnici;
+    public List<KorisnikNotifikacija> getKorisniciNotifikacije() {
+        return korisniciNotifikacije;
     }
+
+    public void setKorisniciNotifikacije(List<KorisnikNotifikacija> korisniciNotifikacije) {
+        this.korisniciNotifikacije = korisniciNotifikacije;
+    }
+
+    //    // Korisnik n-n
+/*    @ManyToMany(mappedBy = "notifikacije", cascade = { CascadeType.ALL })
+    @JsonBackReference
+    private Set<Korisnik> korisnici = new HashSet<Korisnik>();*/
+
+   /* public Set<Korisnik> getKorisnici() {
+        return korisnici;
+    }*/
 
     public String getAdresa() {
         return adresa;
@@ -42,9 +58,9 @@ public class Notifikacija {
         this.adresa = adresa;
     }
 
-    public void setKorisnici(Set<Korisnik> korisnici) {
+  /*  public void setKorisnici(Set<Korisnik> korisnici) {
         this.korisnici = korisnici;
-    }
+    }*/
 
     public Notifikacija(String naslov, String tekst, String tipNotifikacije, String krvnaGrupa) {
         this.naslov = naslov;

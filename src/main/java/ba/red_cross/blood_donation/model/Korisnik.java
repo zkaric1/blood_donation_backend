@@ -10,6 +10,7 @@ import javax.management.relation.Role;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -81,9 +82,40 @@ public class Korisnik implements Comparable<Korisnik> {
             inverseJoinColumns = {
                     @JoinColumn(name = "priznanje_ID", referencedColumnName = "ID", nullable = false, updatable = false)})
     private Set<Priznanje> priznanja = new HashSet<>();
-     // Akcije darivanja n-n
+
+    @OneToMany(
+            mappedBy = "korisnik",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<KorisnikAkcijaDarivanjaKrvi> akcijeDarivanja; //= new ArrayList<>();
+
+    @OneToMany(
+            mappedBy = "korisnik",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<KorisnikNotifikacija> notifikacije;// = new ArrayList<>();
+
+    public List<KorisnikAkcijaDarivanjaKrvi> getAkcijeDarivanja() {
+        return akcijeDarivanja;
+    }
+
+    public void setAkcijeDarivanja(List<KorisnikAkcijaDarivanjaKrvi> akcijeDarivanja) {
+        this.akcijeDarivanja = akcijeDarivanja;
+    }
+
+    public List<KorisnikNotifikacija> getNotifikacije() {
+        return notifikacije;
+    }
+
+    public void setNotifikacije(List<KorisnikNotifikacija> notifikacije) {
+        this.notifikacije = notifikacije;
+    }
+
+    // Akcije darivanja n-n
     // bilo lazy i merge
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH})
+  /*  @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH})
     @JsonManagedReference
     @JoinTable(name = "korisnik_akcije_darivanja",
             joinColumns = {
@@ -118,7 +150,7 @@ public class Korisnik implements Comparable<Korisnik> {
     public void setNotifikacije(Set<Notifikacija> notifikacije) {
         this.notifikacije = notifikacije;
     }
-
+*/
     public Korisnik() {
     }
 

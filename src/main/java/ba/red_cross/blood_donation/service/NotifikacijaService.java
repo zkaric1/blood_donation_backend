@@ -8,9 +8,12 @@ import ba.red_cross.blood_donation.model.Notifikacija;
 import ba.red_cross.blood_donation.repository.NotifikacijaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.*;
 
 @Service
+@Transactional
 public class NotifikacijaService {
 
     @Autowired
@@ -33,6 +36,11 @@ public class NotifikacijaService {
         notifikacijaRepository.deleteAll();
         if (notifikacijaRepository.count() == 0) return new ResponseMessageDTO("Uspjesno obrisane sve notifikacije!").getHashMap();
         return new ResponseMessageDTO("Greska pri brisanju notifikacija!").getHashMap();
+    }
+
+    public HashMap<String,String> obrisiNotifikacijeOdKorisnika(Long id) throws Exception {
+       //  notifikacijaRepository.deleteAllByKorisnici_ID(id);
+        return new ResponseMessageDTO("Uspjesno obrisane notifikacije za kroisnika sa id " + id).getHashMap();
     }
 
     public HashMap<String,String> deleteById (Long id) throws Exception {

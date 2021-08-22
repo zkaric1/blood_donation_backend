@@ -9,10 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class AkcijaDarivanjaKrvi {
@@ -39,25 +36,29 @@ public class AkcijaDarivanjaKrvi {
     @NotBlank(message = "Naslov akcije darivanja ne može biti prazno!")
     private String naslov;
 
-/*    @ManyToMany(targetEntity = Korisnik.class, mappedBy = "akcije", cascade = CascadeType.ALL)
-    private List<Korisnik> korisnici;
+    @OneToMany(
+            mappedBy = "akcijaDarivanjaKrvi",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<KorisnikAkcijaDarivanjaKrvi> korisniciAkcijeDarivanja = new ArrayList<>();
 
-    @JsonManagedReference
-    public List<Korisnik> getKorisnici() {
-        return korisnici;
+    public List<KorisnikAkcijaDarivanjaKrvi> getKorisniciAkcijeDarivanja() {
+        return korisniciAkcijeDarivanja;
     }
 
-    public void setKorisnici(List<Korisnik> korisnici) {
-        this.korisnici = korisnici;
-    }*/
+    public void setKorisniciAkcijeDarivanja(List<KorisnikAkcijaDarivanjaKrvi> korisniciAkcijeDarivanja) {
+        this.korisniciAkcijeDarivanja = korisniciAkcijeDarivanja;
+    }
 
     // Korisnik n-n
     //bilo all
-    @ManyToMany(mappedBy = "akcijeDarivanja", cascade = {CascadeType.REFRESH})
+/*    @ManyToMany(mappedBy = "akcijeDarivanja", cascade = {CascadeType.REFRESH})
     @JsonBackReference
-    private Set<Korisnik> korisnici = new HashSet<Korisnik>();
+    private Set<Korisnik> korisnici = new HashSet<Korisnik>();*/
 
-    public AkcijaDarivanjaKrvi() {}
+    public AkcijaDarivanjaKrvi() {
+    }
 
     public AkcijaDarivanjaKrvi(String adresa, String grad, LocalDate datum, LocalTime pocetak, LocalTime kraj, String naslov) {
         this.adresa = adresa;
@@ -123,12 +124,4 @@ public class AkcijaDarivanjaKrvi {
     public void setNaslov(String naslov) {
         this.naslov = naslov;
     }
-
-//    public Set<Korisnik> getKorisnici() {
-//        return korisnici;
-//    }
-//
-//    public void setKorisnici(Set<Korisnik> korisnici) {
-//        this.korisnici = korisnici;
-//    }
 }

@@ -12,6 +12,7 @@ import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import java.util.List;
 
 @Api( tags = "Notifikacije")
 @RestController
+@Transactional
 public class NotifikacijaController {
 
     @Autowired
@@ -66,6 +68,12 @@ public class NotifikacijaController {
                 result,
                 HttpStatus.OK
         );
+    }
+
+    @DeleteMapping("/notifikacije/korisnik/{id}")
+    @ApiOperation(value = "Brisanje notifikacija od korisnika")
+    HashMap<String,String> obrisiNotifikacijeOdKorisnika(@PathVariable Long  id) throws Exception {
+        return notifikacijaService.obrisiNotifikacijeOdKorisnika(id);
     }
 
     // DELETE metode
