@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class Korisnik implements Comparable<Korisnik> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
