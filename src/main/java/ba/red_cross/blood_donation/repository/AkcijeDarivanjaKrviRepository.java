@@ -12,7 +12,7 @@ public interface AkcijeDarivanjaKrviRepository extends JpaRepository<AkcijaDariv
     List<AkcijaDarivanjaKrvi> findAllByGrad (String grad);
     boolean existsById(Long id);
 
-    @Query(value = "SELECT CAST (SUBSTRING (CAST(bc.datum as varchar), 6, 2) as integer) mjesec, CAST (COUNT(b.akcija_darivanja_krvi_id) as integer) broj_darivanja FROM korisnik_akcija_darivanja_krvi b LEFT JOIN akcija_darivanja_krvi bc on b.akcija_darivanja_krvi_id = bc.id WHERE b.akcija_darivanja_krvi_id = bc.id AND (SUBSTRING (CAST(bc.datum as varchar), 1, 4) = :godina) GROUP BY b.akcija_darivanja_krvi_id, bc.datum", nativeQuery = true)
+    @Query(value = "SELECT CAST (SUBSTRING (CAST(bc.datum as varchar), 6, 2) as integer) mjesec, CAST (COUNT(b.akcija_darivanja_krvi_id) as integer) broj_darivanja FROM korisnik_akcija_darivanja_krvi b LEFT JOIN akcija_darivanja_krvi bc on b.akcija_darivanja_krvi_id = bc.id WHERE b.akcija_darivanja_krvi_id = bc.id AND (SUBSTRING (CAST(bc.datum as varchar), 1, 4) = :godina) GROUP BY mjesec", nativeQuery = true)
     List<Map<Integer,Integer>> getBrojDarivanjaPoMjesecu(@Param("godina") String godina);
 }
 
