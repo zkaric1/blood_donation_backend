@@ -175,10 +175,10 @@ public class AkcijaDarivanjaKrviController {
     @GetMapping("/generisi_izvjestaj/godisnji")
     @ApiOperation(value = "Generisanje i preuzimanje izvještaja za akcije darivanja u godini!")
     public ResponseEntity<byte[]> generisiGodisnjiIzvjestaj() throws Exception {
-        String path = "C:\\Users\\belma\\Desktop\\Report";
+      //  String path = "C:\\Users\\belma\\Desktop\\Report";
         HashMap<String, Object> map = new HashMap<>();
         List<AkcijaDarivanjaKrvi> akcije = akcijeDarivanjaService.getAkcijeDarivanjaKrviTrenutnaGodina();
-        File file = ResourceUtils.getFile("classpath:godisnjiIzvjestaj.jrxml");
+        //File file = ResourceUtils.getFile("classpath:godisnjiIzvjestaj.jrxml");
         JasperReport jasperReport = JasperCompileManager.compileReport(getClass().getResourceAsStream("/reports/godisnjiIzvjestaj.jrxml"));
         //JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(akcije);
