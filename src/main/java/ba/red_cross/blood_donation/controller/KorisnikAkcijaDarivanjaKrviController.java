@@ -1,6 +1,7 @@
 package ba.red_cross.blood_donation.controller;
 
 
+import ba.red_cross.blood_donation.DTO.KorisnikAkcijaDarivanjaKrviDTO;
 import ba.red_cross.blood_donation.exception.AkcijeDarivanjaKrviException;
 import ba.red_cross.blood_donation.exception.GeneralException;
 import ba.red_cross.blood_donation.model.AkcijaDarivanjaKrvi;
@@ -111,10 +112,18 @@ public class KorisnikAkcijaDarivanjaKrviController {
         );
     }
 
+    @GetMapping("/korisnikAkcijeDarivanja/korisnikListaAkcija/{id}")
+    @ApiOperation(value = "Dobavljanje lista akcije darivanja krvi za korisnika sa ID!")
+    public List<AkcijaDarivanjaKrvi> findAkcijeByKorisnikId(@PathVariable Long id) {
+        List<AkcijaDarivanjaKrvi> result = new ArrayList<>();
+        result = korisnikAkcijeDarivanjaService.findAkcijeByKorisnikId(id);
+        return result;
+    }
+
     // POST metoda
     @PostMapping("/korisnikAkcijeDarivanja")
     @ApiOperation(value = "Kreiranje nove korisnik - akcije darivanja krvi!")
-    KorisnikAkcijaDarivanjaKrvi addKorisnikAkcijaDarivanja( @RequestBody KorisnikAkcijaDarivanjaKrvi akcijaDarivanja) {
+    KorisnikAkcijaDarivanjaKrvi addKorisnikAkcijaDarivanja( @RequestBody KorisnikAkcijaDarivanjaKrviDTO akcijaDarivanja) throws Exception {
         return korisnikAkcijeDarivanjaService.createNew(akcijaDarivanja);
     }
     //findByAkcijaId

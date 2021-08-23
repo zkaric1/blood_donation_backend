@@ -20,4 +20,6 @@ public interface KorisnikAkcijaDarivanjaKrviRepository extends JpaRepository<Kor
     @Query(value = "SELECT * FROM korisnik_akcija_darivanja_krvi WHERE akcija_darivanja_krvi_id = :id", nativeQuery = true)
     List<KorisnikAkcijaDarivanjaKrvi> findAllByKorisnikAkcijaId(@Param("id") Long id);
 
+    @Query(value = "SELECT akcija_darivanja_krvi_id FROM korisnik_akcija_darivanja_krvi WHERE korisnik_id = :id", nativeQuery = true)
+    List<Long> findAkcijeByKorisnikID(@Param("id") Long id);
 }
