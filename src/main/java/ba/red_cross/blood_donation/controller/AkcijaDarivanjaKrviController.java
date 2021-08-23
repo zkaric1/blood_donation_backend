@@ -17,9 +17,13 @@ import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.print.attribute.standard.Media;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @Api( tags = "Akcije darivanja krvi")
@@ -153,6 +157,8 @@ public class AkcijaDarivanjaKrviController {
         AkcijaDarivanjaKrvi akcija = akcijeDarivanjaService.getAkcijeDarivanjaKrviById(id);
         List<AkcijaDarivanjaKrvi> akcije = new ArrayList<>();
         akcije.add(akcija);
+        String contents = "";
+
         File file = ResourceUtils.getFile("classpath:akcijeDarivanjaIzvjestaj.jrxml");
         JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(akcije);
@@ -173,15 +179,12 @@ public class AkcijaDarivanjaKrviController {
         HashMap<String, Object> map = new HashMap<>();
         List<AkcijaDarivanjaKrvi> akcije = akcijeDarivanjaService.getAkcijeDarivanjaKrviTrenutnaGodina();
         File file = ResourceUtils.getFile("classpath:godisnjiIzvjestaj.jrxml");
-        JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
+        JasperReport jasperReport = JasperCompileManager.compileReport(getClass().getResourceAsStream("/reports/godisnjiIzvjestaj.jrxml"));
+        //JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(akcije);
         Map<String, Object> parameters = new HashMap<String,Object>();
         JasperPrint jasper = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
-
-
         parameters.put("createdBy", "Alma Ibrasimovic");
-
-
         byte[] data = JasperExportManager.exportReportToPdf(jasper);
         LocalDate now = LocalDate.now();
      //   JasperExportManager.exportReportToPdfFile(jasperPrint, path + "\\godisnji_izvjestaj_" + now.getYear() + ".pdf");
