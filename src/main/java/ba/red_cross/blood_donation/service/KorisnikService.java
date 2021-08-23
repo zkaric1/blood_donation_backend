@@ -9,6 +9,7 @@ import ba.red_cross.blood_donation.model.Rola;
 import ba.red_cross.blood_donation.repository.KorisnikRepository;
 import ba.red_cross.blood_donation.repository.RolaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -57,7 +58,7 @@ public class KorisnikService {
         return korisnikRepository.findByKrvnaGrupa(krvnaGrupa);
     }
 
-    public List<Korisnik> getKorisnikByImePrezime (String ime, String prezime) throws Exception {
+    public List<Korisnik> getKorisnikByImePrezime(String ime, String prezime) throws Exception {
         List<Korisnik> korisnik = korisnikRepository.findByImePrezime(ime, prezime);
         return korisnik;
     }
@@ -138,5 +139,16 @@ public class KorisnikService {
 
         korisnikRepository.save(korisnik);
         return korisnik;
+    }
+
+    public void promijeniSifru(Long korisnikId, String oldPassword, String password) throws Exception {
+        Korisnik korisnik = korisnikRepository.findByID(korisnikId);
+        if (korisnik == null) {
+            throw new Exception("Ne postoji korisnik");
+        } else if (!passwordEncoder.matches(oldPassword, korisnik.getLozinka())) {
+            throw new Exception("Pogrešna lozinka");
+        }
+        korisnik.setLozinka(passwordEncoder.encode(password));
+        korisnikRepository.save(korisnik);
     }
 }

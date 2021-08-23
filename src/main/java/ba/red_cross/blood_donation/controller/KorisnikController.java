@@ -1,4 +1,5 @@
 package ba.red_cross.blood_donation.controller;
+import ba.red_cross.blood_donation.DTO.ChangePasswordDTO;
 import ba.red_cross.blood_donation.DTO.KorisnikPatchDTO;
 import ba.red_cross.blood_donation.DTO.RegisterRequest;
 import ba.red_cross.blood_donation.exception.GeneralException;
@@ -153,4 +154,25 @@ public class KorisnikController {
             );
         }
     }
+
+    @PutMapping("/korisnici/{id}/sifra")
+    @ApiOperation(value = "Mijenjanje sifre za korisnika!")
+    public ResponseEntity<JSONObject> promijeniSifru(@RequestBody ChangePasswordDTO data, @PathVariable("id") Long id) {
+        JSONObject message = new JSONObject();
+        try {
+            korisnikService.promijeniSifru(id, data.getOldPassword(), data.getNewPassword());
+            message.put("message", "Uspjesno azurirana sifra za korisnika sa id " + id);
+            return new ResponseEntity<>(
+                    message,
+                    HttpStatus.OK
+            );
+        } catch (Exception e) {
+            message.put("message", e.getMessage());
+            return new ResponseEntity<>(
+                    message,
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+    }
+
 }
