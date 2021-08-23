@@ -111,7 +111,7 @@ public class AkcijeDarivanjaKrviService {
         List<Map<Integer,Integer>> brojDarivanjaPoMjesecu = akcijeDarivanjaKrviRepository.getBrojDarivanjaPoMjesecu(year);
         List<Map<Integer, Integer>> lista = new ArrayList<>();
         List<Integer> brojDarivanja = new ArrayList<>();
-        for (int i = 0; i<12; i++) brojDarivanja.add(0);
+        for (int i = 0; i<=12; i++) brojDarivanja.add(0);
         for (Map<Integer, Integer> a : brojDarivanjaPoMjesecu) {
             brojDarivanja.set(a.get("mjesec"), a.get("broj_darivanja"));
         }
