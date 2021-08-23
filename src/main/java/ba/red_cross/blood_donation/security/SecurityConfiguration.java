@@ -62,7 +62,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, "/notifikacije").hasAuthority("administrator")
                 .antMatchers(HttpMethod.DELETE, "/notifikacije","/notifikacije/{id}").hasAuthority("administrator")
                 .antMatchers(HttpMethod.DELETE, "/korisnici/{id}/notifikacije", "/korisnici/{korisnikId}/notifikacije/{notifikacijaId}").hasAuthority("korisnik")
-                .antMatchers(HttpMethod.PUT,"/korisnici/{id}/sifra").hasAnyAuthority("administrator","korisnik")
+                .antMatchers(HttpMethod.PUT,"/korisnici/{id}/sifra", "/korisnici/{id}/notifikacije", "/korisnici/{id}").hasAnyAuthority("administrator","korisnik")
 
                 //Swagger
                 .antMatchers(HttpMethod.GET, "/swagger-resources/**",

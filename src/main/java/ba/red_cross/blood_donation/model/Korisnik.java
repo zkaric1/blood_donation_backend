@@ -1,5 +1,6 @@
 package ba.red_cross.blood_donation.model;
 
+import ba.red_cross.blood_donation.DTO.EditKorisnik;
 import ba.red_cross.blood_donation.DTO.RegisterRequest;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -215,6 +216,19 @@ public class Korisnik implements Comparable<Korisnik> {
         this.rola = role;
         this.slatiNotifikacije = true;
         this.lozinka = user.getLozinka();
+    }
+
+    public Korisnik promijeniInfromacije(EditKorisnik editKorisnik) {
+        this.ime = editKorisnik.getIme();
+        this.prezime = editKorisnik.getPrezime();
+        this.datumRodenja = editKorisnik.getDatumRodenja();
+        this.mjestoRodenja = editKorisnik.getMjestoRodenja();
+        this.mjestoPrebivalista = editKorisnik.getMjestoPrebivalista();
+        this.adresaPrebivalista = editKorisnik.getAdresaPrebivalista();
+        this.kantonPrebivalista = editKorisnik.getKantonPrebivalista();
+        this.kontaktTelefon = editKorisnik.getKontaktTelefon();
+        this.zanimanje = editKorisnik.getZanimanje();
+        return this;
     }
 
     public Long getID() {

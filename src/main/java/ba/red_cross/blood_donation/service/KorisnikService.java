@@ -1,5 +1,6 @@
 package ba.red_cross.blood_donation.service;
 
+import ba.red_cross.blood_donation.DTO.EditKorisnik;
 import ba.red_cross.blood_donation.DTO.KorisnikPatchDTO;
 import ba.red_cross.blood_donation.DTO.RegisterRequest;
 import ba.red_cross.blood_donation.DTO.ResponseMessageDTO;
@@ -75,6 +76,24 @@ public class KorisnikService {
             return tempKorisnici;
         }
         return korisnici;
+    }
+
+    public void promijeniKorisnickeInfromacije(Long id, EditKorisnik editKorisnik) throws Exception {
+        Korisnik korisnik = korisnikRepository.findByID(id);
+        if (korisnik == null) {
+            throw new Exception("Ne postoji korisnik");
+        }
+        korisnik = korisnik.promijeniInfromacije(editKorisnik);
+        korisnikRepository.save(korisnik);
+    }
+
+    public void promijeniSlanjeNotifikacija(Long id, boolean sendNotification) throws Exception {
+        Korisnik korisnik = korisnikRepository.findByID(id);
+        if (korisnik == null) {
+            throw new Exception("Ne postoji korisnik");
+        }
+        korisnik.setSlatiNotifikacije(sendNotification);
+        korisnikRepository.save(korisnik);
     }
 
     public Korisnik editKorisnika(Korisnik noviKorisnik) throws Exception {

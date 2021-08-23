@@ -1,10 +1,7 @@
 package ba.red_cross.blood_donation.controller;
-import ba.red_cross.blood_donation.DTO.ChangePasswordDTO;
-import ba.red_cross.blood_donation.DTO.KorisnikPatchDTO;
-import ba.red_cross.blood_donation.DTO.RegisterRequest;
+import ba.red_cross.blood_donation.DTO.*;
 import ba.red_cross.blood_donation.exception.GeneralException;
 import ba.red_cross.blood_donation.model.Korisnik;
-import ba.red_cross.blood_donation.DTO.DTOKorisnici;
 /*
 import ba.red_cross.blood_donation.model.TKontaktiEntity;
 import ba.red_cross.blood_donation.model.TKorisniciEntity;
@@ -148,6 +145,46 @@ public class KorisnikController {
             );
         } catch (Exception e) {
             message.put("Poruka: ", e.getMessage());
+            return new ResponseEntity<>(
+                    message,
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+    }
+
+    @PutMapping("/korisnici/{id}")
+    @ApiOperation(value = "Promjena korisnickih podataka")
+    public ResponseEntity<Object> promijeniKorisnickeInfromacije(@PathVariable("id") Long id, @RequestBody EditKorisnik editKorisnik) {
+        JSONObject message = new JSONObject();
+        try {
+            korisnikService.promijeniKorisnickeInfromacije(id, editKorisnik);
+            message.put("message", "Uspjesno azurirane informacije");
+            return new ResponseEntity<>(
+                    message,
+                    HttpStatus.OK
+            );
+        } catch (Exception e) {
+            message.put("message", e.getMessage());
+            return new ResponseEntity<>(
+                    message,
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+    }
+
+    @PutMapping("/korisnici/{id}/notifikacije")
+    @ApiOperation(value = "Promjena slanjeNotifikacija atirbuta")
+    public  ResponseEntity<Object> promijeniSlanjeNotifikacija(@PathVariable("id") Long id, @RequestParam boolean sendNotifications) throws Exception {
+        JSONObject message = new JSONObject();
+        try {
+            korisnikService.promijeniSlanjeNotifikacija(id, sendNotifications);
+            message.put("message", "Uspjesno azurirane informacije");
+            return new ResponseEntity<>(
+                    message,
+                    HttpStatus.OK
+            );
+        } catch (Exception e) {
+            message.put("message", e.getMessage());
             return new ResponseEntity<>(
                     message,
                     HttpStatus.BAD_REQUEST
