@@ -126,5 +126,12 @@ public class KorisnikAkcijaDarivanjaKrviController {
     KorisnikAkcijaDarivanjaKrvi addKorisnikAkcijaDarivanja( @RequestBody KorisnikAkcijaDarivanjaKrviDTO akcijaDarivanja) throws Exception {
         return korisnikAkcijeDarivanjaService.createNew(akcijaDarivanja);
     }
-    //findByAkcijaId
+
+    @GetMapping("/brojDarivanjaPoAkciji/{id}")
+    @ApiOperation(value = "Dobavljanje broja darivanja krvi za određenu akciju!")
+    public Integer getBrojDarivanja(@PathVariable("id") Long id) throws Exception {
+        Integer brojDarivanja = korisnikAkcijeDarivanjaService.getBrojDarivanjaZaAkciju(id);
+
+        return brojDarivanja;
+    }
 }

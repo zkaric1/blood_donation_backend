@@ -59,4 +59,9 @@ public class KorisnikAkcijaDarivanjaKrviService {
 
         return  akcije;
     }
+
+    public Integer getBrojDarivanjaZaAkciju (Long id) throws Exception {
+        Integer brojDarivanja = korisnikAkcijaDarivanjaKrviRepository.getBrojDarivanjaZaAkciju(id);
+        return brojDarivanja;
+    }
 }
