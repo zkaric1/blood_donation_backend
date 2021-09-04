@@ -146,16 +146,16 @@ public class KorisnikService {
 
     public Korisnik partialUpdateUser(KorisnikPatchDTO noviKorisnik, Long id) throws Exception {
         Korisnik korisnik = korisnikRepository.findById(id).orElseThrow(() -> new Exception("Korisnik sa ID " + id + " ne postoji!"));
-        if (noviKorisnik.getMjestoPrebivalista() != "")
+        if (noviKorisnik.getMjestoPrebivalista() != null && !noviKorisnik.getMjestoPrebivalista().equals("") )
             korisnik.setMjestoPrebivalista(noviKorisnik.getMjestoPrebivalista());
-        if (noviKorisnik.getAdresaPrebivalista() != "")
+        if (noviKorisnik.getAdresaPrebivalista() != null && !noviKorisnik.getAdresaPrebivalista().equals(""))
             korisnik.setAdresaPrebivalista(noviKorisnik.getAdresaPrebivalista());
-        if (noviKorisnik.getKantonPrebivalista() != "")
+        if (noviKorisnik.getKantonPrebivalista() != null && !noviKorisnik.getKantonPrebivalista().equals(""))
             korisnik.setKantonPrebivalista(noviKorisnik.getKantonPrebivalista());
-        if (noviKorisnik.getKontaktTelefon() != "") korisnik.setKontaktTelefon(noviKorisnik.getKontaktTelefon());
-        if (noviKorisnik.getZanimanje() != "") korisnik.setZanimanje(noviKorisnik.getZanimanje());
-        if (noviKorisnik.getEmailAdresa() != "") korisnik.setEmailAdresa(noviKorisnik.getEmailAdresa());
-        if (noviKorisnik.getKorisnickoIme() != "") korisnik.setKorisnickoIme(noviKorisnik.getKorisnickoIme());
+        if (noviKorisnik.getKontaktTelefon() != null && !noviKorisnik.getKontaktTelefon().equals("")) korisnik.setKontaktTelefon(noviKorisnik.getKontaktTelefon());
+        if (noviKorisnik.getZanimanje() != null  && !noviKorisnik.getZanimanje().equals("")) korisnik.setZanimanje(noviKorisnik.getZanimanje());
+        if (noviKorisnik.getEmailAdresa() != null && !noviKorisnik.getEmailAdresa().equals("")) korisnik.setEmailAdresa(noviKorisnik.getEmailAdresa());
+        if (noviKorisnik.getKorisnickoIme() != null && !noviKorisnik.getKorisnickoIme().equals(""))  korisnik.setKorisnickoIme(noviKorisnik.getKorisnickoIme());
 
         korisnikRepository.save(korisnik);
         return korisnik;
