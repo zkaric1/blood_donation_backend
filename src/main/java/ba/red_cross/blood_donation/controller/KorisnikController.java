@@ -2,11 +2,6 @@ package ba.red_cross.blood_donation.controller;
 import ba.red_cross.blood_donation.DTO.*;
 import ba.red_cross.blood_donation.exception.GeneralException;
 import ba.red_cross.blood_donation.model.Korisnik;
-/*
-import ba.red_cross.blood_donation.model.TKontaktiEntity;
-import ba.red_cross.blood_donation.model.TKorisniciEntity;
-import ba.red_cross.blood_donation.service.KontaktiService;
- */
 import ba.red_cross.blood_donation.service.KorisnikService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 
@@ -85,6 +78,27 @@ public class KorisnikController {
             Korisnik dbKorisnik = korisnikService.dodajKontakt(noviKorisnik);
             return new ResponseEntity<>(
                     dbKorisnik,
+                    HttpStatus.OK
+            );
+        }
+        catch(Exception e) {
+            message.put("Poruka: ", e.getMessage());
+            return new ResponseEntity<>(
+                    message,
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+    }
+
+    @ApiOperation(value = "Dodavanje novog darivanja krvi korisniku, bez akcije darivanja!")
+    @PostMapping("/korisnik/dodajDarivanje/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    ResponseEntity<Object> dodajDarivanjeKrvi(@PathVariable Long id) throws Exception {
+        JSONObject message = new JSONObject();
+        try {
+            korisnikService.dodajDarivanjeKrvi(id);
+            return new ResponseEntity<>(
+                    "Uspješno dodano darivanje krvi korisniku!",
                     HttpStatus.OK
             );
         }

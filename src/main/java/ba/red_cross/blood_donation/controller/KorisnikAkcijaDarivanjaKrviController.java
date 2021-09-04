@@ -1,19 +1,15 @@
 package ba.red_cross.blood_donation.controller;
-
-
 import ba.red_cross.blood_donation.DTO.KorisnikAkcijaDarivanjaKrviDTO;
-import ba.red_cross.blood_donation.exception.AkcijeDarivanjaKrviException;
 import ba.red_cross.blood_donation.exception.GeneralException;
 import ba.red_cross.blood_donation.model.AkcijaDarivanjaKrvi;
 import ba.red_cross.blood_donation.model.KorisnikAkcijaDarivanjaKrvi;
-import ba.red_cross.blood_donation.service.AkcijeDarivanjaKrviService;
 import ba.red_cross.blood_donation.service.KorisnikAkcijaDarivanjaKrviService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -134,4 +130,13 @@ public class KorisnikAkcijaDarivanjaKrviController {
 
         return brojDarivanja;
     }
+
+    @GetMapping("/korisnikAkcijeDarivanja/posljednjeDarivanje/{id}")
+    @ApiOperation(value = "Dobavljanje datuma zadnjeg darivanja krvi korisnika sa ID!")
+    public LocalDate dobaviPosljednjeDarivanje(@PathVariable Long id) {
+        LocalDate result = null;
+        result = korisnikAkcijeDarivanjaService.posljednjeDarivanje(id);
+        return result;
+    }
 }
+

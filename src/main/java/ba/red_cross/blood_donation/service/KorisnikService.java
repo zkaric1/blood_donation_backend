@@ -9,6 +9,7 @@ import ba.red_cross.blood_donation.model.Korisnik;
 import ba.red_cross.blood_donation.model.Rola;
 import ba.red_cross.blood_donation.repository.KorisnikRepository;
 import ba.red_cross.blood_donation.repository.RolaRepository;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -168,6 +169,13 @@ public class KorisnikService {
             throw new Exception("Pogrešna lozinka");
         }
         korisnik.setLozinka(passwordEncoder.encode(password));
+        korisnikRepository.save(korisnik);
+    }
+
+    public void dodajDarivanjeKrvi(Long id) throws Exception {
+        Korisnik korisnik = korisnikRepository.findById(id).orElseThrow(() -> new Exception("Korisnik sa ID " + id + " ne postoji!"));
+        Integer brojDarivanja = korisnik.getBrojDarivanjaKrvi();
+        korisnik.setBrojDarivanjaKrvi(brojDarivanja + 1);
         korisnikRepository.save(korisnik);
     }
 }

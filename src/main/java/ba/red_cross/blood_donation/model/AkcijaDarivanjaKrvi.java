@@ -11,7 +11,7 @@ import java.time.LocalTime;
 import java.util.*;
 
 @Entity
-public class AkcijaDarivanjaKrvi {
+public class AkcijaDarivanjaKrvi implements Comparable<AkcijaDarivanjaKrvi> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -123,5 +123,10 @@ public class AkcijaDarivanjaKrvi {
 
     public void setNaslov(String naslov) {
         this.naslov = naslov;
+    }
+
+    @Override
+    public int compareTo(AkcijaDarivanjaKrvi o) {
+        return (o.getDatum().compareTo(this.getDatum()));
     }
 }

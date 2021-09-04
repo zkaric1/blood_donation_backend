@@ -1,7 +1,5 @@
 package ba.red_cross.blood_donation.controller;
 
-import ba.red_cross.blood_donation.DTO.ResponseMessageDTO;
-import ba.red_cross.blood_donation.exception.GeneralException;
 import ba.red_cross.blood_donation.service.KorisnikNotifikacijaService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

@@ -8,8 +8,11 @@ import ba.red_cross.blood_donation.model.KorisnikAkcijaDarivanjaKrvi;
 import ba.red_cross.blood_donation.repository.AkcijeDarivanjaKrviRepository;
 import ba.red_cross.blood_donation.repository.KorisnikAkcijaDarivanjaKrviRepository;
 import ba.red_cross.blood_donation.repository.KorisnikRepository;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -21,6 +24,8 @@ public class KorisnikAkcijaDarivanjaKrviService {
     KorisnikService korisnikService;
     @Autowired
     AkcijeDarivanjaKrviService akcijeDarivanjaKrviService;
+    @Autowired
+    private KorisnikRepository korisnikRepository;
 
     public List<KorisnikAkcijaDarivanjaKrvi> getAll() throws Exception{
         if (korisnikAkcijaDarivanjaKrviRepository.count() == 0) throw new Exception("Nema akcija za korisnike!");
@@ -44,6 +49,9 @@ public class KorisnikAkcijaDarivanjaKrviService {
 
     public KorisnikAkcijaDarivanjaKrvi createNew (KorisnikAkcijaDarivanjaKrviDTO akcijaDarivanja) throws Exception {
         Korisnik korisnik = korisnikService.getKorisnikById(akcijaDarivanja.getKorisnikID());
+        Integer brojDarivanja = korisnik.getBrojDarivanjaKrvi();
+        korisnik.setBrojDarivanjaKrvi(brojDarivanja + 1);
+        korisnikRepository.save(korisnik);
         AkcijaDarivanjaKrvi akcijaDarivanjaKrvi = akcijeDarivanjaKrviService.getAkcijeDarivanjaKrviById(akcijaDarivanja.getAkcijaID());
         KorisnikAkcijaDarivanjaKrvi novaAkcija = new KorisnikAkcijaDarivanjaKrvi(korisnik, akcijaDarivanjaKrvi, "DA");
         return korisnikAkcijaDarivanjaKrviRepository.save(novaAkcija);
@@ -58,6 +66,18 @@ public class KorisnikAkcijaDarivanjaKrviService {
         }
 
         return  akcije;
+    }
+
+    public LocalDate posljednjeDarivanje (Long id) {
+        List<AkcijaDarivanjaKrvi> akcije = new ArrayList<>();
+        List<Long> idAkcija = korisnikAkcijaDarivanjaKrviRepository.findAkcijeByKorisnikID(id);
+
+        for (int i = 0; i<idAkcija.size(); i++) {
+            akcije.add(akcijeDarivanjaKrviService.getAkcijeDarivanjaKrviById(idAkcija.get(i)));
+        }
+
+        Collections.sort(akcije);
+        return akcije.get(0).getDatum();
     }
 
     public Integer getBrojDarivanjaZaAkciju (Long id) throws Exception {
