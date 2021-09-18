@@ -1,9 +1,6 @@
 package ba.red_cross.blood_donation.service;
 
-import ba.red_cross.blood_donation.DTO.EditKorisnik;
-import ba.red_cross.blood_donation.DTO.KorisnikPatchDTO;
-import ba.red_cross.blood_donation.DTO.RegisterRequest;
-import ba.red_cross.blood_donation.DTO.ResponseMessageDTO;
+import ba.red_cross.blood_donation.DTO.*;
 import ba.red_cross.blood_donation.model.AkcijaDarivanjaKrvi;
 import ba.red_cross.blood_donation.model.Korisnik;
 import ba.red_cross.blood_donation.model.Rola;
@@ -176,6 +173,12 @@ public class KorisnikService {
         Korisnik korisnik = korisnikRepository.findById(id).orElseThrow(() -> new Exception("Korisnik sa ID " + id + " ne postoji!"));
         Integer brojDarivanja = korisnik.getBrojDarivanjaKrvi();
         korisnik.setBrojDarivanjaKrvi(brojDarivanja + 1);
+        korisnikRepository.save(korisnik);
+    }
+
+    public void dodajKrvnuGrupu (KrvnaGrupaDTO krvnaGrupa, long korisnikId) throws Exception{
+        Korisnik korisnik = korisnikRepository.findById(korisnikId).orElseThrow(() -> new Exception("Korisnik sa ID " + korisnikId + " ne postoji!"));
+        korisnik.setKrvnaGrupa(krvnaGrupa.getKrvnaGrupa());
         korisnikRepository.save(korisnik);
     }
 }

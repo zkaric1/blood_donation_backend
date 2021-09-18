@@ -82,11 +82,7 @@ public class KorisnikController {
             );
         }
         catch(Exception e) {
-            message.put("Poruka: ", e.getMessage());
-            return new ResponseEntity<>(
-                    message,
-                    HttpStatus.BAD_REQUEST
-            );
+            throw new Exception (e.getMessage());
         }
     }
 
@@ -223,6 +219,22 @@ public class KorisnikController {
                     message,
                     HttpStatus.BAD_REQUEST
             );
+        }
+    }
+
+    @PatchMapping("/korisnici/dodajKrvnuGrupu/{id}")
+    @ApiOperation(value = "Dodavanje krvne grupe nakon prvog darivanja")
+    public ResponseEntity<JSONObject> dodajKrvnuGrupu(@RequestBody KrvnaGrupaDTO krvnaGrupa, @PathVariable("id") Long id) throws Exception {
+        JSONObject message = new JSONObject();
+        try {
+            korisnikService.dodajKrvnuGrupu(krvnaGrupa, id);
+            message.put("Poruka: ", "Uspjesno azurirana krvna grupa korisniku");
+            return new ResponseEntity<>(
+                    message,
+                    HttpStatus.OK
+            );
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
         }
     }
 
