@@ -26,15 +26,21 @@ public class KorisnikService {
 
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+
+    // Za provjeru kompleksnosti passworda
+    public boolean passwordRegex(String password) {
+        String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=.-/!?,;<>'()*:_{}~])(?=\\S+$).{8,}";
+        return password.matches(pattern);
+    }
+
     public Korisnik dodajKontakt(RegisterRequest noviKorisnik) throws Exception {
         Korisnik postojeciKorisnik = korisnikRepository.findByEmailAdresa(noviKorisnik.getEmailAdresa());
         if (postojeciKorisnik != null) {
             throw new Exception("Postoji korisnik sa istim emailom");
         }
-
+        if (!passwordRegex(noviKorisnik.getLozinka())) throw new Exception("Lozinka ne zadovoljava minimalnu kompleksnost!");
         noviKorisnik.setLozinka(passwordEncoder.encode(noviKorisnik.getLozinka()));
         Rola rolaKorisnik = rolaRepository.findById(Long.valueOf(2)).orElseThrow(() -> new Exception("Rola sa ID " + 2 + " ne postoji!"));
-        System.out.print(rolaKorisnik.getNazivRole());
         return korisnikRepository.save(new Korisnik(noviKorisnik, rolaKorisnik, LocalDate.now()));
     }
 
@@ -143,16 +149,20 @@ public class KorisnikService {
 
     public Korisnik partialUpdateUser(KorisnikPatchDTO noviKorisnik, Long id) throws Exception {
         Korisnik korisnik = korisnikRepository.findById(id).orElseThrow(() -> new Exception("Korisnik sa ID " + id + " ne postoji!"));
-        if (noviKorisnik.getMjestoPrebivalista() != null && !noviKorisnik.getMjestoPrebivalista().equals("") )
+        if (noviKorisnik.getMjestoPrebivalista() != null && !noviKorisnik.getMjestoPrebivalista().equals(""))
             korisnik.setMjestoPrebivalista(noviKorisnik.getMjestoPrebivalista());
         if (noviKorisnik.getAdresaPrebivalista() != null && !noviKorisnik.getAdresaPrebivalista().equals(""))
             korisnik.setAdresaPrebivalista(noviKorisnik.getAdresaPrebivalista());
         if (noviKorisnik.getKantonPrebivalista() != null && !noviKorisnik.getKantonPrebivalista().equals(""))
             korisnik.setKantonPrebivalista(noviKorisnik.getKantonPrebivalista());
-        if (noviKorisnik.getKontaktTelefon() != null && !noviKorisnik.getKontaktTelefon().equals("")) korisnik.setKontaktTelefon(noviKorisnik.getKontaktTelefon());
-        if (noviKorisnik.getZanimanje() != null  && !noviKorisnik.getZanimanje().equals("")) korisnik.setZanimanje(noviKorisnik.getZanimanje());
-        if (noviKorisnik.getEmailAdresa() != null && !noviKorisnik.getEmailAdresa().equals("")) korisnik.setEmailAdresa(noviKorisnik.getEmailAdresa());
-        if (noviKorisnik.getKorisnickoIme() != null && !noviKorisnik.getKorisnickoIme().equals(""))  korisnik.setKorisnickoIme(noviKorisnik.getKorisnickoIme());
+        if (noviKorisnik.getKontaktTelefon() != null && !noviKorisnik.getKontaktTelefon().equals(""))
+            korisnik.setKontaktTelefon(noviKorisnik.getKontaktTelefon());
+        if (noviKorisnik.getZanimanje() != null && !noviKorisnik.getZanimanje().equals(""))
+            korisnik.setZanimanje(noviKorisnik.getZanimanje());
+        if (noviKorisnik.getEmailAdresa() != null && !noviKorisnik.getEmailAdresa().equals(""))
+            korisnik.setEmailAdresa(noviKorisnik.getEmailAdresa());
+        if (noviKorisnik.getKorisnickoIme() != null && !noviKorisnik.getKorisnickoIme().equals(""))
+            korisnik.setKorisnickoIme(noviKorisnik.getKorisnickoIme());
 
         korisnikRepository.save(korisnik);
         return korisnik;
@@ -165,6 +175,7 @@ public class KorisnikService {
         } else if (!passwordEncoder.matches(oldPassword, korisnik.getLozinka())) {
             throw new Exception("Pogrešna lozinka");
         }
+        if (!passwordRegex(password)) throw new Exception("Lozinka ne zadovoljava minimalnu kompleksnost!");
         korisnik.setLozinka(passwordEncoder.encode(password));
         korisnikRepository.save(korisnik);
     }
@@ -176,7 +187,7 @@ public class KorisnikService {
         korisnikRepository.save(korisnik);
     }
 
-    public void dodajKrvnuGrupu (KrvnaGrupaDTO krvnaGrupa, long korisnikId) throws Exception{
+    public void dodajKrvnuGrupu(KrvnaGrupaDTO krvnaGrupa, long korisnikId) throws Exception {
         Korisnik korisnik = korisnikRepository.findById(korisnikId).orElseThrow(() -> new Exception("Korisnik sa ID " + korisnikId + " ne postoji!"));
         korisnik.setKrvnaGrupa(krvnaGrupa.getKrvnaGrupa());
         korisnikRepository.save(korisnik);

@@ -208,7 +208,7 @@ public class KorisnikController {
         JSONObject message = new JSONObject();
         try {
             korisnikService.promijeniSifru(id, data.getOldPassword(), data.getNewPassword());
-            message.put("message", "Uspjesno azurirana sifra za korisnika sa id " + id);
+            message.put("message", "Uspjesno ažurirana lozinka");
             return new ResponseEntity<>(
                     message,
                     HttpStatus.OK
@@ -237,5 +237,4 @@ public class KorisnikController {
             throw new Exception(e.getMessage());
         }
     }
-
 }
