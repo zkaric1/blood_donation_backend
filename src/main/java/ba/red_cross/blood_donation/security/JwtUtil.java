@@ -32,13 +32,15 @@ public class JwtUtil {
         return extractExpiration(token, secretKey).before(new Date());
     }
 
-    public static String generateToken(CustomUserDetails userDetails, String secretKey) {
+    public static String generateToken(CustomUserDetails userDetails, String secretKey,  Boolean isRefreshToken) {
         Map<String, Object> claims = new HashMap<>();
         String role = userDetails.getAuthorities().stream().findFirst().get().getAuthority();
         claims.put("role", role);
         claims.put("id", userDetails.getUserId());
         Integer expTimeMilis = 1000*60*60;
-
+        if(isRefreshToken) {
+            expTimeMilis = expTimeMilis + 1000*60*5;
+        }
         return createToken(claims, userDetails.getUsername(), secretKey, expTimeMilis);
     }
 

@@ -5,6 +5,7 @@ import ba.red_cross.blood_donation.exception.GeneralException;
 import ba.red_cross.blood_donation.exception.NotifikacijaException;
 import ba.red_cross.blood_donation.model.AkcijaDarivanjaKrvi;
 import ba.red_cross.blood_donation.model.Notifikacija;
+import ba.red_cross.blood_donation.security.CustomUserDetails;
 import ba.red_cross.blood_donation.service.NotifikacijaService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -12,6 +13,7 @@ import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -72,8 +74,22 @@ public class NotifikacijaController {
 
     @DeleteMapping("/notifikacije/korisnik/{id}")
     @ApiOperation(value = "Brisanje notifikacija od korisnika")
-    HashMap<String,String> obrisiNotifikacijeOdKorisnika(@PathVariable Long  id) throws Exception {
-        return notifikacijaService.obrisiNotifikacijeOdKorisnika(id);
+    ResponseEntity<Object> obrisiNotifikacijeOdKorisnika(@PathVariable Long  id) throws Exception {
+        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        if( userDetails.getUserId() != id) {
+            Exception exception =  new Exception("Unauthorized");
+            return new ResponseEntity<>(
+                    exception,
+                    HttpStatus.UNAUTHORIZED
+            );
+        }
+        JSONObject message = new JSONObject();
+        message.put("Poruka",notifikacijaService.obrisiNotifikacijeOdKorisnika(id));
+        return new ResponseEntity<>(
+                message    ,
+                HttpStatus.OK
+        );
     }
 
     // DELETE metode

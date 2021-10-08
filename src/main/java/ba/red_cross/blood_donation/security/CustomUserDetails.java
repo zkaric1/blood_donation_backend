@@ -10,15 +10,14 @@ import java.util.Collection;
 @Getter
 @Setter
 public class CustomUserDetails extends User {
+    private Long userId;
+
     public Long getUserId() {
         return userId;
     }
-
     public void setUserId(Long userId) {
         this.userId = userId;
     }
-
-    private Long userId;
 
     public CustomUserDetails(String username, String password, Collection<? extends GrantedAuthority> authorities, Long userId) {
         super(username, password, authorities);
