@@ -11,7 +11,12 @@ import java.util.List;
 public class CheckAuth {
 
     public Boolean isAuthorized(Authentication authentication, Long id) {
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        CustomUserDetails userDetails = null;
+        try {
+             userDetails = (CustomUserDetails) authentication.getPrincipal();
+        }catch (Exception e) {
+            return false;
+        }
 
         List<GrantedAuthority> listAuthorities = new ArrayList<>();
         listAuthorities.addAll(authentication.getAuthorities());
