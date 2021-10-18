@@ -61,7 +61,6 @@ public class AkcijaDarivanjaKrviController {
     @GetMapping("/akcija_darivanja_krvi/brojDarivanjaPoMjesecu")
     @ApiOperation(value = "Dobavljanje svih kreiranih akcija darivanja krvi ili za određeni grad!")
     public List<Integer> getBrojDarivanjaPoMjesecu() {
-
         return akcijeDarivanjaService.getBrojDarivanjaPoMjesecu();
     }
 
@@ -147,8 +146,6 @@ public class AkcijaDarivanjaKrviController {
             );
         }
     }
-
-
 
     @GetMapping("/generisi_izvjestaj/{id}")
     @ApiOperation(value = "Generisanje i preuzimanje izvještaja nakon završene akcije darivanja!")

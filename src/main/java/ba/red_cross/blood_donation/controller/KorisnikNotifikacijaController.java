@@ -1,12 +1,15 @@
 package ba.red_cross.blood_donation.controller;
 
+import ba.red_cross.blood_donation.security.CustomUserDetails;
 import ba.red_cross.blood_donation.service.KorisnikNotifikacijaService;
+import ba.red_cross.blood_donation.utils.CheckAuth;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +22,8 @@ import java.util.HashMap;
 @RestController
 public class KorisnikNotifikacijaController {
 
+    private CheckAuth checkAuth = new CheckAuth();
+
     @Autowired
     KorisnikNotifikacijaService korisnikNotifikacijaService;
 
@@ -26,6 +31,13 @@ public class KorisnikNotifikacijaController {
     @ApiOperation(value = "Brisanje svih notifikacija za korisnika!")
     @Transactional
     public ResponseEntity<Object> obrisiNotifikacijeZaKorisnika(@PathVariable Long id) {
+        if(!checkAuth.isAuthorized(SecurityContextHolder.getContext().getAuthentication(), id)) {
+            Exception exception =  new Exception("Unauthorized");
+            return new ResponseEntity<>(
+                    exception,
+                    HttpStatus.UNAUTHORIZED
+            );
+        }
         JSONObject message = new JSONObject();
         try {
             korisnikNotifikacijaService.obrisiNotifikacijeZaKorisnika(id);

@@ -2,13 +2,18 @@ package ba.red_cross.blood_donation.controller;
 import ba.red_cross.blood_donation.DTO.*;
 import ba.red_cross.blood_donation.exception.GeneralException;
 import ba.red_cross.blood_donation.model.Korisnik;
+import ba.red_cross.blood_donation.security.CustomUserDetails;
 import ba.red_cross.blood_donation.service.KorisnikService;
+import ba.red_cross.blood_donation.utils.CheckAuth;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.minidev.json.JSONObject;
+import org.jfree.util.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +22,8 @@ import java.util.List;
 @Api( tags = "Korisnici")
 @RestController
 public class KorisnikController {
+
+    private  CheckAuth checkAuth = new CheckAuth();
 
     @Autowired
     private KorisnikService korisnikService;
@@ -31,6 +38,14 @@ public class KorisnikController {
     @GetMapping("/korisnici/{id}")
     @ApiOperation(value = "Dobavljanje korisnika na osnovu ID!")
     public ResponseEntity<Object> getKorisnikById(@PathVariable Long id) {
+        if(!checkAuth.isAuthorized(SecurityContextHolder.getContext().getAuthentication(), id)) {
+            Exception exception =  new Exception("Unauthorized");
+            return new ResponseEntity<>(
+                    exception,
+                    HttpStatus.UNAUTHORIZED
+            );
+        }
+
         Korisnik result = new Korisnik();
 
         try {
@@ -90,6 +105,13 @@ public class KorisnikController {
     @PostMapping("/korisnik/dodajDarivanje/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     ResponseEntity<Object> dodajDarivanjeKrvi(@PathVariable Long id) throws Exception {
+        if(!checkAuth.isAuthorized(SecurityContextHolder.getContext().getAuthentication(), id)) {
+            Exception exception =  new Exception("Unauthorized");
+            return new ResponseEntity<>(
+                    exception,
+                    HttpStatus.UNAUTHORIZED
+            );
+        }
         JSONObject message = new JSONObject();
         try {
             korisnikService.dodajDarivanjeKrvi(id);
@@ -144,7 +166,14 @@ public class KorisnikController {
     // PATCH
     @PatchMapping("/korisnici/{id}")
     @ApiOperation(value = "Ažuriranje samo određenih podataka korisnika!")
-    public ResponseEntity<JSONObject> partialUpdateUser(@RequestBody KorisnikPatchDTO user, @PathVariable("id") Long id)  {
+    public ResponseEntity<Object> partialUpdateUser(@RequestBody KorisnikPatchDTO user, @PathVariable("id") Long id)  {
+        if(!checkAuth.isAuthorized(SecurityContextHolder.getContext().getAuthentication(), id)) {
+            Exception exception =  new Exception("Unauthorized");
+            return new ResponseEntity<>(
+                    exception,
+                    HttpStatus.UNAUTHORIZED
+            );
+        }
         JSONObject message = new JSONObject();
         try {
             korisnikService.partialUpdateUser(user, id);
@@ -165,6 +194,13 @@ public class KorisnikController {
     @PutMapping("/korisnici/{id}")
     @ApiOperation(value = "Promjena korisnickih podataka")
     public ResponseEntity<Object> promijeniKorisnickeInfromacije(@PathVariable("id") Long id, @RequestBody EditKorisnik editKorisnik) {
+        if(!checkAuth.isAuthorized(SecurityContextHolder.getContext().getAuthentication(), id)) {
+            Exception exception =  new Exception("Unauthorized");
+            return new ResponseEntity<>(
+                    exception,
+                    HttpStatus.UNAUTHORIZED
+            );
+        }
         JSONObject message = new JSONObject();
         try {
             korisnikService.promijeniKorisnickeInfromacije(id, editKorisnik);
@@ -185,6 +221,13 @@ public class KorisnikController {
     @PutMapping("/korisnici/{id}/notifikacije")
     @ApiOperation(value = "Promjena slanjeNotifikacija atirbuta")
     public  ResponseEntity<Object> promijeniSlanjeNotifikacija(@PathVariable("id") Long id, @RequestParam boolean sendNotifications) throws Exception {
+        if(!checkAuth.isAuthorized(SecurityContextHolder.getContext().getAuthentication(), id)) {
+            Exception exception =  new Exception("Unauthorized");
+            return new ResponseEntity<>(
+                    exception,
+                    HttpStatus.UNAUTHORIZED
+            );
+        }
         JSONObject message = new JSONObject();
         try {
             korisnikService.promijeniSlanjeNotifikacija(id, sendNotifications);
@@ -204,7 +247,14 @@ public class KorisnikController {
 
     @PutMapping("/korisnici/{id}/sifra")
     @ApiOperation(value = "Mijenjanje sifre za korisnika!")
-    public ResponseEntity<JSONObject> promijeniSifru(@RequestBody ChangePasswordDTO data, @PathVariable("id") Long id) {
+    public ResponseEntity<Object> promijeniSifru(@RequestBody ChangePasswordDTO data, @PathVariable("id") Long id) {
+        if(!checkAuth.isAuthorized(SecurityContextHolder.getContext().getAuthentication(), id)) {
+            Exception exception =  new Exception("Unauthorized");
+            return new ResponseEntity<>(
+                    exception,
+                    HttpStatus.UNAUTHORIZED
+            );
+        }
         JSONObject message = new JSONObject();
         try {
             korisnikService.promijeniSifru(id, data.getOldPassword(), data.getNewPassword());

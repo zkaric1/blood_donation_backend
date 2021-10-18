@@ -4,10 +4,12 @@ import ba.red_cross.blood_donation.exception.GeneralException;
 import ba.red_cross.blood_donation.model.AkcijaDarivanjaKrvi;
 import ba.red_cross.blood_donation.model.KorisnikAkcijaDarivanjaKrvi;
 import ba.red_cross.blood_donation.service.KorisnikAkcijaDarivanjaKrviService;
+import ba.red_cross.blood_donation.utils.CheckAuth;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ import java.util.List;
 @RestController
 @Api( tags = "Korisnik - akcije darivanja krvi")
 public class KorisnikAkcijaDarivanjaKrviController {
+    private CheckAuth checkAuth = new CheckAuth();
 
     KorisnikAkcijaDarivanjaKrviService korisnikAkcijeDarivanjaService;
 
@@ -48,6 +51,13 @@ public class KorisnikAkcijaDarivanjaKrviController {
     @GetMapping("/korisnikAkcijeDarivanja/{id}")
     @ApiOperation(value = "Dobavljanje korisnik - akcije darivanja krvi na osnovu ID!")
     public ResponseEntity<Object> getKorisnikAkcijeDarivanjaKrviById(@PathVariable Long id) {
+        if(!checkAuth.isAuthorized(SecurityContextHolder.getContext().getAuthentication(), id)) {
+            Exception exception =  new Exception("Unauthorized");
+            return new ResponseEntity<>(
+                    exception,
+                    HttpStatus.UNAUTHORIZED
+            );
+        }
         KorisnikAkcijaDarivanjaKrvi result = new KorisnikAkcijaDarivanjaKrvi();
 
         try {
@@ -69,6 +79,13 @@ public class KorisnikAkcijaDarivanjaKrviController {
     @GetMapping("/korisnikAkcijeDarivanja/korisnik/{id}")
     @ApiOperation(value = "Dobavljanje akcije darivanja krvi korisnika na osnovu ID!")
     public ResponseEntity<Object> getAkcijeZaKorisnika(@PathVariable Long id) {
+        if(!checkAuth.isAuthorized(SecurityContextHolder.getContext().getAuthentication(), id)) {
+            Exception exception =  new Exception("Unauthorized");
+            return new ResponseEntity<>(
+                    exception,
+                    HttpStatus.UNAUTHORIZED
+            );
+        }
         List<KorisnikAkcijaDarivanjaKrvi> result = new ArrayList<>();
 
         try {

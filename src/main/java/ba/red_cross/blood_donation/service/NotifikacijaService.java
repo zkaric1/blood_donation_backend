@@ -38,9 +38,9 @@ public class NotifikacijaService {
         return new ResponseMessageDTO("Greska pri brisanju notifikacija!").getHashMap();
     }
 
-    public HashMap<String,String> obrisiNotifikacijeOdKorisnika(Long id) throws Exception {
+    public String obrisiNotifikacijeOdKorisnika(Long id) throws Exception {
        //  notifikacijaRepository.deleteAllByKorisnici_ID(id);
-        return new ResponseMessageDTO("Uspjesno obrisane notifikacije za kroisnika sa id " + id).getHashMap();
+        return "Uspjesno obrisane notifikacije za kroisnika sa id " + id;
     }
 
     public HashMap<String,String> deleteById (Long id) throws Exception {
