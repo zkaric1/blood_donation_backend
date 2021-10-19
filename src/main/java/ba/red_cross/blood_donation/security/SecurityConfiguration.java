@@ -44,7 +44,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
 
                 // Korisnici
-                .antMatchers(HttpMethod.POST, "/login", "/validate-token", "/korisnik", "/register").permitAll()
+                .antMatchers(HttpMethod.POST, "/login", "/validate-token", "/token-refresh","/korisnik", "/register").permitAll()
                 .antMatchers(HttpMethod.PUT, "/korisnici").hasAuthority("administrator")
                 .antMatchers(HttpMethod.DELETE, "/korisnici/obrisi_sve","/korisnici/{id}").hasAuthority("administrator")
                 .antMatchers(HttpMethod.GET, "/korisnici","/korisnici/{id}").permitAll()

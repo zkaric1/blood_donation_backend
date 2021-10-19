@@ -39,7 +39,7 @@ public class JwtUtil {
         claims.put("id", userDetails.getUserId());
         Integer expTimeMilis = 1000*60*60;
         if(isRefreshToken) {
-            expTimeMilis = expTimeMilis + 1000*60*5;
+            expTimeMilis = 262800000;
         }
         return createToken(claims, userDetails.getUsername(), secretKey, expTimeMilis);
     }
