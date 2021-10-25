@@ -12,6 +12,8 @@ public class CheckAuth {
 
     public Boolean isAuthorized(Authentication authentication, Long id) {
         CustomUserDetails userDetails = null;
+        boolean exists = false;
+
         try {
              userDetails = (CustomUserDetails) authentication.getPrincipal();
         }catch (Exception e) {
@@ -20,10 +22,14 @@ public class CheckAuth {
 
         List<GrantedAuthority> listAuthorities = new ArrayList<>();
         listAuthorities.addAll(authentication.getAuthorities());
-        if(listAuthorities.contains("administrator")) {
+        for (int i = 0; i<listAuthorities.size(); i++) {
+            if (listAuthorities.get(i).getAuthority().equals("administrator")); exists = true;
+        }
+        System.out.print(exists);
+        if(exists) {
             return true;
         }
-        if(userDetails.getUserId() != id) {
+        else if(userDetails.getUserId() != id) {
             return false;
         }
         return true;

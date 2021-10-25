@@ -47,7 +47,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/login", "/validate-token", "/token-refresh","/korisnik", "/register").permitAll()
                 .antMatchers(HttpMethod.PUT, "/korisnici").hasAuthority("administrator")
                 .antMatchers(HttpMethod.DELETE, "/korisnici/obrisi_sve","/korisnici/{id}").hasAuthority("administrator")
-                .antMatchers(HttpMethod.GET, "/korisnici","/korisnici/{id}").permitAll()
+                .antMatchers(HttpMethod.GET, "/korisnici","/korisnici/{id}").hasAnyAuthority("korisnik","administrator")
                 .antMatchers(HttpMethod.PATCH, "/korisnici/{id}").hasAnyAuthority("korisnik","administrator")
 
                 // Akcije darivanja krvi
