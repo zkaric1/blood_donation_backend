@@ -77,7 +77,8 @@ public class KorisnikAkcijaDarivanjaKrviService {
         }
 
         Collections.sort(akcije);
-        return akcije.get(0).getDatum();
+        if (akcije.size() != 0 ) return akcije.get(0).getDatum();
+        return LocalDate.of(1800, 1, 1); // samo da vratimo nemoguć datum ako nije darovao nikad
     }
 
     public Integer getBrojDarivanjaZaAkciju (Long id) throws Exception {

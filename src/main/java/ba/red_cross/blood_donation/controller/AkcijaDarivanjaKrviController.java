@@ -26,7 +26,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
-@Api( tags = "Akcije darivanja krvi")
+@Api(tags = "Akcije darivanja krvi")
 public class AkcijaDarivanjaKrviController {
 
     AkcijeDarivanjaKrviService akcijeDarivanjaService;
@@ -101,14 +101,14 @@ public class AkcijaDarivanjaKrviController {
     // POST metoda
     @PostMapping("/akcija_darivanja_krvi")
     @ApiOperation(value = "Kreiranje nove akcije darivanja krvi!")
-    AkcijaDarivanjaKrvi addAkcijaDarivanja( @RequestBody AkcijaDarivanjaKrvi akcijaDarivanja) {
-        return akcijeDarivanjaService.addAkcijaDarivanja (akcijaDarivanja);
+    AkcijaDarivanjaKrvi addAkcijaDarivanja(@RequestBody AkcijaDarivanjaKrvi akcijaDarivanja) {
+        return akcijeDarivanjaService.addAkcijaDarivanja(akcijaDarivanja);
     }
 
     // PUT metoda
     @PutMapping("/akcija_darivanja_krvi/{id}")
     @ApiOperation(value = "Ažuriranje akcije darivanja krvi sa određenim ID!")
-    ResponseEntity<JSONObject> editAkcijeDarivanjaKrvi(@RequestBody AkcijaDarivanjaKrvi novaAkcijaDarivanja,@PathVariable Long id) throws Exception {
+    ResponseEntity<JSONObject> editAkcijeDarivanjaKrvi(@RequestBody AkcijaDarivanjaKrvi novaAkcijaDarivanja, @PathVariable Long id) throws Exception {
         JSONObject message = new JSONObject();
         try {
             akcijeDarivanjaService.editAkcija(novaAkcijaDarivanja, id);
@@ -129,7 +129,7 @@ public class AkcijaDarivanjaKrviController {
     // PATCH
     @PatchMapping("/akcija_darivanja_krvi/{id}")
     @ApiOperation(value = "Ažuriranje samo određenih podataka akcije darivanja krvi!")
-    public ResponseEntity<JSONObject> partialUpdateAkcija(@RequestBody AkcijaDarivanjaKrvi akcija, @PathVariable("id") Long id)  {
+    public ResponseEntity<JSONObject> partialUpdateAkcija(@RequestBody AkcijaDarivanjaKrvi akcija, @PathVariable("id") Long id) {
         JSONObject message = new JSONObject();
         try {
             akcijeDarivanjaService.partialUpdateAkcija(akcija, id);
@@ -147,6 +147,7 @@ public class AkcijaDarivanjaKrviController {
         }
     }
 
+    /*
     @GetMapping("/generisi_izvjestaj/{id}")
     @ApiOperation(value = "Generisanje i preuzimanje izvještaja nakon završene akcije darivanja!")
     public String generisiIzvjestaj(@PathVariable("id") Long id) throws Exception {
@@ -189,7 +190,7 @@ public class AkcijaDarivanjaKrviController {
         headers.set(HttpHeaders.CONTENT_DISPOSITION, "inline;filename=godisnji_izvjestaj.pdf");
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_PDF).body(data);
     }
-
+*/
     @GetMapping("/zavrseneAkcijeDarivanja")
     @ApiOperation(value = "Dobavljanje akcija darivanja krvi koje su završene!")
     public List<AkcijaDarivanjaKrvi> zavrseneAkcije() throws Exception {
