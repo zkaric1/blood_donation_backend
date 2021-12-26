@@ -15,8 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @SpringBootApplication
 public class BloodDonationApplication {
@@ -29,7 +28,7 @@ public class BloodDonationApplication {
     }
 
     @Bean
-    public CommandLineRunner addDataToDatabase(KorisnikRepository korisnikRepository, TransfuzijskiCentarRepository transCentarRepo, RolaRepository rolaRepo, AkcijeDarivanjaKrviRepository akcijaDarivanjaRepo, NotifikacijaRepository notifikacijaRepo) {
+    public CommandLineRunner addDataToDatabase(KorisnikRepository korisnikRepository, TransfuzijskiCentarRepository transCentarRepo, RolaRepository rolaRepo, AkcijeDarivanjaKrviRepository akcijaDarivanjaRepo, NotifikacijaRepository notifikacijaRepo, TransfuzijskiCentarRepository transfuzijskiCentarRepository) {
         return (args) -> {
           /*  BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             Rola admin = rolaRepo.save(new Rola("administrator"));
@@ -105,7 +104,80 @@ public class BloodDonationApplication {
             notifikacijaRepo.save (new Notifikacija("Hitno potrebna krvna grupa 0+", "Hitno potrebna krvna grupa 0+", "HITNO", "0+"));
 
             log.info("Podaci uspjesno upisani u db!");*/
+          int numberOfCenters = transfuzijskiCentarRepository.findAll().size();
+          log.info("Ukupan broj transfuzioloskih centara u bazi " + numberOfCenters);
+          if(numberOfCenters == 0) {
+              addCenters(transfuzijskiCentarRepository);
+          }
         };
 
+    }
+
+    private void addCenters(TransfuzijskiCentarRepository transfuzijskiCentarRepository) {
+        List<TransfuzijskiCentar> transfuzijskiCentri = new ArrayList<>(
+                Arrays.asList(
+                        new TransfuzijskiCentar("Kralja Tvrtka bb", "Mostar", "+387 (0)36 336-500", "Sveučilišna klinička bolnica"),
+                        new TransfuzijskiCentar("Maršala Tita 294", "Mostar", "+387 (0)36 503 160", "KB \"Dr Safet Mujić\""),
+                        new TransfuzijskiCentar("Trnovac bb", "Tuzla", "00387 35 303 300", "Univerzitetski klinički centar "),
+                        new TransfuzijskiCentar("Crkvice 67", "Zenica", "+387 (0)32 209 852", "JU Kantonalna bolnica "),
+                        new TransfuzijskiCentar("Kranjčevićeva 12", "Sarajevo", " 00387 33 285-186", "JU Opća bolnica \"Prim. dr. Abdulah Nakaš\""),
+                        new TransfuzijskiCentar("Ul. Darivalaca krvi 67", "Bihać", "037 / 318 - 800", "Kantonalna bolnica \"Dr. Irfan Ljubijankić\""),
+                        new TransfuzijskiCentar("Crkvice 67", "Zenica", "+ 387 32 405-133", "JU Kantonalna bolnica"),
+                        new TransfuzijskiCentar("Zdravstvenih radnika 6", "Goražde", "00387 38 241 210", "JZU Kantonalna bolnica"),
+                        new TransfuzijskiCentar("Treća ulica bb", "Orašje", "+387 31 712 703", "Županijska bolnica "),
+                        new TransfuzijskiCentar("Kalibunar bb", "Travnik", "+387 30 519 100", "JU bolnica"),
+                        new TransfuzijskiCentar("Sv. Ive 2", "Livno", "+387-34-200-423", "Županijska bolnica \"Dr. fra Mihovil Sučić\""),
+                        new TransfuzijskiCentar("Dubrave bb Nova Bila", "Travnik", "+387 30 70 85 00", "Hrvatska bolnica \"Dr. fra Mato Nikolić\""),
+                        new TransfuzijskiCentar("Ulica Braće Pobrića 17", "Tešanj", " 00387 32 650-187", "JU Opća bolnica "),
+                        new TransfuzijskiCentar("M. Ahmedbegovića 50", "Gračanica", "+387 35 702032", "JZU Opća bolnica \"Dr Mustafa Beganović\""),
+                        new TransfuzijskiCentar("Ambasadora Wagnerova 15", "Bugojno", "+387 30 252090", "JU Opća bolnica"),
+                        new TransfuzijskiCentar("Kraljice Jelene bb", "Jajce", " +387 30 658106", "JU Opća bolnica"),
+                        new TransfuzijskiCentar("Bolnička bb", "Konjic", "+387 36 726292", "JU Opća bolnica"),
+                        new TransfuzijskiCentar("Prijedorska 111", "Sanski Most", "037689268", "JZU Opća bolnica"),
+                        new TransfuzijskiCentar("Valtera Perića br. 10", "Sarajevo", " + 387 33 220 168", "CK Općine Centar"),
+                        new TransfuzijskiCentar("6. mart 14a", "Hadžići", "+ 387 61 188 596", "CK Općine Hadžići"),
+                        new TransfuzijskiCentar("Jahijela Fincija br. 14", "Ilidža", " + 387 33 638 022", "CK Općine Ilidža"),
+                        new TransfuzijskiCentar("126. ilijaške brigade br. 62", "Sarajevo", "+ 387 33 400 518", "CK Općine Ilijaš"),
+                        new TransfuzijskiCentar("Trg solidarnosti br. 23", "Sarajevo", "+ 387 33 451 895", "CK Općine Novi Grad"),
+                        new TransfuzijskiCentar("Envera Šehovića br. 11", "Sarajevo", "+387 33 610 807", "CK Općine Novo Sarajevo"),
+                        new TransfuzijskiCentar("Edhema Mulabdića br. 2", "Sarajevo", "+ 387 33 532 137", "CK Općine Stari Grad"),
+                        new TransfuzijskiCentar("Trnovo bb", "Delijaš - Trnovo", " + 387 33 439 045", "CK Općine Trnovo"),
+                        new TransfuzijskiCentar("Igmanska br. 50", "Vogošća", "+ 387 33 430 209", "CK Općine Vogošća"),
+                        new TransfuzijskiCentar("Dubrave bb", "Nova Bila", "030 708-500", "Hrvatska bolnica Dr. Fra Mato Nikolić"),
+                        new TransfuzijskiCentar("Branislava Đurđeva bb", "Bihać", "037 226 087", "CK Unsko-Sanskog kantona"),
+                        new TransfuzijskiCentar("Branislava Đurđeva bb", "Bihać", "037 226 092", "CK grada Bihaća"),
+                        new TransfuzijskiCentar("Cazinskih brigada 12", "Cazin", "037 514 454", "CK Općine Cazin"),
+                        new TransfuzijskiCentar("Pazačik bb", "Bosanska Krupa", "037 417 011", "CK Općine Bosanska Krupa"),
+                        new TransfuzijskiCentar("Branilaca BIH 78", "Ključ", "037 661 066", "CK Općine Ključ"),
+                        new TransfuzijskiCentar("Bosanska 13", "Bosanski Petrovac", "037 881 710", "CK Općine Bosanski Petrovac"),
+                        new TransfuzijskiCentar("Muse Ćazima Ćatića 12", "Sanski Most", "037 686 200", "CK Općine Sanski Most"),
+                        new TransfuzijskiCentar("505 viteške brigade bb", "Bužim", "037 410 099", "CK Općine Bužim"),
+                        new TransfuzijskiCentar("Maršala Tita bb", "Velika Kladuša", "037 770 393", "CK Općine Velika Kladuša"),
+                        new TransfuzijskiCentar("Četvrta ulica bb", "Orašje", "031 714 508", "CK Posavskog kantona"),
+                        new TransfuzijskiCentar("Svete Ane 45", "Domaljevac", "031 791 046", "CK Općine Domaljevac-Šamac"),
+                        new TransfuzijskiCentar("Titova bb", "Odžak", "031 762 064", "CK Općine Odžak"),
+                        new TransfuzijskiCentar("Treća ulica 54", "Orašje", "031 712 349", "CK Općine Orašje"),
+                        new TransfuzijskiCentar("Borić 3", "Tuzla", "035 318 630", "CK Tuzlanskog kantona"),
+                        new TransfuzijskiCentar("Branilaca 27", "Banovići", "035 875 065", "CK Općine Banovići"),
+                        new TransfuzijskiCentar("Hasana Kikića bb", "Gradačac", "035 817 406", "CK Općine Gradačac"),
+                        new TransfuzijskiCentar("Patriotske lige 75", "Čelić", "035 662 189", "CK Općine Čelić"),
+                        new TransfuzijskiCentar("Kalesijskih brigada bb", "Kalesija", "035 631 540", "CK Općine Kalesija"),
+                        new TransfuzijskiCentar("Brijesnica velika bb", "Doboj-Istok", "035 723 220", "CK Općine Doboj-Istok"),
+                        new TransfuzijskiCentar("Kej bb", "Gračanica", "035 703 434", "CK Općine Gračanica"),
+                        new TransfuzijskiCentar("Kladanjskih brigada bb", "Kladanj", "035 621 150", "CK Općine Kladanj"),
+                        new TransfuzijskiCentar("Vase Pelagića bb", "Lukavac", "035 554 390", "CK Općine Lukavac"),
+                        new TransfuzijskiCentar("Bulevar Kulina bana 28E", "Zenica", "032 246 090", "CK Zeničko-Dobojskog kantona"),
+                        new TransfuzijskiCentar("Šehidska 24", "Breza", "032 783 495", "CK Općine Breza"),
+                        new TransfuzijskiCentar("Školska bb", "Olovo", "032 826 150", "CK Općine Olovo"),
+                        new TransfuzijskiCentar("Matuzići bb", "Doboj-Jug", "032 691 564", "CK Općine Doboj-Jug"),
+                        new TransfuzijskiCentar("Braće Pobrića 13", "Tešanj", "032 650 463", "CK Općine Tešanj"),
+                        new TransfuzijskiCentar("Rudarska 1", "Kakanj", "032 554 968", "CK Općine Kakanj"),
+                        new TransfuzijskiCentar("Žabljak bb", "Usora", "032 891 026", "CK Općine Usora"),
+                        new TransfuzijskiCentar("Ilijasa Smajlagića 18", "Maglaj", "032 603 302", "CK Općine Maglaj"),
+                        new TransfuzijskiCentar("Zvjezda 34", "Vareš", "032 843 343", "CK Općine Vareš"),
+                        new TransfuzijskiCentar("Zaima Imamovića 27", "Goražde", "038 221 128", "CK Bosansko Podrinjskog kantona")
+                )
+        );
+        transfuzijskiCentarRepository.saveAll(transfuzijskiCentri);
     }
 }
