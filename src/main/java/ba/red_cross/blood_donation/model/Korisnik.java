@@ -2,16 +2,12 @@ package ba.red_cross.blood_donation.model;
 
 import ba.red_cross.blood_donation.DTO.EditKorisnik;
 import ba.red_cross.blood_donation.DTO.RegisterRequest;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import javax.management.relation.Role;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -153,8 +149,7 @@ public class Korisnik implements Comparable<Korisnik> {
         this.notifikacije = notifikacije;
     }
 */
-    public Korisnik() {
-    }
+    public Korisnik() {}
 
     public Korisnik(String ime, String prezime, String korisnickoIme, String spol, LocalDate datumRodenja, String mjestoRodenja, String mjestoPrebivalista, String adresaPrebivalista, String kantonPrebivalista, String kontaktTelefon, String zanimanje, String krvnaGrupa, int brojDarivanjaKrvi, String emailAdresa, String lozinka, Boolean slatiNotifikacije, LocalDate datumKreiranjaRacuna, Rola rola) {
         this.ime = ime;

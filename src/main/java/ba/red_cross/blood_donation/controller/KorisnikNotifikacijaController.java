@@ -1,6 +1,5 @@
 package ba.red_cross.blood_donation.controller;
 
-import ba.red_cross.blood_donation.security.CustomUserDetails;
 import ba.red_cross.blood_donation.service.KorisnikNotifikacijaService;
 import ba.red_cross.blood_donation.utils.CheckAuth;
 import io.swagger.annotations.Api;
@@ -12,11 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
 
 @Api("KorisnikNotifikacije")
 @RestController

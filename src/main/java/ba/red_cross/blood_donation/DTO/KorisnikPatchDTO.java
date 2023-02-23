@@ -1,7 +1,5 @@
 package ba.red_cross.blood_donation.DTO;
 
-import javax.validation.constraints.NotBlank;
-
 public class KorisnikPatchDTO {
 
     private String mjestoPrebivalista;
@@ -13,7 +11,13 @@ public class KorisnikPatchDTO {
     private String korisnickoIme;
 
     public KorisnikPatchDTO() {}
-    public KorisnikPatchDTO(String mjestoPrebivalista, String adresaPrebivalista, String kantonPrebivalista, String kontaktTelefon, String zanimanje, String emailAdresa, String korisnickoIme) {
+    public KorisnikPatchDTO(String mjestoPrebivalista,
+                            String adresaPrebivalista,
+                            String kantonPrebivalista,
+                            String kontaktTelefon,
+                            String zanimanje,
+                            String emailAdresa,
+                            String korisnickoIme) {
         this.mjestoPrebivalista = mjestoPrebivalista;
         this.adresaPrebivalista = adresaPrebivalista;
         this.kantonPrebivalista = kantonPrebivalista;

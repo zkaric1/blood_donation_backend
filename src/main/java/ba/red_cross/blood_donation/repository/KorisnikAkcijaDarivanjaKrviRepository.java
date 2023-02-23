@@ -1,9 +1,6 @@
 package ba.red_cross.blood_donation.repository;
 
-import ba.red_cross.blood_donation.model.AkcijaDarivanjaKrvi;
-import ba.red_cross.blood_donation.model.Korisnik;
 import ba.red_cross.blood_donation.model.KorisnikAkcijaDarivanjaKrvi;
-import ba.red_cross.blood_donation.model.KorisnikNotifikacija;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

@@ -1,15 +1,11 @@
 package ba.red_cross.blood_donation.service;
 
-import ba.red_cross.blood_donation.DTO.ResponseMessageDTO;
 import ba.red_cross.blood_donation.model.Korisnik;
-import ba.red_cross.blood_donation.model.Notifikacija;
 import ba.red_cross.blood_donation.repository.KorisnikNotifikacijaRepository;
 import ba.red_cross.blood_donation.repository.KorisnikRepository;
 import ba.red_cross.blood_donation.repository.NotifikacijaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
 
 @Service
 public class KorisnikNotifikacijaService {

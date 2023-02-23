@@ -1,14 +1,11 @@
 package ba.red_cross.blood_donation.service;
 
 import ba.red_cross.blood_donation.DTO.KorisnikAkcijaDarivanjaKrviDTO;
-import ba.red_cross.blood_donation.exception.AkcijeDarivanjaKrviException;
 import ba.red_cross.blood_donation.model.AkcijaDarivanjaKrvi;
 import ba.red_cross.blood_donation.model.Korisnik;
 import ba.red_cross.blood_donation.model.KorisnikAkcijaDarivanjaKrvi;
-import ba.red_cross.blood_donation.repository.AkcijeDarivanjaKrviRepository;
 import ba.red_cross.blood_donation.repository.KorisnikAkcijaDarivanjaKrviRepository;
 import ba.red_cross.blood_donation.repository.KorisnikRepository;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -7,23 +7,13 @@ import ba.red_cross.blood_donation.service.AkcijeDarivanjaKrviService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.minidev.json.JSONObject;
-import net.sf.jasperreports.engine.*;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.print.attribute.standard.Media;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.time.LocalDate;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @Api(tags = "Akcije darivanja krvi")
@@ -42,8 +32,12 @@ public class AkcijaDarivanjaKrviController {
 
         List<AkcijaDarivanjaKrvi> result = new ArrayList<>();
         try {
-            if (grad != null) result = akcijeDarivanjaService.getAkcijeDarivanjaKrviByGrad(grad);
-            else result = akcijeDarivanjaService.getAkcijeDarivanjaKrvi();
+            if (grad != null) {
+                result = akcijeDarivanjaService.getAkcijeDarivanjaKrviByGrad(grad);
+            }
+            else {
+                result = akcijeDarivanjaService.getAkcijeDarivanjaKrvi();
+            }
         } catch (Exception ex) {
             GeneralException exception = new GeneralException("NOT_FOUND", ex.getMessage());
             return new ResponseEntity<>(
@@ -88,14 +82,27 @@ public class AkcijaDarivanjaKrviController {
     // DELETE metode
     @DeleteMapping("/akcija_darivanja_krvi/obrisi_sve")
     @ApiOperation(value = "Brisanje svih akcija darivanja krvi!")
-    HashMap<String, String> obrisiSveAkcijeDarivanjaKrvi() throws Exception {
+    HashMap<String, String> obrisiSveAkcijeDarivanjaKrvi() {
         return akcijeDarivanjaService.deleteAll();
     }
 
     @DeleteMapping("/akcija_darivanja_krvi/{id}")
     @ApiOperation(value = "Brisanje akcije darivanja krvi sa određenim ID!")
-    HashMap<String, String> obrisiAkcijuDarivanjaKrvi(@PathVariable Long id) throws Exception {
-        return akcijeDarivanjaService.deleteById(id);
+    public ResponseEntity<Object> obrisiAkcijuDarivanjaKrvi(@PathVariable Long id) {
+        try {
+            akcijeDarivanjaService.deleteById(id);
+        } catch (AkcijeDarivanjaKrviException ex) {
+            GeneralException exception = new GeneralException("NOT_FOUND", ex.getMessage());
+            return new ResponseEntity<>(
+                    exception,
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+
+        return new ResponseEntity<>(
+                "Uspjesno obrisana akcija za darivanje krvi sa id " + id,
+                HttpStatus.OK
+        );
     }
 
     // POST metoda

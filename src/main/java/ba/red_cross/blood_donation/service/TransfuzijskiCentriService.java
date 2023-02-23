@@ -1,6 +1,5 @@
 package ba.red_cross.blood_donation.service;
 
-import ba.red_cross.blood_donation.model.Notifikacija;
 import ba.red_cross.blood_donation.model.TransfuzijskiCentar;
 import ba.red_cross.blood_donation.repository.TransfuzijskiCentarRepository;
 import org.springframework.beans.factory.annotation.Autowired;

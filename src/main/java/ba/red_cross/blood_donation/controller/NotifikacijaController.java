@@ -1,9 +1,7 @@
 package ba.red_cross.blood_donation.controller;
 
-import ba.red_cross.blood_donation.exception.AkcijeDarivanjaKrviException;
 import ba.red_cross.blood_donation.exception.GeneralException;
 import ba.red_cross.blood_donation.exception.NotifikacijaException;
-import ba.red_cross.blood_donation.model.AkcijaDarivanjaKrvi;
 import ba.red_cross.blood_donation.model.Notifikacija;
 import ba.red_cross.blood_donation.security.CustomUserDetails;
 import ba.red_cross.blood_donation.service.NotifikacijaService;

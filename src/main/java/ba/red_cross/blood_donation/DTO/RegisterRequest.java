@@ -1,8 +1,5 @@
 package ba.red_cross.blood_donation.DTO;
 
-
-import ba.red_cross.blood_donation.model.Rola;
-
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 

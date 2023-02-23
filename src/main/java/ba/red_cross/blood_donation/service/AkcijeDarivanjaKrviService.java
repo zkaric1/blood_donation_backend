@@ -4,15 +4,10 @@ import ba.red_cross.blood_donation.DTO.ResponseMessageDTO;
 import ba.red_cross.blood_donation.exception.AkcijeDarivanjaKrviException;
 import ba.red_cross.blood_donation.model.AkcijaDarivanjaKrvi;
 import ba.red_cross.blood_donation.repository.AkcijeDarivanjaKrviRepository;
-import io.swagger.models.auth.In;
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -45,12 +40,12 @@ public class AkcijeDarivanjaKrviService {
         String trenutnaGodina = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
 
-        for (int i = 0; i<akcijeTemp.size(); i++) {
-            LocalDate datumAkcije = akcijeTemp.get(i).getDatum();
+        for (AkcijaDarivanjaKrvi akcijaDarivanjaKrvi : akcijeTemp) {
+            LocalDate datumAkcije = akcijaDarivanjaKrvi.getDatum();
             String datumAkcijeGodina = datumAkcije.format(formatter);
 
             if (datumAkcijeGodina.equals(trenutnaGodina)) {
-                akcije.add(akcijeTemp.get(i));
+                akcije.add(akcijaDarivanjaKrvi);
             }
         }
 
@@ -69,20 +64,26 @@ public class AkcijeDarivanjaKrviService {
         return listaAkcijaDarivanja;
     }
 
-    public HashMap<String,String> deleteAll () throws Exception {
-        if (akcijeDarivanjaKrviRepository.count() == 0) return new ResponseMessageDTO("Nema kreiranih akcija darivanja krvi!").getHashMap();
+    public HashMap<String,String> deleteAll () {
+        if (akcijeDarivanjaKrviRepository.count() == 0) {
+            return new ResponseMessageDTO("Nema kreiranih akcija darivanja krvi!").getHashMap();
+        }
+
         akcijeDarivanjaKrviRepository.deleteAll();
-        if (akcijeDarivanjaKrviRepository.count() == 0) return new ResponseMessageDTO("Uspjesno obrisane sve akcije darivanja krvi!").getHashMap();
+
+        if (akcijeDarivanjaKrviRepository.count() == 0) {
+            return new ResponseMessageDTO("Uspjesno obrisane sve akcije darivanja krvi!").getHashMap();
+        }
+
         return new ResponseMessageDTO("Greska pri brisanju akcija darivanja krvi!").getHashMap();
     }
 
-    public HashMap<String,String> deleteById (Long id) throws Exception {
-        if (akcijeDarivanjaKrviRepository.count() == 0) return new ResponseMessageDTO("Nema kreiranih akcija darivanja krvi!").getHashMap();
-        boolean exists = akcijeDarivanjaKrviRepository.existsById(id);
-        if (exists) {
-            akcijeDarivanjaKrviRepository.deleteById(id);
-            return new ResponseMessageDTO("Uspjesno obrisana akcija darivanja krvi sa id " + id).getHashMap();
-        }
+    public HashMap<String,String> deleteById (Long id) throws AkcijeDarivanjaKrviException {
+        AkcijaDarivanjaKrvi akcijaDarivanjaKrvi = akcijeDarivanjaKrviRepository.findById(id).orElseThrow(
+                () -> new AkcijeDarivanjaKrviException("Akcija darivanja krvi sa ID " + id + " ne postoji!")
+        );
+        akcijeDarivanjaKrviRepository.delete(akcijaDarivanjaKrvi);
+
         return new ResponseMessageDTO("Ne postoji akcija darivanja krvi sa id " + id).getHashMap();
     }
 
@@ -137,9 +138,9 @@ public class AkcijeDarivanjaKrviService {
         List<AkcijaDarivanjaKrvi> akcijeTemp = akcijeDarivanjaKrviRepository.findAll();
         List<AkcijaDarivanjaKrvi> akcije = new ArrayList<>();
 
-        for (int i = 0; i<akcijeTemp.size(); i++) {
-            if (akcijeTemp.get(i).getDatum().isBefore(datumSada)) {
-                akcije.add(akcijeTemp.get(i));
+        for (AkcijaDarivanjaKrvi akcijaDarivanjaKrvi : akcijeTemp) {
+            if (akcijaDarivanjaKrvi.getDatum().isBefore(datumSada)) {
+                akcije.add(akcijaDarivanjaKrvi);
             }
         }
 

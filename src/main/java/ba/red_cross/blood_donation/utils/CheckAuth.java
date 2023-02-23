@@ -3,7 +3,6 @@ package ba.red_cross.blood_donation.utils;
 import ba.red_cross.blood_donation.security.CustomUserDetails;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.ArrayList;
 import java.util.List;

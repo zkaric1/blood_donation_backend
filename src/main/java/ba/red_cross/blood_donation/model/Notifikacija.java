@@ -1,16 +1,12 @@
 package ba.red_cross.blood_donation.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
@@ -120,5 +116,4 @@ public class Notifikacija {
     public void setKrvnaGrupa(String krvnaGrupa) {
         this.krvnaGrupa = krvnaGrupa;
     }
-
 }
