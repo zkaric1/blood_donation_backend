@@ -22,7 +22,7 @@ public class TransfuzijskiCentar {
     private String kontaktTelefon;
 
     public TransfuzijskiCentar() {}
-    public TransfuzijskiCentar (String grad, String adresa, String kontaktTelefon, String ustanova) {
+    public TransfuzijskiCentar (String adresa, String grad,  String kontaktTelefon, String ustanova) {
         this.grad = grad;
         this.adresa = adresa;
         this.kontaktTelefon = kontaktTelefon;
