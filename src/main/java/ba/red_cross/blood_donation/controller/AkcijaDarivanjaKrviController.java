@@ -53,7 +53,7 @@ public class AkcijaDarivanjaKrviController {
     }
 
     @GetMapping("/akcija_darivanja_krvi/brojDarivanjaPoMjesecu")
-    @ApiOperation(value = "Dobavljanje svih kreiranih akcija darivanja krvi ili za određeni grad!")
+    @ApiOperation(value = "Dobavljanje broja darivanja krvi po mjesecu!")
     public List<Integer> getBrojDarivanjaPoMjesecu() {
         return akcijeDarivanjaService.getBrojDarivanjaPoMjesecu();
     }
@@ -154,50 +154,6 @@ public class AkcijaDarivanjaKrviController {
         }
     }
 
-    /*
-    @GetMapping("/generisi_izvjestaj/{id}")
-    @ApiOperation(value = "Generisanje i preuzimanje izvještaja nakon završene akcije darivanja!")
-    public String generisiIzvjestaj(@PathVariable("id") Long id) throws Exception {
-        String path = "C:\\Users\\belma\\Desktop\\Report";
-        AkcijaDarivanjaKrvi akcija = akcijeDarivanjaService.getAkcijeDarivanjaKrviById(id);
-        List<AkcijaDarivanjaKrvi> akcije = new ArrayList<>();
-        akcije.add(akcija);
-        String contents = "";
-
-        File file = ResourceUtils.getFile("classpath:akcijeDarivanjaIzvjestaj.jrxml");
-        JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
-        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(akcije);
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("createdBy", "Alma Ibrasimovic");
-
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
-
-        JasperExportManager.exportReportToPdfFile(jasperPrint, path + "\\akcija_darivanja_krvi" + akcija.getDatum() + ".pdf");
-
-        return "Izvjestaj generisan na lokaciji : " + path;
-    }
-
-    @GetMapping("/generisi_izvjestaj/godisnji")
-    @ApiOperation(value = "Generisanje i preuzimanje izvještaja za akcije darivanja u godini!")
-    public ResponseEntity<byte[]> generisiGodisnjiIzvjestaj() throws Exception {
-      //  String path = "C:\\Users\\belma\\Desktop\\Report";
-        HashMap<String, Object> map = new HashMap<>();
-        List<AkcijaDarivanjaKrvi> akcije = akcijeDarivanjaService.getAkcijeDarivanjaKrviTrenutnaGodina();
-        //File file = ResourceUtils.getFile("classpath:godisnjiIzvjestaj.jrxml");
-        JasperReport jasperReport = JasperCompileManager.compileReport(getClass().getResourceAsStream("/reports/godisnjiIzvjestaj.jrxml"));
-        //JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
-        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(akcije);
-        Map<String, Object> parameters = new HashMap<String,Object>();
-        JasperPrint jasper = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
-        parameters.put("createdBy", "Alma Ibrasimovic");
-        byte[] data = JasperExportManager.exportReportToPdf(jasper);
-        LocalDate now = LocalDate.now();
-     //   JasperExportManager.exportReportToPdfFile(jasperPrint, path + "\\godisnji_izvjestaj_" + now.getYear() + ".pdf");
-        HttpHeaders headers = new HttpHeaders();
-        headers.set(HttpHeaders.CONTENT_DISPOSITION, "inline;filename=godisnji_izvjestaj.pdf");
-        return ResponseEntity.ok().contentType(MediaType.APPLICATION_PDF).body(data);
-    }
-*/
     @GetMapping("/zavrseneAkcijeDarivanja")
     @ApiOperation(value = "Dobavljanje akcija darivanja krvi koje su završene!")
     public List<AkcijaDarivanjaKrvi> zavrseneAkcije() throws Exception {

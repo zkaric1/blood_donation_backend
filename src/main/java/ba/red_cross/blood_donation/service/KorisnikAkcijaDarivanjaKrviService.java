@@ -54,15 +54,16 @@ public class KorisnikAkcijaDarivanjaKrviService {
         return korisnikAkcijaDarivanjaKrviRepository.save(novaAkcija);
     }
 
-    public List<AkcijaDarivanjaKrvi> findAkcijeByKorisnikId (Long id) {
+    public List<AkcijaDarivanjaKrvi> findAkcijeByKorisnikId (Long id) throws Exception{
+        korisnikRepository.findById(id).orElseThrow(() -> new Exception("Korisnik sa ID " + id + " ne postoji!"));
         List<AkcijaDarivanjaKrvi> akcije = new ArrayList<>();
         List<Long> idAkcija = korisnikAkcijaDarivanjaKrviRepository.findAkcijeByKorisnikID(id);
 
-        for (int i = 0; i<idAkcija.size(); i++) {
-            akcije.add(akcijeDarivanjaKrviService.getAkcijeDarivanjaKrviById(idAkcija.get(i)));
+        for (Long aLong : idAkcija) {
+            akcije.add(akcijeDarivanjaKrviService.getAkcijeDarivanjaKrviById(aLong));
         }
 
-        return  akcije;
+        return akcije;
     }
 
     public LocalDate posljednjeDarivanje (Long id) {
@@ -79,7 +80,12 @@ public class KorisnikAkcijaDarivanjaKrviService {
     }
 
     public Integer getBrojDarivanjaZaAkciju (Long id) throws Exception {
-        Integer brojDarivanja = korisnikAkcijaDarivanjaKrviRepository.getBrojDarivanjaZaAkciju(id);
-        return brojDarivanja;
+        try {
+            akcijeDarivanjaKrviService.getAkcijeDarivanjaKrviById(id);
+            Integer brojDarivanja = korisnikAkcijaDarivanjaKrviRepository.getBrojDarivanjaZaAkciju(id);
+            return brojDarivanja;
+        } catch (Exception ex) {
+            throw ex;
+        }
     }
 }

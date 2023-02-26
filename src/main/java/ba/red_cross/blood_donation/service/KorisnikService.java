@@ -1,19 +1,19 @@
 package ba.red_cross.blood_donation.service;
 
 import ba.red_cross.blood_donation.DTO.*;
-import ba.red_cross.blood_donation.model.AkcijaDarivanjaKrvi;
 import ba.red_cross.blood_donation.model.Korisnik;
 import ba.red_cross.blood_donation.model.Rola;
 import ba.red_cross.blood_donation.repository.KorisnikRepository;
 import ba.red_cross.blood_donation.repository.RolaRepository;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class KorisnikService {
@@ -83,19 +83,13 @@ public class KorisnikService {
     }
 
     public void promijeniKorisnickeInfromacije(Long id, EditKorisnik editKorisnik) throws Exception {
-        Korisnik korisnik = korisnikRepository.findByID(id);
-        if (korisnik == null) {
-            throw new Exception("Ne postoji korisnik");
-        }
+        Korisnik korisnik = korisnikRepository.findById(id).orElseThrow(() -> new Exception("Korisnik sa ID " + id + " ne postoji!"));
         korisnik = korisnik.promijeniInfromacije(editKorisnik);
         korisnikRepository.save(korisnik);
     }
 
     public void promijeniSlanjeNotifikacija(Long id, boolean sendNotification) throws Exception {
-        Korisnik korisnik = korisnikRepository.findByID(id);
-        if (korisnik == null) {
-            throw new Exception("Ne postoji korisnik");
-        }
+        Korisnik korisnik = korisnikRepository.findById(id).orElseThrow(() -> new Exception("Korisnik sa ID " + id + " ne postoji!"));
         korisnik.setSlatiNotifikacije(sendNotification);
         korisnikRepository.save(korisnik);
     }
@@ -137,14 +131,9 @@ public class KorisnikService {
         return new ResponseMessageDTO("Greska pri brisanju korisnika!").getHashMap();
     }
 
-    public HashMap<String, String> deleteById(Long id) throws Exception {
-        if (korisnikRepository.count() == 0) return new ResponseMessageDTO("Nema kreiranih korisnika").getHashMap();
-        boolean exists = korisnikRepository.existsById(id);
-        if (exists) {
-            korisnikRepository.deleteById(id);
-            return new ResponseMessageDTO("Uspjesno obrisan korisnik sa id " + id).getHashMap();
-        }
-        return new ResponseMessageDTO("Ne postoji korisnik sa id " + id).getHashMap();
+    public void deleteById(Long id) throws Exception {
+        korisnikRepository.findById(id).orElseThrow(() -> new Exception("Korisnik sa ID " + id + " ne postoji!"));
+        korisnikRepository.deleteById(id);
     }
 
     public Korisnik partialUpdateUser(KorisnikPatchDTO noviKorisnik, Long id) throws Exception {

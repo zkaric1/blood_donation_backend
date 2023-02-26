@@ -2,6 +2,7 @@ package ba.red_cross.blood_donation.controller;
 
 import ba.red_cross.blood_donation.DTO.LoginRequest;
 import ba.red_cross.blood_donation.DTO.LoginResponse;
+import ba.red_cross.blood_donation.exception.GeneralException;
 import ba.red_cross.blood_donation.model.Korisnik;
 import ba.red_cross.blood_donation.model.dto.ValidationRequest;
 import ba.red_cross.blood_donation.model.dto.ValidationResponse;
@@ -48,7 +49,8 @@ public class AuthController {
 
             return new ResponseEntity<>(authenticationService.login(loginRequest), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<Object>(e, new HttpHeaders(),HttpStatus.BAD_REQUEST);
+            GeneralException exception = new GeneralException("NOT_FOUND", e.getMessage());
+            return new ResponseEntity<>(exception, new HttpHeaders(),HttpStatus.BAD_REQUEST);
         }
     }
 

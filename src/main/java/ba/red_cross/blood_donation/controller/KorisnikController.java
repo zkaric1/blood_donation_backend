@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -156,33 +157,44 @@ public class KorisnikController {
 
     @DeleteMapping("/korisnici/{id}")
     @ApiOperation(value = "Brisanje korisnika sa određenim ID!")
-    HashMap<String, String> obrisiKorisnikaById(@PathVariable Long id) throws Exception {
-        return korisnikService.deleteById(id);
+    ResponseEntity<Object> obrisiKorisnikaById(@PathVariable Long id) throws Exception {
+        try {
+            korisnikService.deleteById(id);
+        } catch (Exception ex) {
+            GeneralException exception = new GeneralException("NOT_FOUND", ex.getMessage());
+            return new ResponseEntity<>(
+                    exception,
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+
+        return new ResponseEntity<>(
+                "Uspjesno obrisan korisnik sa id " + id,
+                HttpStatus.OK
+        );
     }
 
     // PATCH
     @PatchMapping("/korisnici/{id}")
     @ApiOperation(value = "Ažuriranje samo određenih podataka korisnika!")
     public ResponseEntity<Object> partialUpdateUser(@RequestBody KorisnikPatchDTO user, @PathVariable("id") Long id)  {
-        if(!checkAuth.isAuthorized(SecurityContextHolder.getContext().getAuthentication(), id)) {
+        if (!checkAuth.isAuthorized(SecurityContextHolder.getContext().getAuthentication(), id)) {
             Exception exception =  new Exception("Unauthorized");
             return new ResponseEntity<>(
                     exception,
                     HttpStatus.UNAUTHORIZED
             );
         }
-        JSONObject message = new JSONObject();
         try {
             korisnikService.partialUpdateUser(user, id);
-            message.put("Poruka: ", "Uspjesno azuriran korisnikom sa id " + id);
             return new ResponseEntity<>(
-                    message,
+                    "Uspjesno azuriran korisnikom sa id " + id,
                     HttpStatus.OK
             );
         } catch (Exception e) {
-            message.put("Poruka: ", e.getMessage());
+            GeneralException exception = new GeneralException("NOT_FOUND", e.getMessage());
             return new ResponseEntity<>(
-                    message,
+                    exception,
                     HttpStatus.BAD_REQUEST
             );
         }
@@ -198,25 +210,23 @@ public class KorisnikController {
                     HttpStatus.UNAUTHORIZED
             );
         }
-        JSONObject message = new JSONObject();
         try {
             korisnikService.promijeniKorisnickeInfromacije(id, editKorisnik);
-            message.put("message", "Uspjesno azurirane informacije");
             return new ResponseEntity<>(
-                    message,
+                    "Uspjesno azurirane informacije",
                     HttpStatus.OK
             );
         } catch (Exception e) {
-            message.put("message", e.getMessage());
+            GeneralException exception = new GeneralException("NOT_FOUND", e.getMessage());
             return new ResponseEntity<>(
-                    message,
+                    exception,
                     HttpStatus.BAD_REQUEST
             );
         }
     }
 
     @PutMapping("/korisnici/{id}/notifikacije")
-    @ApiOperation(value = "Promjena slanjeNotifikacija atirbuta")
+    @ApiOperation(value = "Promjena slanjeNotifikacija atributa")
     public  ResponseEntity<Object> promijeniSlanjeNotifikacija(@PathVariable("id") Long id, @RequestParam boolean sendNotifications) throws Exception {
         if(!checkAuth.isAuthorized(SecurityContextHolder.getContext().getAuthentication(), id)) {
             Exception exception =  new Exception("Unauthorized");
@@ -225,18 +235,16 @@ public class KorisnikController {
                     HttpStatus.UNAUTHORIZED
             );
         }
-        JSONObject message = new JSONObject();
         try {
             korisnikService.promijeniSlanjeNotifikacija(id, sendNotifications);
-            message.put("message", "Uspjesno azurirane informacije");
             return new ResponseEntity<>(
-                    message,
+                    "Uspjesno azurirane informacije",
                     HttpStatus.OK
             );
         } catch (Exception e) {
-            message.put("message", e.getMessage());
+            GeneralException exception = new GeneralException("NOT_FOUND", e.getMessage());
             return new ResponseEntity<>(
-                    message,
+                    exception,
                     HttpStatus.BAD_REQUEST
             );
         }
@@ -261,9 +269,9 @@ public class KorisnikController {
                     HttpStatus.OK
             );
         } catch (Exception e) {
-            message.put("message", e.getMessage());
+            GeneralException exception = new GeneralException("NOT_FOUND", e.getMessage());
             return new ResponseEntity<>(
-                    message,
+                    exception,
                     HttpStatus.BAD_REQUEST
             );
         }
@@ -271,17 +279,19 @@ public class KorisnikController {
 
     @PatchMapping("/korisnici/dodajKrvnuGrupu/{id}")
     @ApiOperation(value = "Dodavanje krvne grupe nakon prvog darivanja")
-    public ResponseEntity<JSONObject> dodajKrvnuGrupu(@RequestBody KrvnaGrupaDTO krvnaGrupa, @PathVariable("id") Long id) throws Exception {
-        JSONObject message = new JSONObject();
+    public ResponseEntity<Object> dodajKrvnuGrupu(@RequestBody KrvnaGrupaDTO krvnaGrupa, @PathVariable("id") Long id) throws Exception {
         try {
             korisnikService.dodajKrvnuGrupu(krvnaGrupa, id);
-            message.put("Poruka: ", "Uspjesno azurirana krvna grupa korisniku");
             return new ResponseEntity<>(
-                    message,
+                    "Uspjesno azurirana krvna grupa korisniku",
                     HttpStatus.OK
             );
         } catch (Exception e) {
-            throw new Exception(e.getMessage());
+            GeneralException exception = new GeneralException("NOT_FOUND", e.getMessage());
+            return new ResponseEntity<>(
+                    exception,
+                    HttpStatus.BAD_REQUEST
+            );
         }
     }
 }

@@ -75,7 +75,7 @@ public class NotifikacijaController {
     ResponseEntity<Object> obrisiNotifikacijeOdKorisnika(@PathVariable Long  id) throws Exception {
         CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
-        if( userDetails.getUserId() != id) {
+        if (userDetails.getUserId() != id) {
             Exception exception =  new Exception("Unauthorized");
             return new ResponseEntity<>(
                     exception,
@@ -83,9 +83,9 @@ public class NotifikacijaController {
             );
         }
         JSONObject message = new JSONObject();
-        message.put("Poruka",notifikacijaService.obrisiNotifikacijeOdKorisnika(id));
+        message.put("Poruka", notifikacijaService.obrisiNotifikacijeOdKorisnika(id));
         return new ResponseEntity<>(
-                message    ,
+                message,
                 HttpStatus.OK
         );
     }
@@ -113,19 +113,17 @@ public class NotifikacijaController {
     // PUT metoda
     @PutMapping("/notifikacije")
     @ApiOperation(value = "Ažuriranje notifikacije sa određenim ID!")
-    ResponseEntity<JSONObject> editNotifikacija(@RequestBody Notifikacija novaNotifikacija) throws Exception {
-        JSONObject message = new JSONObject();
+    ResponseEntity<Object> editNotifikacija(@RequestBody Notifikacija novaNotifikacija) throws Exception {
         try {
             notifikacijaService.editNotifikacija(novaNotifikacija);
-            message.put("Poruka: ", "Uspjesno azurirana notifikacija sa id " + novaNotifikacija.getID());
             return new ResponseEntity<>(
-                    message,
+                    "Uspjesno azurirana notifikacija sa id " + novaNotifikacija.getID(),
                     HttpStatus.OK
             );
         } catch (Exception e) {
-            message.put("Poruka: ", e.getMessage());
+            GeneralException exception = new GeneralException("NOT_FOUND", e.getMessage());
             return new ResponseEntity<>(
-                    message,
+                    exception,
                     HttpStatus.BAD_REQUEST
             );
         }

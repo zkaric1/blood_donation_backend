@@ -127,10 +127,23 @@ public class KorisnikAkcijaDarivanjaKrviController {
 
     @GetMapping("/korisnikAkcijeDarivanja/korisnikListaAkcija/{id}")
     @ApiOperation(value = "Dobavljanje lista akcije darivanja krvi za korisnika sa ID!")
-    public List<AkcijaDarivanjaKrvi> findAkcijeByKorisnikId(@PathVariable Long id) {
+    public ResponseEntity<Object> findAkcijeByKorisnikId(@PathVariable Long id) {
         List<AkcijaDarivanjaKrvi> result = new ArrayList<>();
-        result = korisnikAkcijeDarivanjaService.findAkcijeByKorisnikId(id);
-        return result;
+        try {
+            result = korisnikAkcijeDarivanjaService.findAkcijeByKorisnikId(id);
+        } catch (Exception ex) {
+            GeneralException exception = new GeneralException("NOT_FOUND", ex.getMessage());
+
+            return new ResponseEntity<>(
+                    exception,
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+
+        return new ResponseEntity<>(
+                result,
+                HttpStatus.OK
+        );
     }
 
     // POST metoda
@@ -142,10 +155,22 @@ public class KorisnikAkcijaDarivanjaKrviController {
 
     @GetMapping("/brojDarivanjaPoAkciji/{id}")
     @ApiOperation(value = "Dobavljanje broja darivanja krvi za određenu akciju!")
-    public Integer getBrojDarivanja(@PathVariable("id") Long id) throws Exception {
-        Integer brojDarivanja = korisnikAkcijeDarivanjaService.getBrojDarivanjaZaAkciju(id);
+    public ResponseEntity<Object> getBrojDarivanja(@PathVariable("id") Long id) throws Exception {
+        Integer brojDarivanja = 0;
+        try {
+            brojDarivanja = korisnikAkcijeDarivanjaService.getBrojDarivanjaZaAkciju(id);
+        } catch (Exception ex) {
+            GeneralException exception = new GeneralException("NOT_FOUND", ex.getMessage());
+            return new ResponseEntity<>(
+                    exception,
+                    HttpStatus.BAD_REQUEST
+            );
+        }
 
-        return brojDarivanja;
+        return new ResponseEntity<>(
+                brojDarivanja,
+                HttpStatus.OK
+        );
     }
 
     @GetMapping("/korisnikAkcijeDarivanja/posljednjeDarivanje/{id}")
