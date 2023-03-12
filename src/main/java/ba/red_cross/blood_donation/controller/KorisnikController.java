@@ -95,7 +95,11 @@ public class KorisnikController {
             );
         }
         catch(Exception e) {
-            throw new Exception (e.getMessage());
+            GeneralException exception = new GeneralException("NOT_FOUND", e.getMessage());
+            return new ResponseEntity<>(
+                    exception,
+                    HttpStatus.BAD_REQUEST
+            );
         }
     }
 
@@ -110,7 +114,6 @@ public class KorisnikController {
                     HttpStatus.UNAUTHORIZED
             );
         }
-        JSONObject message = new JSONObject();
         try {
             korisnikService.dodajDarivanjeKrvi(id);
             return new ResponseEntity<>(
@@ -119,9 +122,9 @@ public class KorisnikController {
             );
         }
         catch(Exception e) {
-            message.put("Poruka: ", e.getMessage());
+            GeneralException exception = new GeneralException("NOT_FOUND", e.getMessage());
             return new ResponseEntity<>(
-                    message,
+                    exception,
                     HttpStatus.BAD_REQUEST
             );
         }
@@ -130,19 +133,18 @@ public class KorisnikController {
     // PUT
     @PutMapping("/korisnici")
     @ApiOperation(value = "Ažuriranje korisnika sa određenim ID!")
-    ResponseEntity<JSONObject> editKorisnika(@RequestBody DTOKorisnici noviKorisnik) throws Exception {
+    ResponseEntity<Object> editKorisnika(@RequestBody DTOKorisnici noviKorisnik) throws Exception {
         JSONObject message = new JSONObject();
         try {
             korisnikService.editKorisnika(noviKorisnik.getKorisnik());
-            message.put("Poruka: ", "Uspjesno azuriran korisnikom sa id " + noviKorisnik.getKorisnik().getID());
             return new ResponseEntity<>(
-                    message,
+                    "Uspjesno azuriran korisnik sa id " + noviKorisnik.getKorisnik().getID(),
                     HttpStatus.OK
             );
         } catch (Exception e) {
-            message.put("Poruka: ", e.getMessage());
+            GeneralException exception = new GeneralException("NOT_FOUND", e.getMessage());
             return new ResponseEntity<>(
-                    message,
+                    exception,
                     HttpStatus.BAD_REQUEST
             );
         }
